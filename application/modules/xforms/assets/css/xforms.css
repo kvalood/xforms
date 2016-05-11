@@ -1,0 +1,70 @@
+.xform{position:relative}
+
+.xforms_loader{
+    display: block;
+    position: absolute;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7) url('../images/preloader.svg') no-repeat center center;
+    background-size: 50px;
+    background-attachment: fixed;
+}
+
+/* Notification*/
+.transition {
+    -moz-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.background-success {
+    background-color: #57BF57;
+}
+
+#notie-alert-outer, #notie-confirm-outer, #notie-input-outer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999999999;
+    height: auto;
+    width: 100%;
+    display: none;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#notie-alert-content{position: relative}
+
+
+#notie-alert-inner .icon-close{
+    font-size: 30px !important;
+    display: block;
+    color: #fff;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -17px;
+}
+
+#notie-alert-text {
+    color: #FFFFFF;
+    display: inline-block;
+    margin: 17px 0;
+}
+
+#notie-alert-text a{
+    margin-left: 10px;
+    color: #fff;
+    border: 2px solid;
+    padding: 5px 16px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#notie-alert-text a:hover{
+    color: rgb(207, 237, 255);
+}

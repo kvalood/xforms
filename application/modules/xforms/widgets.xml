@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets>
+
+    <widget>
+        <title>Конструктор форм</title>
+        <description>Вывод виджета формы</description>
+        <method>show_form</method>
+    </widget>
+
+</widgets>
