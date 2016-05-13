@@ -5,11 +5,12 @@
 {$form.desc}
 
 {if $fields}
-    <form action="{site_url('xforms/show')}/{$form.url}" method="post" enctype="multipart/form-data" id="{$form.url}" class="xform">
+    <form action="{site_url('xforms/show')}/{$form.url}" method="post" enctype="multipart/form-data" id="{$form.url}"
+          class="xform">
 
         {form_csrf()}
-        <input type="hidden" name="cms_widget_form" value="1" />
-        <input type="hidden" name="form_url" value="{$form.url}" />
+        <input type="hidden" name="cms_widget_form" value="1"/>
+        <input type="hidden" name="form_url" value="{$form.url}"/>
 
         <ul class="fields g-row g-row_indent-30">
             {foreach $fields as $field}
@@ -17,19 +18,24 @@
                     {if $field.type=='select' || $field.type=='radio'}
                         <div class="field__title">{if $field.require==1}<i>*</i>{/if} {$field.label}</div>
                     {else:}
-                        <label for="f{$field.id}" class="field__title">{if $field.require==1}<i>*</i>{/if}{$field.label}</label>
+                        <label for="f{$field.id}" class="field__title">{if $field.require==1}<i>*</i>{/if}{$field.label}
+                        </label>
                     {/if}
 
                     {if $field.type=='text'}
-                        <input type="text" name="f{$field.id}" id="f{$field.id}" value="{$field.value}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if}  />
+                        <input type="text" name="f{$field.id}" id="f{$field.id}"
+                               value="{$field.value}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if} />
                     {elseif $field.type=='textarea'}
-                        <textarea name="f{$field.id}" class="message_text"  id="f{$field.id}"{if $field.disabled==1} disabled="disabled"{/if}>{$field.value}</textarea>
+                        <textarea name="f{$field.id}" class="message_text"
+                                  id="f{$field.id}"{if $field.disabled==1} disabled="disabled"{/if}>{$field.value}</textarea>
                     {elseif $field.type=='checkbox'}
-                        <input type="checkbox" name="f{$field.id}" id="f{$field.id}" value="{$field.value}"{if $field.disabled==1} disabled="disabled"{/if} />
+                        <input type="checkbox" name="f{$field.id}" id="f{$field.id}"
+                               value="{$field.value}"{if $field.disabled==1} disabled="disabled"{/if} />
                         {$value = explode("\n",$field.value)}
                         <ul class="field__radio">
                             {foreach $value as $key => $val}
-                                <li><label><input type="radio" name="f{$field.id}" value="{$key}" id="{$field.id}{$key}" {if $key == 0}checked{/if}/> <span>{$val}</span></label></li>
+                                <li><label><input type="radio" name="f{$field.id}" value="{$key}" id="{$field.id}{$key}"
+                                                  {if $key == 0}checked{/if}/> <span>{$val}</span></label></li>
                             {/foreach}
                         </ul>
                     {elseif $field.type=='select'}
@@ -43,7 +49,8 @@
                         {$value = explode("\n",$field.value)}
                         <ul class="field__radio">
                             {foreach $value as $key => $val}
-                                <li><label><input type="radio" name="f{$field.id}" value="{$key}" id="{$field.id}{$key}" {if $key == 0}checked{/if}/> <span>{$val}</span></label></li>
+                                <li><label><input type="radio" name="f{$field.id}" value="{$key}" id="{$field.id}{$key}"
+                                                  {if $key == 0}checked{/if}/> <span>{$val}</span></label></li>
                             {/foreach}
                         </ul>
                     {/if}
@@ -61,7 +68,8 @@
             {/if}
 
             <li class="submit g-col-12">
-                <input type="submit" class="more-link bth" onClick="send_widget_form($(this));return false;" value="Отправить заявку" />
+                <input type="submit" class="more-link bth" onClick="send_widget_form($(this));return false;"
+                       value="Отправить заявку"/>
             </li>
 
         </ul>

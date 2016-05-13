@@ -1,6 +1,8 @@
-.xform{position:relative}
+.xform {
+    position: relative
+}
 
-.xforms_loader{
+.xforms_loader {
     display: block;
     position: absolute;
     z-index: 99999;
@@ -37,10 +39,11 @@
     font-size: 18px;
 }
 
-#notie-alert-content{position: relative}
+#notie-alert-content {
+    position: relative
+}
 
-
-#notie-alert-inner .icon-close{
+#notie-alert-inner .icon-close {
     font-size: 30px !important;
     display: block;
     color: #fff;
@@ -56,7 +59,7 @@
     margin: 17px 0;
 }
 
-#notie-alert-text a{
+#notie-alert-text a {
     margin-left: 10px;
     color: #fff;
     border: 2px solid;
@@ -65,6 +68,6 @@
     display: inline-block;
 }
 
-#notie-alert-text a:hover{
+#notie-alert-text a:hover {
     color: rgb(207, 237, 255);
 }
