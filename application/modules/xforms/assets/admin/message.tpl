@@ -6,7 +6,8 @@
         </div>
         <div class="pull-right">
             <div class="d-i_b">
-                <a href="/admin/components/cp/xforms/" class="t-d_n m-r_15"><span class="f-s_14">←</span> <span class="t-d_u">Венуться</span></a>
+                <a href="/admin/components/cp/xforms/" class="t-d_n m-r_15"><span class="f-s_14">←</span> <span
+                            class="t-d_u">Венуться</span></a>
             </div>
         </div>
     </div>
@@ -20,19 +21,19 @@
             <th>Дата</th>
             </thead>
             <tbody>
-                {foreach $message as $msg}
-                    <tr>
-                        <td>{$msg.id}</td>
-                        <td>
-                            {$msg.author}
-                        </td>
-                        <td>
-                           {$msg.msg}
-                        </td>
-                        <td>{$msg.file}</td>
-                        <td>{date('d.m.Y H:i',$msg.date)}</td>
-                    </tr>
-                {/foreach}
+            {foreach $message as $msg}
+                <tr>
+                    <td>{$msg.id}</td>
+                    <td>
+                        {$msg.author}
+                    </td>
+                    <td>
+                        {$msg.msg}
+                    </td>
+                    <td>{$msg.file}</td>
+                    <td>{date('d.m.Y H:i',$msg.date)}</td>
+                </tr>
+            {/foreach}
             </tbody>
         </table>
     {else:}

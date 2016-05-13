@@ -2,11 +2,11 @@
  * Created by JAMES_BOND on 07.05.2016.
  */
 
-var field__item   = '.field__item',
-    error_class   = 'error_input',
+var field__item = '.field__item',
+    error_class = 'error_input',
     captcha_image = '.captcha_image';
 
-function send_widget_form(i){
+function send_widget_form(i) {
 
     var form = $(i).closest('form');
 
@@ -16,30 +16,30 @@ function send_widget_form(i){
         type: "POST",
         url: form.attr('action'),
         data: form.serialize(),
-        success: function(data){
+        success: function (data) {
             var notify = JSON.parse(data);
 
             //Ошибки формы клиента
-            if(notify.errors) {
+            if (notify.errors) {
                 var array = [];
                 for (var index in notify.errors) {
                     var attr = notify.errors[index],
-                        prnt  = $('[name="' + index + '"]').closest(field__item);
+                        prnt = $('[name="' + index + '"]').closest(field__item);
 
                     prnt.addClass(error_class).find('.error').remove();
-                    prnt.append('<p class="error">'+attr+'</p>');
+                    prnt.append('<p class="error">' + attr + '</p>');
                     array.push(index);
                 }
                 $('html, body').stop().animate({scrollTop: $('[name="' + array[0] + '"]').parent().offset().top}, 350);
 
                 // Обновляем капчу, в случае ошибки.
-                if(notify.captcha_image) {
+                if (notify.captcha_image) {
                     form.find(captcha_image).html(notify.captcha_image).closest(field__item).find('input').val('');
                 }
             }
 
             // Форма отправлена
-            if(notify.success) {
+            if (notify.success) {
                 $('html, body').stop().animate({scrollTop: form.offset().top}, 350);
                 form.remove();
                 notie.alert(1, notify.success);
@@ -53,7 +53,7 @@ function send_widget_form(i){
 }
 
 // Удаляем информацию об ошибке
-$(document).on('click', '.' + error_class +' input, .' + error_class + ' textarea', function(){
+$(document).on('click', '.' + error_class + ' input, .' + error_class + ' textarea', function () {
     $(this).closest(field__item).removeClass(error_class).find('.error').remove();
 });
 
