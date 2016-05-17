@@ -1,7 +1,3 @@
-/**
- * Created by JAMES_BOND on 07.05.2016.
- */
-
 var field__item = '.field__item',
     error_class = 'error_input',
     captcha_image = '.captcha_image';

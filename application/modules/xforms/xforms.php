@@ -272,11 +272,14 @@ class Xforms extends MY_Controller
                     $item = trim($item);
                     if ($this->form_validation->valid_email($item)) {
                         $this->email->initialize(['mailtype' => 'html']);
-                        $this->email->from($form['email'][0]);
+                        //$this->email->from($form['email'][0]);
                         $this->email->subject($form['subject']);
                         $this->email->message($message);
                         $this->email->to($item);
                         $this->email->send();
+
+                        // отдаем в console.log(notify.console) информацию об отправке.
+                        $notify['console'] = $this->email->print_debugger();
                     }
                 }
 
