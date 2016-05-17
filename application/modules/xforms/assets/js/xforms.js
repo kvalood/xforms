@@ -37,7 +37,7 @@ function send_widget_form(i) {
             // Форма отправлена
             if (notify.success) {
                 $('html, body').stop().animate({scrollTop: form.offset().top}, 350);
-                form.remove();
+                //form.remove();
                 notie.alert(1, notify.success);
             }
 

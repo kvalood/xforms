@@ -267,9 +267,10 @@ class Xforms extends MY_Controller
 
                 // Отправялем email
                 $message = assetManager::create()->setData('data', $msg)->fetchTemplate('email');
-                $form['email'] = array_diff(explode(',', $form['email']), ['']);
+                $form['email'] = array_diff(explode(',', str_replace(' ', '', $form['email'])), ['']);
                 foreach ($form['email'] as $item) {
                     $item = trim($item);
+
                     if ($this->form_validation->valid_email($item)) {
                         $this->email->initialize(['mailtype' => 'html']);
                         //$this->email->from($form['email'][0]);
@@ -279,7 +280,8 @@ class Xforms extends MY_Controller
                         $this->email->send();
 
                         // отдаем в console.log(notify.console) информацию об отправке.
-                        $notify['console'] = $this->email->print_debugger();
+                        //$notify['console']['debug'][] = $this->email->print_debugger();
+                        $this->email->clear();
                     }
                 }
 

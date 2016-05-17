@@ -101,29 +101,29 @@
 
                                 <div class="control-group">
                                     <div class="controls">
-                                            <span class="frame_label no_connection m-t_5 m-b_10">
-                                                <span class="niceCheck b_n">
-                                                    <input type="checkbox" value="1"
-                                                           name="captcha"{if $form.captcha} checked{/if}>
-                                                </span>
-                                                Исспользовать защитный код при отправке? (Каптча)
+                                        <span class="frame_label no_connection m-t_5 m-b_10">
+                                            <span class="niceCheck b_n">
+                                                <input type="checkbox" value="1"
+                                                       name="captcha"{if $form.captcha} checked{/if}>
                                             </span>
+                                            Исспользовать защитный код при отправке? (Каптча)
+                                        </span>
                                     </div>
                                 </div>
 
                                 <div class="control-group">
                                     <div class="controls">
-                                            <span class="frame_label no_connection m-t_5 m-b_10">
-                                                <span class="niceCheck b_n">
-                                                    <input type="checkbox" value="1"
-                                                           name="direct_url"{if $form.direct_url} checked{/if}>
-                                                </span>
-                                                Разрешить прямой доступ через URL?
-                                                <span class="help-block">
-                                                    Если опция включена, на форму можно зайти по прямому URL вида - /xforms/show/FORM_NAME<br/>
-                                                    Если отключена, форма будет доступна только при обращении из виджета
-                                                </span>
+                                        <span class="frame_label no_connection m-t_5 m-b_10">
+                                            <span class="niceCheck b_n">
+                                                <input type="checkbox" value="1"
+                                                       name="direct_url"{if $form.direct_url} checked{/if}>
                                             </span>
+                                            Разрешить прямой доступ через URL?
+                                            <span class="help-block">
+                                                Если опция включена, на форму можно зайти по прямому URL вида - /xforms/show/FORM_NAME<br/>
+                                                Если отключена, форма будет доступна только при обращении из виджета
+                                            </span>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -142,13 +142,13 @@
                                         Сообщение об успешной отправке
                                     </div>
                                     <div class="controls">
-											<textarea id="good" class="elRTE" name="good" rows="10" cols="180">
-                                                {if $form.id}
-                                                    {$form.success}
-                                                {else:}
-                                                    {lang('Ваш запрос успешно отправлен!', 'xforms')}
-                                                {/if}
-                                            </textarea>
+                                        <textarea id="good" class="elRTE" name="good" rows="10" cols="180">
+                                            {if $form.id}
+                                                {$form.success}
+                                            {else:}
+                                                {lang('Ваш запрос успешно отправлен!', 'xforms')}
+                                            {/if}
+                                        </textarea>
                                     </div>
                                 </div>
 
