@@ -80,7 +80,7 @@ class Xforms_Widgets extends MY_Controller
 
                     $this->load->module('admin/widgets_manager')->update_config($widget_data['id'], $data);
                     showMessage(lang('amt_settings_saved'));
-                    if ($this->input->poset('action') == 'tomain') {
+                    if ($this->input->post('action') == 'tomain') {
                         pjax('/admin/widgets_manager/index');
                     }
                 }
