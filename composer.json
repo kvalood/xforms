@@ -1,0 +1,11 @@
+{
+    "name": "pulse-studio/xforms",
+    "description": "ImageCMS module",
+    "keywords": [
+        "ImageCMS",
+        "module"
+    ],
+    "homepage": "http://www.imagecms.net",
+    "type": "imagecms-module",
+    "require": {}
+}
