@@ -81,6 +81,9 @@ class Xforms_model extends CI_Model
      * @return string - title form
      */
 
+    /**
+     * @param integer $id
+     */
     public function get_form_name($id) {
 
         $q = $this->db->select('title')->where('id', $id)->get('xforms')->row_array();
