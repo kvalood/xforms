@@ -5,8 +5,7 @@
 {$form.desc}
 
 {if $fields}
-    <form action="{site_url('xforms/show')}/{$form.url}" method="post" enctype="multipart/form-data" id="{$form.url}"
-          class="xform">
+    <form action="{site_url('xforms/show')}/{$form.url}" method="post" enctype="multipart/form-data" id="{$form.url}" class="xform">
 
         {form_csrf()}
         <input type="hidden" name="cms_widget_form" value="1"/>
@@ -18,7 +17,8 @@
                     {if $field.type=='select' || $field.type=='radio'}
                         <div class="field__title">{if $field.require==1}<i>*</i>{/if} {$field.label}</div>
                     {else:}
-                        <label for="f{$field.id}" class="field__title">{if $field.require==1}<i>*</i>{/if}{$field.label}
+                        <label for="f{$field.id}" class="field__title">
+                            {if $field.require==1}<i>*</i>{/if}{$field.label}
                         </label>
                     {/if}
 

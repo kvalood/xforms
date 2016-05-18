@@ -3,10 +3,10 @@
     {foreach $data as $item}
         <tr>
             {if $item.field.type == 'separator'}
-                <td colspan="2" style="background-color:#e5ebf0;">{$item.field.label}</td>
+                <td colspan="2" style="font-size: 16px;padding:6px; width:40%; background-color:#e5ebf0; border:1px solid #becedc;">{$item.field.label}</td>
             {else:}
-                <td style="padding:6px; width:40%; background-color:#e1eef0; border:1px solid #becedc;font-size: 14px;">
-                    {$item.field.type}
+                <td style="padding:6px; width:40%; background-color:#F2F9F9; border:1px solid #becedc; font-size: 14px;">
+                    {$item.field.label}
                 </td>
                 <td style="padding:6px; width:60%; border:1px solid #becedc;font-size: 14px;">
                     {$item.data}
