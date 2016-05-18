@@ -63,7 +63,7 @@ class Xforms_model extends CI_Model
     /***
      * @param int $id
      * @param array $param
-     * @return
+     * @return array
      */
 
     public function get_form_fields($id, $param = []) {
@@ -88,8 +88,8 @@ class Xforms_model extends CI_Model
     }
 
     /***
-     * @return mixed
      * list forms
+     * @return mixed
      */
 
     public function get_forms() {
