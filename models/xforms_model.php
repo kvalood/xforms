@@ -8,6 +8,7 @@ class Xforms_model extends CI_Model
     /**
      * Add field for form
      * @param array $data
+     * @return int
      */
     public function add_field($data = []) {
 
@@ -18,6 +19,7 @@ class Xforms_model extends CI_Model
     /**
      * Add form
      * @param array $data
+     * @return int
      */
     public function add_form($data = []) {
 
@@ -37,8 +39,8 @@ class Xforms_model extends CI_Model
 
     /***
      * @param int $id
+     * @return array
      */
-
     public function get_field($id) {
 
         return $this->db->where('id', $id)->get('xforms_field')->row_array();
@@ -48,7 +50,6 @@ class Xforms_model extends CI_Model
      * @param $id
      * @return array form
      */
-
     public function get_form($id) {
 
         $this->db->limit(1);
@@ -65,7 +66,6 @@ class Xforms_model extends CI_Model
      * @param array $param
      * @return array
      */
-
     public function get_form_fields($id, $param = []) {
 
         if (isset($param['visible'])) {
@@ -76,13 +76,9 @@ class Xforms_model extends CI_Model
 
     }
 
-    /***
-     * @param $id - form
-     * @return string - title form
-     */
-
     /**
      * @param integer $id
+     * @return int
      */
     public function get_form_name($id) {
 
@@ -94,7 +90,6 @@ class Xforms_model extends CI_Model
      * list forms
      * @return mixed
      */
-
     public function get_forms() {
 
         return $this->db->get('xforms')->result_array();
