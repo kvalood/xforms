@@ -235,8 +235,9 @@ class Admin extends BaseAdminController
             ->renderAdmin('message');
     }
 
-    // Sort fields in the form
-
+    /**
+     * Sort fields in the form
+     */
     public function update_positions() {
 
         $positions = $this->input->post('positions');
