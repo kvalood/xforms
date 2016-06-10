@@ -15,7 +15,7 @@ function send_widget_form(i) {
         success: function (data) {
             var notify = JSON.parse(data);
 
-            //Ошибки формы клиента
+            // Ошибки формы
             if (notify.errors) {
                 var array = [];
                 for (var index in notify.errors) {
@@ -34,12 +34,10 @@ function send_widget_form(i) {
                 }
             }
 
-            console.log(notify.console);
-
-            // Форма отправлена
+            // Успешная отпрвка формы
             if (notify.success) {
                 $('html, body').stop().animate({scrollTop: form.offset().top}, 350);
-                //form.remove();
+                form.remove();
                 notie.alert(1, notify.success);
             }
 

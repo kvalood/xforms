@@ -239,12 +239,12 @@ class Xforms extends MY_Controller
                 $require = ($field['require'] == 1) ? 'required|' : '';
 
                 if (isset($post_data[$key_post])) {
-                    if ($field['type'] == 'radio') {
+                    if ($field['type'] == 'radio' OR $field['type'] == 'checkbox') {
                         $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
                         $radio = explode("\n", $field['value']);
                         $msg[] = [
                                   'field' => $field,
-                                  'data'  => $radio[$post_data[$key_post]],
+                                  'data'  => $radio[$post_data[$key_post]]
                                  ];
                     } else {
                         $this->form_validation->set_rules($key_post, $field['label'], 'trim|xss_clean|' . $require . $field['validation']);
@@ -275,7 +275,10 @@ class Xforms extends MY_Controller
 
                     if ($this->form_validation->valid_email($item)) {
                         $this->email->initialize(['mailtype' => 'html']);
-                        //$this->email->from($form['email'][0]);
+
+                        if($this->email->protocol != 'smtp')
+                            $this->email->from($form['email'][0]);
+
                         $this->email->subject($form['subject']);
                         $this->email->message($message);
                         $this->email->to($item);
@@ -286,6 +289,8 @@ class Xforms extends MY_Controller
                         $this->email->clear();
                     }
                 }
+                $notify['console'] = $msg;
+
 
                 $notify['success'] = $form['success'];
             } else {
@@ -298,12 +303,15 @@ class Xforms extends MY_Controller
         if ($is_widget) {
             return json_encode($notify);
         } else {
-
             assetManager::create()
                 ->setData('form', $form)
                 ->setData('fields', $fields)
                 ->setData('notify', $notify)
-                ->render('xforms');
+                ->registerScript('notie')
+                ->registerScript('autosize.min')
+                ->registerScript('xforms')
+                ->registerStyle('xforms')
+                ->render('../templates/show_form');
         }
     }
 
