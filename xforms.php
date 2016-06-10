@@ -236,9 +236,9 @@ class Xforms extends MY_Controller
             foreach ($fields as $field) {
                 $key_post = 'f' . $field['id'];
 
-                if (isset($post_data[$key_post])) {
-                    $require = ($field['require'] == 1) ? 'required|' : '';
+                $require = ($field['require'] == 1) ? 'required|' : '';
 
+                if (isset($post_data[$key_post])) {
                     if ($field['type'] == 'radio') {
                         $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
                         $radio = explode("\n", $field['value']);
@@ -255,6 +255,8 @@ class Xforms extends MY_Controller
                     }
                 } elseif ($field['type'] == 'separator') {
                     $msg[] = ['field' => $field];
+                } else {
+                    $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
                 }
             }
 

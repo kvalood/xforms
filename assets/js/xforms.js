@@ -34,6 +34,8 @@ function send_widget_form(i) {
                 }
             }
 
+            console.log(notify.console);
+
             // Форма отправлена
             if (notify.success) {
                 $('html, body').stop().animate({scrollTop: form.offset().top}, 350);

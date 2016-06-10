@@ -1,8 +1,10 @@
 {/* Шаблон отображения формы XFORMS как виджет */}
 
-{/* <h1>{$form.title}</h1> */}
+<h1>{$form.title}</h1>
 
-{$form.desc}
+{if $form.desc}
+	<div class="xforms_description">{$form.desc}</div>
+{/if}
 
 {if $fields}
     <form action="{site_url('xforms/show')}/{$form.url}" method="post" enctype="multipart/form-data" id="{$form.url}" class="xform">
@@ -14,7 +16,7 @@
         <ul class="fields g-row g-row_indent-30">
             {foreach $fields as $field}
                 <li class="field__item{if $field.type=='separator'} item_separator{/if} {$field.operation}">
-                    {if $field.type=='select' || $field.type=='radio'}
+                    {if $field.type=='select' || $field.type=='radio' || $field.type == 'separator'}
                         <div class="field__title">{if $field.require==1}<i>*</i>{/if} {$field.label}</div>
                     {else:}
                         <label for="f{$field.id}" class="field__title">
