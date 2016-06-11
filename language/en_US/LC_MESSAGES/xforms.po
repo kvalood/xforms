@@ -2,8 +2,8 @@
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-11 01:54+0300\n"
-"PO-Revision-Date: 2016-06-11 01:54+0300\n"
+"POT-Creation-Date: 2016-06-11 02:24+0300\n"
+"PO-Revision-Date: 2016-06-11 02:24+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
 "Language: \n"
@@ -18,370 +18,120 @@ msgstr ""
 "X-Poedit-Country: \n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: application/modules/xbanners/assets/admin/banner/settings.tpl:73
-msgid "arrows"
-msgstr "Arrows navigation"
-
-#: application/modules/xbanners/assets/admin/banner/settings.tpl:45
-msgid "Effects"
+#: application/modules/xforms/admin.php:40
+msgid "Status change success"
 msgstr ""
 
-#: application/modules/xbanners/admin.php:162
-#: application/modules/xbanners/admin.php:168
-msgid "The %s field can only contain alphanumeric characters and symbols: - , _"
+#: application/modules/xforms/admin.php:114
+msgid "Field created"
 msgstr ""
 
-#: application/modules/xbanners/admin.php:226
-msgid "Positions saved"
+#: application/modules/xforms/admin.php:122
+#: application/modules/xforms/admin.php:192
+msgid "Changes has been saved"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/edit.tpl:19
-msgid "Add slide"
+#: application/modules/xforms/assets/admin/field.tpl:5
+msgid "Editing fields in the form"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/edit.tpl:29
-msgid "Slides"
+#: application/modules/xforms/assets/admin/field.tpl:5
+msgid "Adding fields in the form"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/settings.tpl:57
-msgid "autoplay"
-msgstr "Enable autoplay"
-
-#: application/modules/xbanners/assets/admin/banner/settings.tpl:65
-#: application/modules/xbanners/admin.php:72
-msgid "autoplaySpeed"
-msgstr "Autoplay speed"
-
-#: application/modules/xbanners/assets/admin/banner/settings.tpl:82
-msgid "dots"
-msgstr "Dots navigation"
-
-#: application/modules/xbanners/admin.php:73
-msgid "speed"
-msgstr "Scroll speed"
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:76
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:73
-msgid "Slide name"
+#: application/modules/xforms/assets/admin/field.tpl:21
+#: application/modules/xforms/assets/admin/fields.tpl:16
+#: application/modules/xforms/assets/admin/form.tpl:25
+msgid "Create"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:81
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:78
-msgid "Activity"
+#: application/modules/xforms/assets/admin/field.tpl:25
+#: application/modules/xforms/assets/admin/form.tpl:29
+msgid "Save and go back"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:87
-msgid "Permanent active"
+#: application/modules/xforms/assets/admin/field.tpl:25
+#: application/modules/xforms/assets/admin/form.tpl:29
+msgid "Create and exit"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:91
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:124
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:102
-msgid "from"
+#: application/modules/xforms/assets/admin/fields.tpl:5
+msgid "Form fields"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:96
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:130
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:108
-msgid "to"
+#: application/modules/xforms/assets/admin/fields.tpl:54
+msgid "show"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:101
-msgid "Inactive"
+#: application/modules/xforms/assets/admin/fields.tpl:54
+msgid "don't show"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:124
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:130
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:102
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:108
-msgid "choose a date"
+#: application/modules/xforms/assets/admin/fields.tpl:75
+msgid "Remove fields"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:149
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:124
-msgid "Slide url. Search to find url to your site page or paste remote one."
+#: application/modules/xforms/assets/admin/fields.tpl:78
+msgid "Remove the selected field?"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:154
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:129
-msgid "Url open type"
+#: application/modules/xforms/assets/admin/form.tpl:7
+msgid "Edit form"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:158
-msgid "yes"
+#: application/modules/xforms/assets/admin/form.tpl:9
+msgid "Create form"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:158
-msgid "no"
+#: application/modules/xforms/assets/admin/form.tpl:149
+msgid "Your request has been successfully sent!"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:184
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:151
-msgid "All categories"
+#: application/modules/xforms/assets/admin/forms.tpl:5
+msgid "Form designer"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:202
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:166
-msgid "Page where banner's slide should be placed."
+#: application/modules/xforms/assets/admin/widget_settings.tpl:5
+#: application/modules/xforms/templates/show_form_form.tpl:5
+msgid "Widget settings"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:209
-msgid "Statistic"
+#: application/modules/xforms/assets/admin/widget_settings.tpl:14
+#: application/modules/xforms/templates/show_form_form.tpl:14
+msgid "Save and exit"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:236
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:181
-msgid "Cancel"
+#: application/modules/xforms/templates/show_form.tpl:68
+msgid "Type the characters you see in this image."
 msgstr ""
 
-#: application/modules/xbanners/admin.php:132
-msgid "Slide must have image"
+#: application/modules/xforms/xforms.php:266
+msgid "Code protection"
 msgstr ""
 
-#: application/modules/xbanners/module_info.php:6
-msgid "Banners"
+#: application/modules/xforms/xforms_widgets.php:84
+msgid "amt_settings_saved"
 msgstr ""
 
-#: application/modules/xbanners/module_info.php:7
-msgid "Improved banners module"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/BannerPageTypesManager.php:41
-msgid "Main"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/BannerPageTypesManager.php:45
-#: application/modules/xbanners/src/Managers/BannerPageTypesManager.php:49
-msgid "Product category"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/BannerPageTypesManager.php:53
-msgid "Page category"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/BannerPageTypesManager.php:57
-msgid "Page"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/BannerPageTypesManager.php:61
-msgid "Product brand"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/BannerPageTypesManager.php:65
-msgid "Search page"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/ImagesManager.php:226
-msgid "You can upload only images"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/ImagesManager.php:230
-msgid "You can not upload file with size more than:"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/ImagesManager.php:260
-msgid "Images"
-msgstr ""
-
-#: application/modules/xbanners/src/Managers/ImagesManager.php:283
-#: application/modules/xbanners/src/Managers/ImagesManager.php:294
-msgid "Images without relation"
-msgstr ""
-
-#: application/modules/xbanners/src/UrlFinder/Finders/Pages.php:17
-msgid "Pages"
-msgstr ""
-
-#: application/modules/xbanners/src/UrlFinder/Finders/Brands.php:19
-msgid "Brands"
-msgstr ""
-
-#: application/modules/xbanners/src/UrlFinder/Finders/ProductCategories.php:19
-msgid "Product Categories"
-msgstr ""
-
-#: application/modules/xbanners/src/UrlFinder/Finders/PageCategories.php:20
-msgid "Page Categories"
-msgstr ""
-
-#: application/modules/xbanners/src/UrlFinder/Finders/Products.php:19
-msgid "Products"
-msgstr ""
-
-#: application/modules/xbanners/assets/js/crop/src/jquery.picture.cut.js:73
-msgid "Wait..."
-msgstr ""
-
-#: application/modules/xbanners/assets/js/crop/src/jquery.picture.cut.js:74
-msgid "Wait!"
-msgstr ""
-
-#: application/modules/xbanners/assets/js/crop/src/jquery.picture.cut.js:529
-#: application/modules/xbanners/assets/js/crop/src/jquery.picture.cut.js:530
-#: application/modules/xbanners/assets/js/crop/src/jquery.picture.cut.js:531
-msgid "Crop image"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/list.tpl:6
-msgid "Banner managment"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/list.tpl:11
-#: application/modules/xbanners/assets/admin/banner/edit.tpl:13
+#: application/modules/xforms/assets/admin/field.tpl:12
+#: application/modules/xforms/assets/admin/fields.tpl:10
+#: application/modules/xforms/assets/admin/form.tpl:16
+#: application/modules/xforms/assets/admin/widget_settings.tpl:10
+#: application/modules/xforms/templates/show_form_form.tpl:10
 msgid "Back"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/list.tpl:23
-msgid "Visualization"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/list.tpl:24
-msgid "Banner position"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/list.tpl:25
-msgid "Output page"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/list.tpl:26
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:55
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:55
-msgid "Size"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/list.tpl:27
-msgid "Banners count"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/list.tpl:45
+#: application/modules/xforms/assets/admin/fields.tpl:50
 msgid "Editing"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/list.tpl:55
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:60
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:60
-msgid "px"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/edit.tpl:7
-msgid "Banner editing"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/settings.tpl:14
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:234
+#: application/modules/xforms/assets/admin/field.tpl:19
+#: application/modules/xforms/assets/admin/form.tpl:23
+#: application/modules/xforms/assets/admin/widget_settings.tpl:12
+#: application/modules/xforms/templates/show_form_form.tpl:12
 msgid "Save"
 msgstr ""
 
-#: application/modules/xbanners/assets/admin/banner/edit.tpl:30
-msgid "Settings"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:8
-msgid "Show"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:13
-msgid "All"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:26
-msgid "Add new slide"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/settings.tpl:27
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:64
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:64
-#: application/modules/xbanners/admin.php:71
-#: application/modules/xbanners/admin.php:118
-msgid "Name"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:31
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:223
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:39
-msgid "Edit"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:137
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:115
-msgid "Url"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:172
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:142
-msgid "Show in"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:194
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:160
-msgid "Select page"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:166
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:137
-msgid "Open slide link in new window tab"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:89
-msgid "Active"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:114
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:92
-msgid "Permanent banner"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/add_slide.tpl:178
-msgid "Add"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:38
-#: application/modules/xbanners/assets/admin/banner/slides_list.tpl:228
+#: application/modules/xforms/assets/admin/fields.tpl:83
 msgid "Delete"
-msgstr ""
-
-#: application/modules/xbanners/assets/admin/banner/settings.tpl:10
-msgid "Options"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:86
-msgid "Banner successfully update"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:86
-#: application/modules/xbanners/admin.php:150
-#: application/modules/xbanners/admin.php:189
-#: application/modules/xbanners/admin.php:210
-msgid "Success"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:119
-msgid "URL"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:150
-msgid "Successfully saved"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:132
-#: application/modules/xbanners/admin.php:156
-#: application/modules/xbanners/admin.php:193
-#: application/modules/xbanners/admin.php:213
-msgid "Error"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:189
-msgid "Image successfully deleted"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:193
-msgid "Can not delete image"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:210
-msgid "Banner slide successfully deleted"
-msgstr ""
-
-#: application/modules/xbanners/admin.php:213
-msgid "Can not delete banner slide"
 msgstr ""
