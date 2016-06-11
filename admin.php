@@ -38,12 +38,11 @@ class Admin extends BaseAdminController
         showMessage(lang('Status change success', 'admin'));
     }
 
-    /***
-     *  Работа с формами
+
+    /**
      * @param string $data
      * @return bool
      */
-
     public function check_emails($data) {
 
         return $this->form_validation->valid_emails($data);
