@@ -37,7 +37,7 @@ class Xforms_model extends CI_Model
         }
     }
 
-    /***
+    /**
      * @param int $id
      * @return array
      */
@@ -46,7 +46,7 @@ class Xforms_model extends CI_Model
         return $this->db->where('id', $id)->get('xforms_field')->row_array();
     }
 
-    /***
+    /**
      * @param $id
      * @return array form
      */
@@ -61,7 +61,7 @@ class Xforms_model extends CI_Model
         }
     }
 
-    /***
+    /**
      * @param int $id
      * @param array $param
      * @return array
@@ -86,7 +86,7 @@ class Xforms_model extends CI_Model
         return $q['title'];
     }
 
-    /***
+    /**
      * list forms
      * @return mixed
      */

@@ -38,7 +38,6 @@ class Admin extends BaseAdminController
         showMessage(lang('Status change success', 'admin'));
     }
 
-
     /**
      * @param string $data
      * @return bool
@@ -247,4 +246,5 @@ class Admin extends BaseAdminController
 
         showMessage('Позиция обновлена');
     }
+
 }
