@@ -17,6 +17,8 @@ class Xforms_Widgets extends MY_Controller
     public function __construct() {
 
         parent::__construct();
+        $lang = new MY_Lang();
+        $lang->load('xforms');
         $this->load->model('xforms_model');
     }
 
@@ -79,7 +81,7 @@ class Xforms_Widgets extends MY_Controller
                     $data = ['form_id' => $this->input->post('form_id')];
 
                     $this->load->module('admin/widgets_manager')->update_config($widget_data['id'], $data);
-                    showMessage(lang('amt_settings_saved'));
+                    showMessage(lang('amt_settings_saved', 'xforms'));
                     if ($this->input->post('action') == 'tomain') {
                         pjax('/admin/widgets_manager/index');
                     }

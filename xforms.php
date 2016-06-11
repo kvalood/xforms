@@ -14,6 +14,8 @@ class Xforms extends MY_Controller
 
         parent::__construct();
         $this->load->module('core');
+        $lang = new MY_Lang();
+        $lang->load('xforms');
         $this->load->model('xforms_model');
         $this->load->library('form_validation');
 
@@ -244,7 +246,7 @@ class Xforms extends MY_Controller
                         $radio = explode("\n", $field['value']);
                         $msg[] = [
                                   'field' => $field,
-                                  'data'  => $radio[$post_data[$key_post]]
+                                  'data'  => $radio[$post_data[$key_post]],
                                  ];
                     } else {
                         $this->form_validation->set_rules($key_post, $field['label'], 'trim|xss_clean|' . $require . $field['validation']);
@@ -261,7 +263,7 @@ class Xforms extends MY_Controller
             }
 
             if ($form['captcha'] == 1) {
-                $this->form_validation->set_rules('captcha', lang('Code protection'), 'callback_captcha_check');
+                $this->form_validation->set_rules('captcha', lang('Code protection', 'xforms'), 'callback_captcha_check');
             }
 
             if (!$this->form_validation->run($this) == FALSE) {
@@ -276,8 +278,9 @@ class Xforms extends MY_Controller
                     if ($this->form_validation->valid_email($item)) {
                         $this->email->initialize(['mailtype' => 'html']);
 
-                        if($this->email->protocol != 'smtp')
+                        if($this->email->protocol != 'smtp') {
                             $this->email->from($form['email'][0]);
+                        }
 
                         $this->email->subject($form['subject']);
                         $this->email->message($message);
@@ -290,7 +293,6 @@ class Xforms extends MY_Controller
                     }
                 }
                 $notify['console'] = $msg;
-
 
                 $notify['success'] = $form['success'];
             } else {

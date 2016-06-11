@@ -16,6 +16,8 @@ class Admin extends BaseAdminController
     public function __construct() {
 
         parent::__construct();
+        $lang = new MY_Lang();
+        $lang->load('xforms');
         $this->load->model('xforms_model');
         $this->load->library('form_validation');
     }
@@ -35,9 +37,8 @@ class Admin extends BaseAdminController
         }
 
         $this->xforms_model->update_field($field['id'], $field);
-        showMessage(lang('Status change success', 'admin'));
+        showMessage(lang('Status change success', 'xforms'));
     }
-
 
     /**
      * @param string $data
@@ -67,12 +68,11 @@ class Admin extends BaseAdminController
         }
     }
 
-    /***
+    /**
      * Работа с полями формы
      * @param null|int $fid
      * @param null|string $field
      */
-
     public function field($fid = null, $field = null) {
 
         if ($this->input->post('type')) {
@@ -110,7 +110,7 @@ class Admin extends BaseAdminController
                         $this->xforms_model->update_field($field_id, $data);
                     }
 
-                    showMessage(lang('Field created', 'cfcm'));
+                    showMessage(lang('Field created', 'xforms'));
                     $path = '/admin/components/cp/xforms/field/' . $fid . '/' . $field_id;
                 } else {
                     if (!$data['position']) {
@@ -118,7 +118,7 @@ class Admin extends BaseAdminController
                     }
 
                     $this->xforms_model->update_field((int) $field, $data);
-                    showMessage(lang('Changes has been saved', 'admin'));
+                    showMessage(lang('Changes has been saved', 'xforms'));
                     $path = '/admin/components/cp/xforms/field/' . $fid . '/' . $field;
                 }
 
@@ -188,7 +188,7 @@ class Admin extends BaseAdminController
 
                 // Создаем / сохраняем
                 if (isset($id) AND $this->xforms_model->update_form($id, $data)) {
-                    showMessage(lang('Changes has been saved', 'admin'));
+                    showMessage(lang('Changes has been saved', 'xforms'));
                     $path = '/admin/components/cp/xforms/form/' . $id;
                 } else {
                     $id = $this->xforms_model->add_form($data);
@@ -223,10 +223,9 @@ class Admin extends BaseAdminController
         assetManager::create()->setData('forms', $this->xforms_model->get_forms())->renderAdmin('forms');
     }
 
-    /***
+    /**
      * Работа с сообщениями для формы
      */
-
     public function messages() {
 
         assetManager::create()

@@ -65,7 +65,7 @@
 
             {if $form.captcha}
                 <div class="field__item captcha_field">
-                    <div class="field__title">{lang('Type the characters you see in this image.', 'rce')}</div>
+                    <div class="field__title">{lang('Type the characters you see in this image.', 'xforms')}</div>
                     <div class="captcha_image">{$form.captcha_image}</div>
                     <input type="text" name="captcha" autocomplete="off" required />
                 </div>
