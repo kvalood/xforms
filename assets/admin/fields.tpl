@@ -2,18 +2,18 @@
     <div class="frame_title clearfix">
         <div class="pull-left">
             <span class="help-inline"></span>
-            <span class="title">{lang('Поля формы - ', 'xforms')} <b>{$form_name}</b></span>
+            <span class="title">{lang('Form fields', 'xforms')} - <b>{$form_name}</b></span>
         </div>
         <div class="pull-right">
             <div class="d-i_b">
                 <a href="/admin/components/cp/xforms/" class="t-d_n m-r_15"><span class="f-s_14">←</span> <span
-                            class="t-d_u">{lang("Back","admin")}</span></a>
+                            class="t-d_u">{lang("Back","xforms")}</span></a>
                 <button onclick="$('#delete_fields').modal();" type="button"
                         class="btn btn-small btn-danger action_on pages_action pages_delete" disabled="disabled"><i
                             class="icon-trash"></i>Удалить
                 </button>
                 <a href="/admin/components/cp/xforms/field/{$form_id}" class="btn btn-small pjax btn-success"><i
-                            class="icon-plus-sign icon-white"></i>{lang("Create","admin")}</a>
+                            class="icon-plus-sign icon-white"></i>{lang("Create","xforms")}</a>
             </div>
         </div>
     </div>
@@ -47,11 +47,11 @@
                     <td>
                         <a href="/admin/components/cp/xforms/field/{$form_id}/{$field.id}"
                            data-rel="tooltip"
-                           data-title="{lang("Editing","admin")}">{$field.label}</a>
+                           data-title="{lang("Editing","xforms")}">{$field.label}</a>
                     </td>
                     <td>
                         <div class="frame_prod-on_off" data-rel="tooltip" data-placement="top"
-                             data-original-title="{if $field.visible}{lang("show","admin")}{else:}{lang("don't show", 'admin')}{/if}"
+                             data-original-title="{if $field.visible}{lang("show","xforms")}{else:}{lang("don't show", 'xforms')}{/if}"
                              onclick="xforms.change_field_visible('{$field.id}');">
                             <span class="prod-on_off {if !$field.visible}disable_tovar{/if}"
                                   style="{if !$field.visible}left: -28px;{/if}"></span>
@@ -72,15 +72,15 @@
 <div class="modal hide fade products_delete_dialog" id="delete_fields">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>{lang('Удалить поля','xforms')}</h3>
+        <h3>{lang('Remove fields','xforms')}</h3>
     </div>
     <div class="modal-body">
-        {lang('Удалить выбраные поля?', 'xforms')}
+        {lang('Remove the selected field?', 'xforms')}
     </div>
     <div class="modal-footer">
         <a href="" class="btn" onclick="$('#delete_fields').modal('hide');">Отмена</a>
         <a href="" class="btn btn-primary"
-           onclick="xforms.deleteFieldsConfirm();$('.modal').modal('hide');">{lang("Delete","admin")}</a>
+           onclick="xforms.deleteFieldsConfirm();$('.modal').modal('hide');">{lang("Delete","xforms")}</a>
     </div>
 </div>
 

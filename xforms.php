@@ -14,6 +14,8 @@ class Xforms extends MY_Controller
 
         parent::__construct();
         $this->load->module('core');
+        $lang = new MY_Lang();
+        $lang->load('xforms');
         $this->load->model('xforms_model');
         $this->load->library('form_validation');
 
@@ -261,7 +263,7 @@ class Xforms extends MY_Controller
             }
 
             if ($form['captcha'] == 1) {
-                $this->form_validation->set_rules('captcha', lang('Code protection'), 'callback_captcha_check');
+                $this->form_validation->set_rules('captcha', lang('Code protection', 'xforms'), 'callback_captcha_check');
             }
 
             if (!$this->form_validation->run($this) == FALSE) {

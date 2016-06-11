@@ -2,27 +2,27 @@
     <div class="frame_title clearfix">
         <div class="pull-left">
             <span class="help-inline"></span>
-            <span class="title">{if $field.id}{lang('Редактирование поля в форме', 'xforms')}{else:}{lang('Добавление поля в форме', 'xforms')}{/if}
+            <span class="title">{if $field.id}{lang('Editing fields in the form', 'xforms')}{else:}{lang('Adding fields in the form', 'xforms')}{/if}
                 - <b>{echo $CI->load->model('xforms_model')->get_form_name($fid)}</b></span>
         </div>
         <div class="pull-right">
             <div class="d-i_b">
 
                 <a href="/admin/components/cp/xforms/fields/{$fid}" class="{if !$field.id}pjax{/if} t-d_n m-r_15"><span
-                            class="f-s_14">←</span> <span class="t-d_u">{lang("Back","admin")}</span></a>
+                            class="f-s_14">←</span> <span class="t-d_u">{lang("Back","xforms")}</span></a>
 
                 <button type="button"
                         class="btn btn-small {if !$field.id}btn-success{else:}btn-primary{/if} action_on formSubmit"
                         data-action="edit" data-form="#save" data-submit>
                     {if $field.id}
                         <i class="icon-ok icon-white"></i>
-                        {lang("Save","admin")}{else:}
+                        {lang("Save","xforms")}{else:}
                         <i class="icon-plus-sign icon-white"></i>
-                        {lang("Create","admin")}{/if}
+                        {lang("Create","xforms")}{/if}
                 </button>
 
                 <button type="button" class="btn btn-small action_on formSubmit" data-action="exit" data-form="#save">
-                    <i class="icon-check"></i>{if $field.id}{lang("Save and go back","admin")}{else:}{lang("Create and exit","admin")}{/if}
+                    <i class="icon-check"></i>{if $field.id}{lang("Save and go back","xforms")}{else:}{lang("Create and exit","xforms")}{/if}
                 </button>
             </div>
         </div>

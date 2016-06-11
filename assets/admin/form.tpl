@@ -4,29 +4,29 @@
             <span class="help-inline"></span>
 			<span class="title">
                 {if $form.id}
-                    {lang('Редактировать форму', 'xforms')}
+                    {lang('Edit form', 'xforms')}
                 {else:}
-                    {lang('Создать форму', 'xforms')}
+                    {lang('Create form', 'xforms')}
                 {/if}
             </span>
         </div>
         <div class="pull-right">
             <div class="d-i_b">
                 <a href="/admin/components/cp/xforms/" class="{if !$form.id}pjax{/if} t-d_n m-r_15"><span
-                            class="f-s_14">←</span> <span class="t-d_u">{lang("Back","admin")}</span></a>
+                            class="f-s_14">←</span> <span class="t-d_u">{lang("Back","xforms")}</span></a>
 
                 <button type="button"
                         class="btn btn-small {if !$form.id}btn-success{else:}btn-primary{/if} action_on formSubmit"
                         data-action="edit" data-form="#save" data-submit>
                     {if $form.id}
                         <i class="icon-ok icon-white"></i>
-                        {lang("Save","admin")}{else:}
+                        {lang("Save","xforms")}{else:}
                         <i class="icon-plus-sign icon-white"></i>
-                        {lang("Create","admin")}{/if}
+                        {lang("Create","xforms")}{/if}
                 </button>
 
                 <button type="button" class="btn btn-small action_on formSubmit" data-action="close" data-form="#save">
-                    <i class="icon-check"></i>{if $form.id}{lang("Save and go back","admin")}{else:}{lang("Create and exit","admin")}{/if}
+                    <i class="icon-check"></i>{if $form.id}{lang("Save and go back","xforms")}{else:}{lang("Create and exit","xforms")}{/if}
                 </button>
             </div>
         </div>
@@ -146,7 +146,7 @@
                                             {if $form.id}
                                                 {$form.success}
                                             {else:}
-                                                {lang('Ваш запрос успешно отправлен!', 'xforms')}
+                                                {lang('Your request has been successfully sent!', 'xforms')}
                                             {/if}
                                         </textarea>
                                     </div>
