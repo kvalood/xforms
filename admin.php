@@ -68,12 +68,11 @@ class Admin extends BaseAdminController
         }
     }
 
-    /***
+    /**
      * Работа с полями формы
      * @param null|int $fid
      * @param null|string $field
      */
-
     public function field($fid = null, $field = null) {
 
         if ($this->input->post('type')) {
@@ -224,10 +223,9 @@ class Admin extends BaseAdminController
         assetManager::create()->setData('forms', $this->xforms_model->get_forms())->renderAdmin('forms');
     }
 
-    /***
+    /**
      * Работа с сообщениями для формы
      */
-
     public function messages() {
 
         assetManager::create()
