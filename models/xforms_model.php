@@ -47,7 +47,7 @@ class Xforms_model extends CI_Model
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return array form
      */
     public function get_form($id) {
