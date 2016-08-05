@@ -103,10 +103,7 @@ class Xforms extends MY_Controller
                                           'type'       => 'varchar',
                                           'constraint' => 255,
                                          ],
-                         'value'      => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 255,
-                                         ],
+                         'value'      => ['type'       => 'text'],
                          'desc'       => [
                                           'type'       => 'varchar',
                                           'constraint' => 255,
