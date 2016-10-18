@@ -22,10 +22,10 @@
                     {/if}
 
                     {if $field.type=='select' || $field.type=='radio' || $field.type == 'separator' || count($checkbox_value) >= 1}
-                        <div class="field__title">{if $field.require==1}<i>*</i>{/if} {$field.label}</div>
+                        <div class="field__title{if $field.require==1} require_field{/if}">{$field.label}</div>
                     {else:}
-                        <label for="f{$field.id}" class="field__title">
-                            {if $field.require==1}<i>*</i>{/if} {$field.label}
+                        <label for="f{$field.id}" class="field__title{if $field.require==1} require_field{/if}">
+                            {$field.label}
                         </label>
                     {/if}
 
@@ -37,31 +37,42 @@
                         {if count($checkbox_value) >= 1}
                             <ul class="field__checkbox">
                                 {foreach $checkbox_value as $key => $val}
-                                    <li><label><input type="checkbox" name="f{$field.id}" value="{$key}"/> <span>{$val}</span></label></li>
+                                    <li><label><input type="checkbox" name="f{$field.id}[]" value="{$key}" {if $field.checked && $key==0}checked{/if}/> <span>{$val}</span></label></li>
                                 {/foreach}
                             </ul>
                         {else:}
-                            <input type="checkbox" name="f{$field.id}" id="f{$field.id}" value="{if empty($checkbox_value)}1{else:}{$field.value}{/if}"{if $field.disabled==1} disabled="disabled"{/if} />
+                            <input type="checkbox" name="f{$field.id}" id="f{$field.id}" value="{if empty($checkbox_value)}1{else:}{$field.value}{/if}"{if $field.disabled==1} disabled="disabled"{/if} {if $field.checked}checked{/if} />
                         {/if}
                     {elseif $field.type=='select'}
                         <select name="f{$field.id}" id="f{$field.id}" {if $field.disabled==1}disabled="disabled"{/if}>
                             {$value = explode("\n",$field.value)}
-                            {foreach $value as $val}
-                                <option value="{$val}">{$val}</option>
+                            {if !$field.checked}
+                                <option value="">Выберите значение</option>
+                            {/if}
+                            {foreach $value as $key => $val}
+                                <option value="{$key}" {if $field.checked && $key==0}selected{/if}>{$val}</option>
                             {/foreach}
                         </select>
                     {elseif $field.type=='radio'}
                         {$value = explode("\n",$field.value)}
                         <ul class="field__radio">
                             {foreach $value as $key => $val}
-                                <li><label><input type="radio" name="f{$field.id}" value="{$key}" id="{$field.id}{$key}"/> <span>{$val}</span></label></li>
+                                <li><label><input type="radio" name="f{$field.id}" value="{$key}" id="{$field.id}{$key}" {if $field.checked && $key==0}checked{/if}/> <span>{$val}</span></label></li>
                             {/foreach}
                         </ul>
+                    {elseif $field.type=='file'}
+                        <div class="field__item file" data-field-id="{$field.id}">
+                            <div class="drop_here">
+                                Перетащите сюда или
+                                <a>Выберите файл</a>
+                                <input type="file" name="f{$field.id}[]" data-url="{site_url('xforms')}/upload/{$field.id}" multiple>
+                            </div>
+                            <ul class="file_list"></ul>
+                        </div>
                     {/if}
                     {if $field.desc}<p class="desc">{$field.desc}</p>{/if}
                 </div>
             {/foreach}
-
 
             {if $form.captcha}
                 <div class="field__item captcha_field">

@@ -82,24 +82,26 @@ class Admin extends BaseAdminController
             $this->form_validation->set_rules('operation', 'Операции', 'trim');
             $this->form_validation->set_rules('position', 'Позиция', 'trim|xss_clean|numeric');
             $this->form_validation->set_rules('maxlength', 'Максимум символов', 'trim|xss_clean|numeric');
+            $this->form_validation->set_rules('allowed_types', 'Типы файлов', 'trim|xss_clean|max_length[500]');
 
             if ($this->form_validation->run($this) == FALSE) {
                 showMessage(validation_errors(), false, 'r');
             } else {
                 $data = [
-                         'fid'        => $fid,
-                         'type'       => $this->input->post('type'),
-                         'label'      => $this->input->post('name'),
-                         'value'      => $this->input->post('value'),
-                         'desc'       => $this->input->post('desc'),
-                         'operation'  => $this->input->post('operation'),
-                         'position'   => $this->input->post('position'),
-                         'maxlength'  => $this->input->post('maxlength'),
-                         'checked'    => $this->input->post('check'),
-                         'disabled'   => $this->input->post('disable'),
-                         'require'    => $this->input->post('required'),
-                         'validation' => $this->input->post('validation'),
-                         'visible'    => $this->input->post('visible'),
+                         'fid'           => $fid,
+                         'type'          => $this->input->post('type'),
+                         'label'         => $this->input->post('name'),
+                         'value'         => $this->input->post('value'),
+                         'desc'          => $this->input->post('desc'),
+                         'operation'     => $this->input->post('operation'),
+                         'position'      => $this->input->post('position'),
+                         'maxlength'     => $this->input->post('maxlength'),
+                         'checked'       => $this->input->post('check'),
+                         'disabled'      => $this->input->post('disable'),
+                         'require'       => $this->input->post('required'),
+                         'validation'    => $this->input->post('validation'),
+                         'visible'       => $this->input->post('visible'),
+                         'allowed_types' => $this->input->post('allowed_types'),
                         ];
 
                 if (!$field) {
@@ -113,9 +115,6 @@ class Admin extends BaseAdminController
                     showMessage(lang('Field created', 'xforms'));
                     $path = '/admin/components/cp/xforms/field/' . $fid . '/' . $field_id;
                 } else {
-                    if (!$data['position']) {
-                        $data['position'] = (int) $field;
-                    }
 
                     $this->xforms_model->update_field((int) $field, $data);
                     showMessage(lang('Changes has been saved', 'xforms'));
@@ -221,6 +220,44 @@ class Admin extends BaseAdminController
     public function index() {
 
         assetManager::create()->setData('forms', $this->xforms_model->get_forms())->renderAdmin('forms');
+    }
+
+    /**
+     * Обновление модуля с 2.0 версии до 2.3
+     */
+    public function update_2_3() {
+
+        //Добавим колонку с расшерениями файлов
+        $xforms_field = [
+                'allowed_types' => [
+                    'type'       => 'varchar',
+                    'constraint' => 500,
+                ]
+            ];
+
+        $this->load->dbforge();
+        $this->dbforge->add_column('xforms_field', $xforms_field);
+
+        // удаляем старые поля из xforms_messages
+        $this->dbforge->drop_column('xforms_messages', 'author');
+        $this->dbforge->drop_column('xforms_messages', 'file');
+        $this->dbforge->drop_column('xforms_messages', 'msg');
+        $this->dbforge->drop_column('xforms_messages', 'date');
+
+        //Добавим Новые колонки в xforms_messages
+        $xforms_messages = [
+                'fid'       => [
+                    'type'       => 'int',
+                    'constraint' => 11,
+                ],
+                'message'   => ['type' => 'text'],
+                'status' => [
+                    'type'         => 'smallint',
+                    'constraint'   => 1
+                ]
+            ];
+        $this->dbforge->add_column('xforms_messages', $xforms_messages);
+
     }
 
     /**

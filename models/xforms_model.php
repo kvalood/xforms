@@ -4,18 +4,6 @@
 
 class Xforms_model extends CI_Model
 {
-
-    /**
-     * Add field for form
-     * @param array $data
-     * @return int
-     */
-    public function add_field($data = []) {
-
-        $this->db->insert('xforms_field', $data);
-        return $this->db->insert_id();
-    }
-
     /**
      * Add form
      * @param array $data
@@ -25,25 +13,6 @@ class Xforms_model extends CI_Model
 
         $this->db->insert('xforms', $data);
         return $this->db->insert_id();
-    }
-
-    /**
-     * @param array $ids
-     */
-    public function delete_fields($ids = []) {
-
-        foreach ($ids as $id) {
-            $this->db->where('id', $id)->delete('xforms_field');
-        }
-    }
-
-    /**
-     * @param int $id
-     * @return array
-     */
-    public function get_field($id) {
-
-        return $this->db->where('id', $id)->get('xforms_field')->row_array();
     }
 
     /**
@@ -62,6 +31,20 @@ class Xforms_model extends CI_Model
     }
 
     /**
+     * Update form
+     * @param int $id
+     * @param array $data
+     * @return bool
+     */
+    public function update_form($id, $data = []) {
+
+        $this->db->where('id', $id);
+        $this->db->update('xforms', $data);
+
+        return TRUE;
+    }
+
+    /**
      * @param int $id
      * @param array $param
      * @return array
@@ -73,7 +56,6 @@ class Xforms_model extends CI_Model
         }
 
         return $this->db->where('fid', $id)->order_by('position', 'asc')->get('xforms_field')->result_array();
-
     }
 
     /**
@@ -96,21 +78,23 @@ class Xforms_model extends CI_Model
     }
 
     /**
-     * @param string $name
-     * @return mixed
+     * Add field for form
+     * @param array $data
+     * @return int
      */
-    public function get_label($name) {
+    public function add_field($data = []) {
 
-        $label = $this->db->select('label')->where('name', $name)->get('xforms_field')->row_array();
-        return $label['label'];
+        $this->db->insert('xforms_field', $data);
+        return $this->db->insert_id();
     }
 
     /**
-     * @return mixed
+     * @param int $id
+     * @return array
      */
-    public function get_messages() {
+    public function get_field($id) {
 
-        return $this->db->get('xforms_messages')->result_array();
+        return $this->db->where('id', $id)->get('xforms_field')->row_array();
     }
 
     /**
@@ -126,17 +110,21 @@ class Xforms_model extends CI_Model
     }
 
     /**
-     * Update form
-     * @param int $id
-     * @param array $data
-     * @return bool
+     * @param array $ids
      */
-    public function update_form($id, $data = []) {
+    public function delete_fields($ids = []) {
 
-        $this->db->where('id', $id);
-        $this->db->update('xforms', $data);
+        foreach ($ids as $id) {
+            $this->db->where('id', $id)->delete('xforms_field');
+        }
+    }
 
-        return TRUE;
+    /**
+     * @return mixed
+     */
+    public function get_messages() {
+
+        return $this->db->get('xforms_messages')->result_array();
     }
 
 }

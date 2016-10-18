@@ -48,6 +48,9 @@ class Xforms_Widgets extends MY_Controller
             ->setData('form', $form)
             ->registerScript('notie')
             ->registerScript('autosize.min')
+            ->registerScript('jquery.ui.widget')
+            ->registerScript('jquery.iframe-transport')
+            ->registerScript('jquery.fileupload')
             ->registerScript('xforms')
             ->registerStyle('xforms')
             ->fetchTemplate('../widgets/' . $widget['name']);

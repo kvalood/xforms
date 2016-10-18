@@ -61,6 +61,9 @@
                                             <option value="radio"{if $field.type=='radio'} selected="selected"{/if}>
                                                 radio
                                             </option>
+                                            <option value="file"{if $field.type=='file'} selected="selected"{/if}>
+                                                загрузка файла
+                                            </option>
                                             <option value="" disabled>------</option>
                                             <option value="separator"{if $field.type=='separator'} selected="selected"{/if}>
                                                 разделитель
@@ -77,9 +80,7 @@
                                         <div class="o_h">
                                             <input type="text" name="name" id="name" value="{$field.label}" required>
                                         </div>
-                                        <div class="help-block">показывается в label и транслитом задается name input'a
-                                            и textarea
-                                        </div>
+                                        <div class="help-block">показывается в label</div>
                                     </div>
                                 </div>
 
@@ -95,7 +96,7 @@
                                     </div>
                                 </div>
 
-                                <div class="control-group">
+                                <div class="control-group" style="display:{if $field.type == 'select' || $field.type == 'radio' || $field.type == 'checkbox'}block{else:}none{/if}">
                                     <label class="control-label" for="value">
                                         Значение
                                     </label>
@@ -128,6 +129,17 @@
                                     </div>
                                 </div>
 
+                                <div class="control-group" style="display:{if $field.type == 'file'}block{else:}none{/if}">
+                                    <label class="control-label" for="allowed_types">Расширения файлов:</label>
+                                    <div class="controls">
+                                        <div class="o_h">
+                                            <input name="allowed_types" id="allowed_types" value="{$field.allowed_types}"
+                                                   type="text">
+                                        </div>
+                                        <span class="help-block">Впишите расширения файлов, доступных к загрузке, через  |<br/>Например: gif|jpg|png</span>
+                                    </div>
+                                </div>
+
                                 <div class="control-group">
                                     <label class="control-label" for="operation">Операции и стили:</label>
                                     <div class="controls">
@@ -151,27 +163,27 @@
                                     </div>
                                 </div>
 
-                                <div class="control-group">
+                                <div class="control-group" style="display:{if !$field || ($field.type == 'textarea' || $field.type == 'text')}block{else:}none{/if}">
                                     <label class="control-label" for="maxlength">
                                         Максимум символов:
                                     </label>
                                     <div class="controls">
                                         <input type="text" name="maxlength" id="maxlength" value="{$field.maxlength}">
                                         <div class="help-block">Максимальное количество символов<br/>
-                                            Этот параметр для input type="text". Не путать с max_length[255]!
+                                            Этот параметр для input type="text" и textarea. Не путать с max_length[255]!
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="control-group">
+                                <div class="control-group" style="display:{if $field.type == 'select' || $field.type == 'radio' || $field.type == 'checkbox'}block{else:}none{/if}">
                                     <div class="control-label"></div>
                                     <div class="controls">
 											<span class="frame_label no_connection">
 												<span class="niceCheck" style="background-position: -46px 0px;">
-													<input type="checkbox" name="check"
+													<input type="checkbox" name="check" id="check"
                                                            value="1" {if $field.checked==1} checked="checked"{/if}/>
 												</span>
-												Отмеченный чекбокс</span>
+												Ометить первое значение checkbox/radio/select</span>
                                     </div>
                                 </div>
 
@@ -180,7 +192,7 @@
                                     <div class="controls">
 											<span class="frame_label no_connection">
 												<span class="niceCheck" style="background-position: -46px 0px;">
-													<input type="checkbox" name="disable"
+													<input type="checkbox" name="disable" id="disable"
                                                            value="1" {if $field.disabled==1} checked="checked"{/if}/>
 												</span>
 												Отключённое поле (параметр disabled)</span>
@@ -192,10 +204,10 @@
                                     <div class="controls">
 											<span class="frame_label no_connection">
 												<span class="niceCheck" style="background-position: -46px 0px;">
-													<input type="checkbox" name="visible"
+													<input type="checkbox" name="visible" id="visible"
                                                            value="1" {if $field.visible==1 || !isset($field)} checked="checked"{/if}>
 												</span>
-												Активное поле?</span>
+												Видимое поле?</span>
                                     </div>
                                 </div>
 
@@ -209,3 +221,33 @@
         </table>
     </div>
 </section>
+
+{literal}
+    <script type="text/javascript">
+        $(document).on('change', 'select[name="type"]', function() {
+
+            var selected_val = $(this).val(),
+                showers_line = {
+                    checkbox: ['value', 'check'],
+                    select: ['value', 'check'],
+                    radio: ['check', 'value'],
+                    text: ['maxlength'],
+                    textarea: ['maxlength'],
+                    file: ['allowed_types']
+                },
+                optional_fields = ['check', 'value', 'maxlength', 'allowed_types'];
+
+            // Вылючаем опциональные поля
+            for(var i in optional_fields) {
+
+                var field_line = $('#' + optional_fields[i]).closest('.control-group');
+
+                if($.inArray(optional_fields[i], showers_line[selected_val]) > -1) {
+                    $(field_line).css('display', 'block');
+                } else {
+                    $(field_line).css('display', 'none');
+                }
+            }
+        });
+    </script>
+{/literal}

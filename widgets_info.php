@@ -2,8 +2,8 @@
 
 $widgets = [
             [
-             'title'       => 'Виджет - Конструктор форм',
-             'description' => 'Вывод формы',
+             'title'       => 'xforms - Конструктор форм',
+             'description' => 'Выводит заданную форму в виджет.',
              'method'      => 'show_form',
             ],
            ];

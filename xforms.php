@@ -20,6 +20,8 @@ class Xforms extends MY_Controller
         $this->load->library('form_validation');
 
         $this->load->library('email');
+
+        $this->load->helper(array('form', 'url'));
     }
 
     public function _deinstall() {
@@ -95,19 +97,6 @@ class Xforms extends MY_Controller
                                           'type'       => 'int',
                                           'constraint' => 11,
                                          ],
-                         'type'       => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 255,
-                                         ],
-                         'label'      => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 255,
-                                         ],
-                         'value'      => ['type'       => 'text'],
-                         'desc'       => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 255,
-                                         ],
                          'position'   => [
                                           'type'       => 'int',
                                           'constraint' => 11,
@@ -142,28 +131,32 @@ class Xforms extends MY_Controller
                                           'type'       => 'varchar',
                                           'constraint' => 500,
                                          ],
+                         'allowed_types' => [
+                                          'type'       => 'varchar',
+                                          'constraint' => 500,
+                                         ]
                         ];
 
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->add_field($xforms_field);
         $this->dbforge->create_table('xforms_field', TRUE);
 
+        // id, fid, msg (json)
         $xforms_messages = [
                             'id'     => [
                                          'type'           => 'INT',
                                          'constraint'     => 11,
                                          'auto_increment' => TRUE,
                                         ],
-                            'author' => [
-                                         'type'       => 'varchar',
-                                         'constraint' => 255,
+                            'fid'    => [
+                                         'type'       => 'int',
+                                         'constraint' => 11,
                                         ],
-                            'file'   => ['type' => 'text'],
-                            'msg'    => ['type' => 'text'],
-                            'date'   => [
-                                         'type'       => 'INT',
-                                         'constraint' => 32,
-                                        ],
+                            'message'=> ['type' => 'text'],
+                            'status' => [
+                                         'type'         => 'smallint',
+                                         'constraint'   => 1
+                                        ]
                            ];
 
         $this->dbforge->add_key('id', TRUE);
@@ -224,39 +217,72 @@ class Xforms extends MY_Controller
         }
 
         $notify = []; // Для вывода уведомлений, ошибок и др.
-
+        $notify['console']['post'][] = $this->input->post();
         // Если нажали отправить форму, то перебираем все входящие значения
         if ($this->input->post()) {
 
-            $msg = []; // Текст на почту
+            $msg        = []; // Текст в админку
+            $msg_email  = []; // Текст для почты
 
             $post_data = $this->input->post();
 
             foreach ($fields as $field) {
+
                 $key_post = 'f' . $field['id'];
-
                 $require = ($field['require'] == 1) ? 'required|' : '';
+                $data_msg = '';
 
-                if (isset($post_data[$key_post])) {
-                    if ($field['type'] == 'radio' OR $field['type'] == 'checkbox') {
-                        $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
-                        $radio = explode("\n", $field['value']);
-                        $msg[] = [
-                                  'field' => $field,
-                                  'data'  => $radio[$post_data[$key_post]],
-                                 ];
-                    } else {
-                        $this->form_validation->set_rules($key_post, $field['label'], 'trim|xss_clean|' . $require . $field['validation']);
-                        $msg[] = [
-                                  'field' => $field,
-                                  'data'  => $post_data[$key_post],
-                                 ];
-                    }
-                } elseif ($field['type'] == 'separator') {
-                    $msg[] = ['field' => $field];
-                } else {
+                // Делаем валидацию полей + подготоваливаем данные для отправки в письме
+                if ($field['type'] == 'radio' OR $field['type'] == 'select') {
                     $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
+                    $checked = explode("\n", $field['value']);
+                    $data_msg = $checked[$post_data[$key_post]];
+                } elseif($field['type'] == 'checkbox') {
+
+                    if($require)
+                        $this->form_validation->set_rules($key_post, $field['label'], $require);
+
+                    $checked = explode("\n", $field['value']);
+
+                    foreach ($checked as $key => $val) {
+                        if(isset($post_data[$key_post][$key]))
+                            $data_msg .= $val . '<br/>';
+                    }
                 }
+                elseif($field['type'] == 'file') {
+
+                    if($require)
+                        $this->form_validation->set_rules($key_post, $field['label'], $require);
+
+                    $files = [];
+                    $post_files = array_diff($post_data[$key_post], ['']);
+
+
+
+                    $notify['console']['post_data'][] = $post_data[$key_post];
+
+                    if(!empty($post_data[$key_post])) {
+                        foreach ($post_data[$key_post] as $key => $val) {
+                            $notify['console']['f'][] = $val;
+                            foreach($val as $k => $v) {
+                                $files[$k][$key] = $v;
+                            }
+                        }
+                        foreach($files as $file) {
+                            $notify['console']['file'] = $file;
+                            $data_msg .= '<a href="' . site_url('upload/xforms/') . $file['url'] . '">' . $file['name'] . '</a> - ';
+                            $data_msg .= '<a href="' . site_url('xforms/deleteFile/') . $file['url'] . '">Удалить</a><br/>';
+                        }
+                    }
+                } elseif ($field['type'] == 'text' OR $field['type'] == 'textarea') {
+                    $this->form_validation->set_rules($key_post, $field['label'], 'trim|xss_clean|' . $require . $field['validation']);
+                    $data_msg = $post_data[$key_post];
+                }
+
+                $msg_email[$field['id']]['field'] = $field;
+
+                if(!empty($data_msg))
+                    $msg_email[$field['id']]['data'] = $data_msg;
             }
 
             if ($form['captcha'] == 1) {
@@ -267,7 +293,7 @@ class Xforms extends MY_Controller
                 // добавляем сообщение в БД.
 
                 // Отправялем email
-                $message = assetManager::create()->setData('data', $msg)->fetchTemplate('email');
+                $message = assetManager::create()->setData('data', $msg_email)->fetchTemplate('email');
                 $form['email'] = array_diff(explode(',', str_replace(' ', '', $form['email'])), ['']);
                 foreach ($form['email'] as $item) {
                     $item = trim($item);
@@ -289,7 +315,7 @@ class Xforms extends MY_Controller
                         $this->email->clear();
                     }
                 }
-                $notify['console'] = $msg;
+                $notify['console']['msg_email'] = $msg_email;
 
                 $notify['success'] = $form['success'];
             } else {
@@ -308,9 +334,96 @@ class Xforms extends MY_Controller
                 ->setData('notify', $notify)
                 ->registerScript('notie')
                 ->registerScript('autosize.min')
+                ->registerScript('jquery.ui.widget')
+                ->registerScript('jquery.iframe-transport')
+                ->registerScript('jquery.fileupload')
                 ->registerScript('xforms')
                 ->registerStyle('xforms')
                 ->render('../templates/show_form');
+        }
+    }
+
+    /**
+     * Upload file
+     */
+    public function upload($field_id) {
+
+        // Найдем форму.
+        if(!$field = $this->xforms_model->get_field($field_id))
+            return false;
+
+        $form = $this->xforms_model->get_form(intval($field['fid']));
+
+        // расширния файлов доступные к загрузке
+        if($field['allowed_types'])
+            $config['allowed_types'] = $field['allowed_types'];
+        else
+            $config['allowed_types'] = 'jpg|png|rar|zip|doc|docx|psd|pdf';
+
+        // путь загрузки
+        $config['upload_path'] = './uploads/xforms/'; // . $form['url'] . '/';
+        $upload_path_url = '/uploads/xforms/'; // . $form['url'] . '/';
+
+        if (!is_dir($config['upload_path'])) {
+            mkdir($config['upload_path'], 0700, true);
+        }
+
+        $config['encrypt_name'] = TRUE;
+        $config['remove_spaces'] = TRUE;
+
+        $this->load->library('upload', $config);
+
+        // fixed multiple file upload. Fucking codeigninter...
+        $files = $_FILES;
+        $cpt = count($_FILES['f'.$field_id]['name']);
+        for($i=0; $i<$cpt; $i++) {
+            $_FILES['userfile']['name']     = $files['f'.$field_id]['name'][$i];
+            $_FILES['userfile']['type']     = $files['f'.$field_id]['type'][$i];
+            $_FILES['userfile']['tmp_name'] = $files['f'.$field_id]['tmp_name'][$i];
+            $_FILES['userfile']['error']    = $files['f'.$field_id]['error'][$i];
+            $_FILES['userfile']['size']     = $files['f'.$field_id]['size'][$i];
+
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload()) {
+                echo json_encode(array('error' => $this->upload->display_errors()));
+            } else {
+                $info = $this->upload->data();
+
+                $file             = new StdClass;
+                $file->name       = $_FILES['userfile']['name'];
+                $file->url        = $info['file_name'];
+                $file->size       = $info['size'];
+                $file->extension  = $info['extension'];
+                $file->full_url   = $upload_path_url . $info['file_name'];
+                $file->deleteUrl  = base_url() . 'xforms/deleteFile/' . $info['file_name'];
+                $file->deleteType = 'DELETE';
+                $file->error      = null;
+
+                echo json_encode($file);
+            }
+        }
+    }
+
+    /**
+     * remove file
+     * @param $file
+     */
+    public function deleteFile($file) {//gets the job done but you might want to add error checking and security
+        $success = unlink(FCPATH . 'uploads/xforms/' . $file);
+        //info to see if it is doing what it is supposed to
+        $info = new StdClass;
+        $info->sucess = $success;
+        $info->path = base_url() . 'uploads/' . $file;
+        $info->file = is_file(FCPATH . 'uploads/' . $file);
+
+        if (IS_AJAX) {
+            //I don't think it matters if this is set but good for error checking in the console/firebug
+            echo json_encode(array($info));
+        } else {
+            //here you will need to decide what you want to show for a successful delete
+            $file_data['delete_data'] = $file;
+            $this->load->view('admin/delete_success', $file_data);
         }
     }
 
