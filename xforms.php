@@ -154,7 +154,6 @@ class Xforms extends MY_Controller
         $this->dbforge->add_field($xforms_field);
         $this->dbforge->create_table('xforms_field', TRUE);
 
-        // id, fid, msg (json)
         $xforms_messages = [
                             'id'     => [
                                          'type'           => 'INT',
@@ -230,7 +229,7 @@ class Xforms extends MY_Controller
         }
 
         $notify = []; // Для вывода уведомлений, ошибок и др.
-        $notify['console']['post'][] = $this->input->post();
+
         // Если нажали отправить форму, то перебираем все входящие значения
         if ($this->input->post()) {
 
@@ -268,21 +267,14 @@ class Xforms extends MY_Controller
                         $this->form_validation->set_rules($key_post, $field['label'], $require);
 
                     $files = [];
-                    $post_files = array_diff($post_data[$key_post], ['']);
-
-
-
-                    $notify['console']['post_data'][] = $post_data[$key_post];
 
                     if(!empty($post_data[$key_post])) {
                         foreach ($post_data[$key_post] as $key => $val) {
-                            $notify['console']['f'][] = $val;
                             foreach($val as $k => $v) {
                                 $files[$k][$key] = $v;
                             }
                         }
                         foreach($files as $file) {
-                            $notify['console']['file'] = $file;
                             $data_msg .= '<a href="' . site_url('upload/xforms/') . $file['url'] . '">' . $file['name'] . '</a> - ';
                             $data_msg .= '<a href="' . site_url('xforms/deleteFile/') . $file['url'] . '">Удалить</a><br/>';
                         }
@@ -304,6 +296,7 @@ class Xforms extends MY_Controller
 
             if (!$this->form_validation->run($this) == FALSE) {
                 // добавляем сообщение в БД.
+                // TODO: Добавить сообщение в админку.
 
                 // Отправялем email
                 $message = assetManager::create()->setData('data', $msg_email)->fetchTemplate('email');
@@ -323,12 +316,10 @@ class Xforms extends MY_Controller
                         $this->email->to($item);
                         $this->email->send();
 
-                        // отдаем в console.log(notify.console) информацию об отправке.
-                        //$notify['console']['debug'][] = $this->email->print_debugger();
+                        //$notify['console']['debug'][] = $this->email->print_debugger(); // отдаем в console.log(notify.console) информацию об отправке.
                         $this->email->clear();
                     }
                 }
-                $notify['console']['msg_email'] = $msg_email;
 
                 $notify['success'] = $form['success'];
             } else {
@@ -421,8 +412,9 @@ class Xforms extends MY_Controller
     /**
      * remove file
      * @param $file
+     * TODO: Доделать проверку безопасности и вывод ошибок, если файл отсутствует.
      */
-    public function deleteFile($file) {//gets the job done but you might want to add error checking and security
+    public function deleteFile($file) {
         $success = unlink(FCPATH . 'uploads/xforms/' . $file);
         //info to see if it is doing what it is supposed to
         $info = new StdClass;
