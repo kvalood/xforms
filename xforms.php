@@ -97,6 +97,19 @@ class Xforms extends MY_Controller
                                           'type'       => 'int',
                                           'constraint' => 11,
                                          ],
+                         'type'       => [
+                                          'type'       => 'varchar',
+                                          'constraint' => 255,
+                                         ],
+                         'label'      => [
+                                          'type'       => 'varchar',
+                                          'constraint' => 255,
+                                         ],
+                         'value'      => ['type'       => 'text'],
+                         'desc'       => [
+                                          'type'       => 'varchar',
+                                          'constraint' => 255,
+                                         ],
                          'position'   => [
                                           'type'       => 'int',
                                           'constraint' => 11,
