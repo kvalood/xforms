@@ -275,8 +275,8 @@ class Xforms extends MY_Controller
                             }
                         }
                         foreach($files as $file) {
-                            $data_msg .= '<a href="' . site_url('upload/xforms/') . $file['url'] . '">' . $file['name'] . '</a> - ';
-                            $data_msg .= '<a href="' . site_url('xforms/deleteFile/') . $file['url'] . '">Удалить</a><br/>';
+                            $data_msg .= '<a href="' . site_url('xforms/download/' . $file['url']) . '">' . $file['name'] . '</a> - ';
+                            $data_msg .= '<a href="' . site_url('xforms/deleteFile/' . $file['url']) . '" title="удалить" style="color:red;">×</a><br/>';
                         }
                     }
                 } elseif ($field['type'] == 'text' OR $field['type'] == 'textarea') {
@@ -408,6 +408,23 @@ class Xforms extends MY_Controller
             }
         }
     }
+
+
+    /**
+     * Download file
+     */
+    public function download($file) {
+        $this->load->helper('download');
+
+        $data = file_get_contents("./uploads/xforms/$file");
+
+        if(empty($data)) {
+            $this->core->error_404();
+        } else {
+            force_download($file, $data);
+        }
+    }
+
 
     /**
      * remove file
