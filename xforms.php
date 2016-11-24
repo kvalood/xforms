@@ -1,6 +1,7 @@
 <?php
 
 use CMSFactory\assetManager;
+use cmsemail\email;
 
 (defined('BASEPATH')) OR exit('No direct script access allowed');
 
@@ -305,6 +306,9 @@ class Xforms extends MY_Controller
                     $item = trim($item);
 
                     if ($this->form_validation->valid_email($item)) {
+
+                        // email::getInstance()->sendEmail($this->input->post('email'), 'feedback', $feedback_variables);
+
                         $this->email->initialize(['mailtype' => 'html']);
 
                         if($this->email->protocol != 'smtp') {
@@ -332,18 +336,33 @@ class Xforms extends MY_Controller
         if ($is_widget) {
             return json_encode($notify);
         } else {
-            assetManager::create()
-                ->setData('form', $form)
-                ->setData('fields', $fields)
-                ->setData('notify', $notify)
-                ->registerScript('notie')
-                ->registerScript('autosize.min')
-                ->registerScript('jquery.ui.widget')
-                ->registerScript('jquery.iframe-transport')
-                ->registerScript('jquery.fileupload')
-                ->registerScript('xforms')
-                ->registerStyle('xforms')
-                ->render('../templates/show_form');
+
+            // Если есть поля "файл" в форме. Что бы не загружать лишние скрипты...
+            $result = array_filter($fields, function($lines){
+                return ($lines['type'] == 'files'); //Поиск по первому значению
+            });
+
+            if($result) {
+                assetManager::create()
+                    ->setData('form', $form)
+                    ->setData('fields', $fields)
+                    ->setData('notify', $notify)
+                    ->registerScript('jquery.ui.widget')
+                    ->registerScript('jquery.iframe-transport')
+                    ->registerScript('jquery.fileupload')
+                    ->registerScript('xforms')
+                    ->registerScript('xforms_files')
+                    ->registerStyle('xforms')
+                    ->render('../templates/show_form');
+            } else {
+                assetManager::create()
+                    ->setData('form', $form)
+                    ->setData('fields', $fields)
+                    ->setData('notify', $notify)
+                    ->registerScript('xforms')
+                    ->registerStyle('xforms')
+                    ->render('../templates/show_form');
+            }
         }
     }
 

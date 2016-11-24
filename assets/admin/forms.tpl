@@ -8,32 +8,38 @@
             <div class="d-i_b">
                 <a href="/admin/components/cp/xforms/form" class="btn btn-small pjax btn-success"><i
                             class="icon-plus-sign icon-white"></i>Создать форму</a>
-                <a href="/admin/components/cp/xforms/messages" class="btn btn-small pjax btn-success"><i
-                            class="icon-envelope icon-white"></i>Сообщения</a>
+                <!-- <a href="/admin/components/cp/xforms/messages" class="btn btn-small pjax btn-success"><i
+                            class="icon-envelope icon-white"></i>Сообщения</a> -->
             </div>
         </div>
     </div>
     {if $forms}
         <table id="cats_table" class="table  table-bordered table-hover table-condensed t-l_a">
             <thead>
-            <th>ID</th>
-            <th>Наименование</th>
-            <th>URL</th>
-            <th>Тема</th>
-            <th>E-mail</th>
-            <th>Действия</th>
+                <th class="span1">ID</th>
+                <th class="span4">Наименование</th>
+                <th class="span2">URL</th>
+                <th class="span2">Тема</th>
+                <th class="span1">E-mail</th>
+                <th class="span1">Действия</th>
             </thead>
             <tbody>
             {foreach $forms as $form}
                 <tr>
                     <td>{$form.id}</td>
                     <td class="share_alt">
-                        <a class="pjax" href="/admin/components/cp/xforms/fields/{$form.id}" data-rel="tooltip"
-                           data-placement="top" data-original-title="Редактировать поля">{$form.title}</a>
+                        <div class="o_h">
+                            <a class="pjax" href="/admin/components/cp/xforms/fields/{$form.id}" data-rel="tooltip"
+                               data-placement="top" data-original-title="Редактировать поля">{$form.title}</a>
+                        </div>
                     </td>
                     <td>
+                        {if $form.direct_url}
                         <a href="{site_url('xforms/show')}/{$form.url}" target="_blank" data-rel="tooltip"
                            data-placement="top" data-original-title="Посмотреть на сайте">{$form.url}</a>
+                        {else:}
+                            Не показывается на сайте
+                        {/if}
                     </td>
                     <td>{$form.subject}</td>
                     <td>{$form.email}</td>

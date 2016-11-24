@@ -42,18 +42,34 @@ class Xforms_Widgets extends MY_Controller
             $form['captcha_image'] = $this->dx_auth->get_captcha_image();
         }
 
-        return assetManager::create()
-            ->setData('widget', $widget)
-            ->setData('fields', $this->xforms_model->get_form_fields($settings['form_id'], ['visible' => 1]))
-            ->setData('form', $form)
-            ->registerScript('notie')
-            ->registerScript('autosize.min')
-            ->registerScript('jquery.ui.widget')
-            ->registerScript('jquery.iframe-transport')
-            ->registerScript('jquery.fileupload')
-            ->registerScript('xforms')
-            ->registerStyle('xforms')
-            ->fetchTemplate('../widgets/' . $widget['name']);
+        $fields = $this->xforms_model->get_form_fields($settings['form_id'], ['visible' => 1]);
+
+        // Если есть поля "файл" в форме. Что бы не загружать лишние скрипты...
+        $result = array_filter($fields, function($lines){
+            return ($lines['type'] == 'files'); //Поиск по первому значению
+        });
+
+        if($result) {
+            return assetManager::create()
+                ->setData('widget', $widget)
+                ->setData('fields', $fields)
+                ->setData('form', $form)
+                ->registerScript('jquery.ui.widget')
+                ->registerScript('jquery.iframe-transport')
+                ->registerScript('jquery.fileupload')
+                ->registerScript('xforms')
+                ->registerScript('xforms_files')
+                ->registerStyle('xforms')
+                ->fetchTemplate('../widgets/' . $widget['name']);
+        } else {
+            return assetManager::create()
+                ->setData('widget', $widget)
+                ->setData('fields', $fields)
+                ->setData('form', $form)
+                ->registerScript('xforms')
+                ->registerStyle('xforms')
+                ->fetchTemplate('../widgets/' . $widget['name']);
+        }
     }
 
     /**
