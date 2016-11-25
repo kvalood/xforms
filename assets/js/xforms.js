@@ -47,8 +47,8 @@ function send_widget_form(i) {
 
             // Успешная отпрвка формы
             if (notify.success) {
-                if (typeof xforms.success == 'function') {
-                    xforms.success(form, notify.success);
+                if (typeof xforms_success == 'function') {
+                    xforms_success(form, notify.success);
                 } else {
                     form.find('input[type="submit"]').remove().parent().html(notify.success);
                     form.find('.xforms_loader').remove();
