@@ -209,12 +209,12 @@ class Xforms extends MY_Controller
      */
     public function show($url = '') {
 
-        $is_widget = ($this->input->post('cms_widget_form')) ? 1 : 0;
+        $is_widget  = ($this->input->post('is_widget')) ? 1 : 0; // TODO: Remove
+        $is_ajax    = $this->input->is_ajax_request() ? 1 : 0;
+        $form       = $this->xforms_model->get_form($url);
 
-        $form = $this->xforms_model->get_form($url);
-
-        if (!$is_widget) {
-            if (!$form OR !$form['direct_url']) {
+        if (!$is_ajax) {
+            if (!$form['id'] OR !$form['direct_url']) {
                 $this->core->error_404();
             } else {
                 $this->core->set_meta_tags($form['title']);
@@ -333,7 +333,7 @@ class Xforms extends MY_Controller
             }
         }
 
-        if ($is_widget) {
+        if ($is_ajax) {
             return json_encode($notify);
         } else {
 

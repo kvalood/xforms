@@ -24,7 +24,7 @@ function send_widget_form(i) {
                 var array = [];
                 for (var index in notify.errors) {
                     var error = notify.errors[index],
-                        field = $('[name="' + index + '[]"').length ? $('[name="' + index + '[]"').closest(field__item) : $('[name="' + index + '"').closest(field__item);
+                        field = $('[name="' + index + '[]"]').length ? $('[name="' + index + '[]"]').closest(field__item) : $('[name="' + index + '"]').closest(field__item);
 
                     field.addClass(error_class).find('.error').remove();
                     field.append('<p class="error">' + error + '</p>');
