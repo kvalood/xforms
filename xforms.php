@@ -339,7 +339,7 @@ class Xforms extends MY_Controller
 
             // Если есть поля "файл" в форме. Что бы не загружать лишние скрипты...
             $result = array_filter($fields, function($lines){
-                return ($lines['type'] == 'files'); //Поиск по первому значению
+                return ($lines['type'] == 'file'); //Поиск по первому значению
             });
 
             if($result) {
