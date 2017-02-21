@@ -73,7 +73,7 @@
                                             <input type="text" name="page_url" value="{$form.url}" id="page_url"
                                                    required>
                                         </div>
-                                        <div class="help-block">(только латинские символы)</div>
+                                        <div class="help-block">только латинские символы</div>
                                     </div>
                                 </div>
 
@@ -112,6 +112,19 @@
                                 </div>
 
                                 <div class="control-group">
+                                    <label class="control-label" for="action_files">
+                                        Прикрепленные файлы к форме:
+                                    </label>
+                                    <div class="controls">
+                                        <select name="action_files" id="action_files">
+                                            <option value="1" {if $form.action_files == 1}selected="selected"{/if}>Сохранять на сервере</option>
+                                            <option value="2" {if $form.action_files == 2}selected="selected"{/if}>Только прикреплять к письму</option>
+                                            <option value="3" {if $form.action_files == 3}selected="selected"{/if}>Прикреплять к письму и сохранять на сервере</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
                                     <div class="controls">
                                         <span class="frame_label no_connection m-t_5 m-b_10">
                                             <span class="niceCheck b_n">
@@ -126,6 +139,28 @@
                                         </span>
                                     </div>
                                 </div>
+
+                            {if $form.id}
+                                <div class="control-group">
+                                    <label class="control-label" for="user_message_active">
+                                        Укажите поле формы с email'ом отправителя:
+                                    </label>
+                                    <div class="controls">
+
+                                        <select name="user_message_active" id="user_message_active">
+                                            <option value="1" {if !$form.user_message_active}selected="selected"{/if}>Не отправлять клиенту письмо</option>
+
+                                            {foreach $fields as $field}
+                                                <option value="{$field.id}" {if $form.user_message_active == $field.id}selected="selected"{/if}>{$field.label} ({$field.id})</option>
+                                            {/foreach}
+                                        </select>
+                                        <span class="help-block">
+                                        Если отправителю тоже нужно прислать письмо, после отправки.<br/>
+                                        Из какого поля формы будем брать email отправителя, что бы отправить ему письмо?
+                                        </span>
+                                    </div>
+                                </div>
+                            {/if}
 
                                 <div class="control-group">
                                     <div class="control-label">

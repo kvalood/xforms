@@ -8,8 +8,8 @@
             <div class="d-i_b">
                 <a href="/admin/components/cp/xforms/form" class="btn btn-small pjax btn-success"><i
                             class="icon-plus-sign icon-white"></i>Создать форму</a>
-                <!-- <a href="/admin/components/cp/xforms/messages" class="btn btn-small pjax btn-success"><i
-                            class="icon-envelope icon-white"></i>Сообщения</a> -->
+                <a href="/admin/components/cp/xforms/messages" class="btn btn-small pjax btn-success"><i
+                            class="icon-envelope icon-white"></i>Сообщения</a>
             </div>
         </div>
     </div>

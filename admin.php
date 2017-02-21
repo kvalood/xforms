@@ -1,6 +1,7 @@
 <?php
 
 use CMSFactory\assetManager;
+use Components;
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -166,8 +167,8 @@ class Admin extends BaseAdminController
             $this->form_validation->set_rules('page_title', 'Заголовок', 'trim|xss_clean|required|min_length[1]|max_length[255]');
             $this->form_validation->set_rules('page_url', 'URL формы', 'alpha_dash|least_one_symbol');
             $this->form_validation->set_rules('subject', 'Тема', 'trim|xss_clean|required|min_length[1]|max_length[255]');
-            $this->form_validation->set_rules('desc', 'Описание', 'trim|xss_clean|max_length[255]');
-            $this->form_validation->set_rules('good', 'Сообщение', 'trim|xss_clean|max_length[255]|required');
+            $this->form_validation->set_rules('desc', 'Описание', 'trim|xss_clean');
+            $this->form_validation->set_rules('good', 'Сообщение', 'trim|xss_clean|required');
             $this->form_validation->set_rules('email', 'Email', 'callback_check_emails');
 
             if ($this->form_validation->run($this) == FALSE) {
@@ -175,14 +176,16 @@ class Admin extends BaseAdminController
             } else {
                 // Собираем данные
                 $data = [
-                         'title'      => $this->input->post('page_title'),
-                         'url'        => $this->input->post('page_url'),
-                         'desc'       => $this->input->post('desc'),
-                         'success'    => $this->input->post('good'),
-                         'subject'    => $this->input->post('subject'),
-                         'email'      => $this->input->post('email'),
-                         'captcha'    => $this->input->post('captcha'),
-                         'direct_url' => $this->input->post('direct_url'),
+                         'title'                => $this->input->post('page_title'),
+                         'url'                  => $this->input->post('page_url'),
+                         'desc'                 => $this->input->post('desc'),
+                         'success'              => $this->input->post('good'),
+                         'subject'              => $this->input->post('subject'),
+                         'email'                => $this->input->post('email'),
+                         'captcha'              => $this->input->post('captcha'),
+                         'direct_url'           => $this->input->post('direct_url'),
+                         'user_message_active'  => $this->input->post('user_message_active'),
+                         'action_files'         => $this->input->post('action_files'),
                         ];
 
                 // Создаем / сохраняем
@@ -193,6 +196,32 @@ class Admin extends BaseAdminController
                     $id = $this->xforms_model->add_form($data);
                     showMessage('Готово', 'Форма добавлена');
                     $path = '/admin/components/cp/xforms/form/' . $id;
+
+                    // Добавим шаблон "xforms_send" для отправки почты через модуль cmsemail
+                    $this->load->dbforge();
+                    $email_paterns = [
+                        'name'                  => 'xforms_send_form_' . $id,
+                        'from'                  => 'Админстрация сайта',
+                        'from_email'            => '',
+                        'type'                  => 'HTML',
+                        'patern'                => '',
+                        'user_message_active'   => 0,
+                        'admin_message_active'  => 0
+                    ];
+                    $this->db->insert('mod_email_paterns', $email_paterns);
+                    $email_patterns_id = $this->db->insert_id();
+
+                    $email_paterns_i18n = [
+                        'id'            => $email_patterns_id,
+                        'locale'        => 'ru',
+                        'theme'         => $data['subject'] ? $data['subject'] : 'ImageCMS - Отправка формы - ' . $id,
+                        'user_message'  => 'Здравствуйте. Мы свяжемся с вами в ближайшее время.',
+                        'admin_message' => '<p>Пришла заявка.</p><p>$message$</p>',
+                        'description'   => 'Отправка формы xforms - ' . $data['title'],
+                        'variables'     => 'a:2:{s:9:"$message$";s:46:"Список заполненных полей";s:14:"$link_message$";s:72:"Ссылка для Администратора на сообщение";}'
+                    ];
+                    $this->db->insert('mod_email_paterns_i18n', $email_paterns_i18n);
+
                 }
 
                 if ($this->input->post('action') == 'close') {
@@ -207,6 +236,7 @@ class Admin extends BaseAdminController
             if (isset($id)) {
                 assetManager::create()
                     ->setData('form', $this->xforms_model->get_form($id))
+                    ->setData('fields', $this->xforms_model->get_form_fields($id, ['visible' => 1, 'type' => 'text']))
                     ->renderAdmin('form');
             } else {
                 assetManager::create()->renderAdmin('form');
@@ -219,54 +249,46 @@ class Admin extends BaseAdminController
      */
     public function index() {
 
+        /* Как нибудь доделаю...
+           надо
+        // версия модуля из файлов
+        $xforms_version = components::get_module_info('xforms')['version'];
+
+        // Версия модуля из БД
+        $this->load->dbforge();
+        $this->db->where('name', 'xforms');
+        $query = $this->db->get('components')->row_array();
+        $version = unserialize($query['settings']);
+
+        // Запускаем обновление БД
+        if($xforms_version > $version['version']) {
+            if($version['version'] < '2.3')
+                $this->update_2_3();
+        }
+        */
+
         assetManager::create()->setData('forms', $this->xforms_model->get_forms())->renderAdmin('forms');
     }
 
     /**
-     * Обновление модуля с 2.0 версии до 2.3
-     */
-    public function update_2_3() {
-
-        //Добавим колонку с расшерениями файлов
-        $xforms_field = [
-                'allowed_types' => [
-                    'type'       => 'varchar',
-                    'constraint' => 500,
-                ]
-            ];
-
-        $this->load->dbforge();
-        $this->dbforge->add_column('xforms_field', $xforms_field);
-
-        // удаляем старые поля из xforms_messages
-        $this->dbforge->drop_column('xforms_messages', 'author');
-        $this->dbforge->drop_column('xforms_messages', 'file');
-        $this->dbforge->drop_column('xforms_messages', 'msg');
-        $this->dbforge->drop_column('xforms_messages', 'date');
-
-        //Добавим Новые колонки в xforms_messages
-        $xforms_messages = [
-                'fid'       => [
-                    'type'       => 'int',
-                    'constraint' => 11,
-                ],
-                'message'   => ['type' => 'text'],
-                'status' => [
-                    'type'         => 'smallint',
-                    'constraint'   => 1
-                ]
-            ];
-        $this->dbforge->add_column('xforms_messages', $xforms_messages);
-
-    }
-
-    /**
-     * Работа с сообщениями для формы
+     * Show list messages in admin panel
      */
     public function messages() {
 
         assetManager::create()
-            ->setData('message', $this->xforms_model->get_messages())
+            ->setData('messages', $this->xforms_model->get_messages())
+            ->renderAdmin('messages');
+    }
+
+
+    /**
+     * show message
+     * @param $id
+     */
+    public function message($id) {
+
+        assetManager::create()
+            ->setData('message', $this->xforms_model->get_message($id))
             ->renderAdmin('message');
     }
 
@@ -282,5 +304,104 @@ class Admin extends BaseAdminController
         }
 
         showMessage('Позиция обновлена');
+    }
+
+
+    /**
+     * Обновление модуля с 2.0 версии до 2.3
+     */
+    public function update_2_3() {
+
+        //Добавим колонку с расшерениями файлов
+        $xforms_field = [
+            'allowed_types' => [
+                'type'       => 'varchar',
+                'constraint' => 500,
+            ]
+        ];
+
+        $this->load->dbforge();
+        $this->dbforge->add_column('xforms_field', $xforms_field);
+
+        // удаляем старые поля из xforms_messages
+        $this->dbforge->drop_column('xforms_messages', 'author');
+        $this->dbforge->drop_column('xforms_messages', 'file');
+        $this->dbforge->drop_column('xforms_messages', 'msg');
+        $this->dbforge->drop_column('xforms_messages', 'date');
+
+        //Добавим Новые колонки в xforms_messages
+        $xforms_messages = [
+            'fid'       => [
+                'type'       => 'int',
+                'constraint' => 11,
+            ],
+            'message'   => ['type' => 'text'],
+            'status' => [
+                'type'         => 'smallint',
+                'constraint'   => 1,
+                'default'      => 1,
+            ]
+        ];
+        $this->dbforge->add_column('xforms_messages', $xforms_messages);
+    }
+
+    /**
+     * Обновление модуля с 2.3 версии до 2.4
+     */
+    public function update_2_4() {
+
+
+        // Добавим колонки в xforms_messages
+        $xforms_messages = [
+            'created' => [
+                'type'       => 'int',
+                'constraint' => 11
+            ],
+            'status' => [
+                'type'         => 'smallint',
+                'constraint'   => 1
+            ]
+        ];
+
+        $this->load->dbforge();
+        $this->dbforge->add_column('xforms_messages', $xforms_messages);
+
+        // Добавим поле "Действие с файлами" - action_files
+        $this->dbforge->add_column('xforms', ['action_files' => ['type' => 'smallint', 'constraint' => '1', 'default' => 1]]);
+
+        // ДОбавим поле "Клиентский email"
+        $this->dbforge->add_column('xforms', ['user_message_active' => ['type' => 'int', 'constraint' => '3']]);
+
+        // Переберем все созданные формы, и добавим для них переменную для cmsemail
+        $xforms = $this->xforms_model->get_forms();
+
+        $this->db->update('components', ['settings' => serialize(['version' => '2.4'])]);
+
+        if($xforms) {
+            foreach ($xforms as $key => $xform) {
+                $email_paterns = [
+                    'name'                  => 'xforms_send_form_' . $xform['id'],
+                    'from'                  => 'Админстрация сайта',
+                    'from_email'            => '',
+                    'type'                  => 'HTML',
+                    'patern'                => '',
+                    'user_message_active'   => 0,
+                    'admin_message_active'  => 0
+                ];
+                $this->db->insert('mod_email_paterns', $email_paterns);
+                $email_patterns_id = $this->db->insert_id();
+
+                $email_paterns_i18n = [
+                    'id'            => $email_patterns_id,
+                    'locale'        => 'ru',
+                    'theme'         => $xform['subject'] ? $xform['subject'] : 'ImageCMS - Отправка формы - ' . $xform['id'],
+                    'user_message'  => 'Здравствуйте. Мы свяжемся с вами в ближайшее время.',
+                    'admin_message' => '<p>Пришла заявка.</p><p>$message$</p>',
+                    'description'   => 'Отправка формы xforms - ' . $xform['title'],
+                    'variables'     => 'a:2:{s:9:"$message$";s:46:"Список заполненных полей";s:14:"$link_message$";s:72:"Ссылка для Администратора на сообщение";}'
+                ];
+                $this->db->insert('mod_email_paterns_i18n', $email_paterns_i18n);
+            }
+        }
     }
 }

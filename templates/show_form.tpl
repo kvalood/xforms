@@ -26,16 +26,18 @@
                 {foreach $fields as $field}
                     <div class="field__item{if $field.type=='separator'} item_separator{/if} {$field.operation}">
 
-                        {if $field.type=='checkbox'}
+                        {if $field.type=='checkbox' || $field.type=='radio' || $field.type=='select'}
                             {$checkbox_value = array_diff(explode("\n",$field.value), array(''))}
                         {/if}
 
-                        {if $field.type=='select' || $field.type=='radio' || $field.type == 'separator' || count($checkbox_value) >= 1}
+                        {if (($field.type=='select' || $field.type=='radio') AND count($checkbox_value) >= 1) || $field.type == 'separator' || count($checkbox_value) >= 1}
                             <div class="field__title{if $field.require==1} require_field{/if}">{$field.label}</div>
                         {else:}
-                            <label for="f{$field.id}" class="field__title{if $field.require==1} require_field{/if}">
-                                {$field.label}
-                            </label>
+                            {if (!$checkbox_value AND $field.type=='checkbox') || $field.type=='text' || $field.type=='textarea' || $field.type=='file'}
+                                <label for="f{$field.id}" class="field__title{if $field.require==1} require_field{/if}">
+                                    {$field.label}
+                                </label>
+                            {/if}
                         {/if}
 
                         {if $field.type=='text'}
@@ -50,25 +52,25 @@
                                     {/foreach}
                                 </ul>
                             {else:}
-                                <input type="checkbox" name="f{$field.id}" id="f{$field.id}" value="{if empty($checkbox_value)}1{else:}{$field.value}{/if}"{if $field.disabled==1} disabled="disabled"{/if} {if $field.checked}checked{/if} />
+                                <input type="checkbox" name="f{$field.id}" id="f{$field.id}" value="{if empty($checkbox_value)}1{else:}{$field.value}{/if}"{if $field.disabled==1 AND !$field.require} disabled="disabled"{/if} {if $field.checked}checked{/if} />
                             {/if}
-                        {elseif $field.type=='select'}
+                        {elseif $field.type=='select' AND $checkbox_value}
                             <select name="f{$field.id}" id="f{$field.id}" {if $field.disabled==1}disabled="disabled"{/if}>
-                                {$value = explode("\n",$field.value)}
                                 {if !$field.checked}
                                     <option value="">Выберите значение</option>
                                 {/if}
-                                {foreach $value as $key => $val}
+                                {foreach $checkbox_value as $key => $val}
                                     <option value="{$key}" {if $field.checked && $key==0}selected{/if}>{$val}</option>
                                 {/foreach}
                             </select>
                         {elseif $field.type=='radio'}
-                            {$value = explode("\n",$field.value)}
-                            <ul class="field__radio">
-                                {foreach $value as $key => $val}
-                                    <li><label><input type="radio" name="f{$field.id}" value="{$key}" id="{$field.id}{$key}" {if $field.checked && $key==0}checked{/if}/> <span>{$val}</span></label></li>
-                                {/foreach}
-                            </ul>
+                            {if count($checkbox_value) >= 1}
+                                <ul class="field__radio">
+                                    {foreach $checkbox_value as $key => $val}
+                                        <li><label><input type="radio" name="f{$field.id}" value="{$key}" id="{$field.id}{$key}" {if $field.checked && $key==0}checked{/if}/> <span>{$val}</span></label></li>
+                                    {/foreach}
+                                </ul>
+                            {/if}
                         {elseif $field.type=='file'}
                             <div class="field__item file" data-field-id="{$field.id}">
                                 <div class="drop_here">
@@ -84,7 +86,7 @@
                 {/foreach}
 
                 {if $form.captcha}
-                    <div class="field__item captcha_field">
+                    <div class="field__item captcha_field col s12">
                         <div class="field__title">{lang('Type the characters you see in this image.', 'xforms')}</div>
                         <div class="captcha_image">{$form.captcha_image}</div>
                         <input type="text" name="captcha" autocomplete="off" required />

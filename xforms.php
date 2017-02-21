@@ -2,6 +2,7 @@
 
 use CMSFactory\assetManager;
 use cmsemail\email;
+use CMSFactory\ModuleSettings;
 
 (defined('BASEPATH')) OR exit('No direct script access allowed');
 
@@ -19,8 +20,6 @@ class Xforms extends MY_Controller
         $lang->load('xforms');
         $this->load->model('xforms_model');
         $this->load->library('form_validation');
-
-        $this->load->library('email');
 
         $this->load->helper(array('form', 'url'));
     }
@@ -60,10 +59,7 @@ class Xforms extends MY_Controller
                                     'constraint' => 255,
                                    ],
                    'desc'       => ['type' => 'text'],
-                   'success'    => [
-                                    'type'       => 'varchar',
-                                    'constraint' => 255,
-                                   ],
+                   'success'    => ['type' => 'text'],
                    'subject'    => [
                                     'type'       => 'varchar',
                                     'constraint' => 255,
@@ -82,6 +78,15 @@ class Xforms extends MY_Controller
                                     'constraint' => 1,
                                     'default'    => 0,
                                    ],
+                   'action_files' => [
+                                    'type' => 'smallint',
+                                    'constraint' => '1',
+                                    'default' => 1
+                                    ],
+                   'user_message_active' => [
+                                    'type' => 'int',
+                                    'constraint' => '3'
+                                    ]
                   ];
 
         $this->dbforge->add_key('id', TRUE);
@@ -166,9 +171,14 @@ class Xforms extends MY_Controller
                                          'constraint' => 11,
                                         ],
                             'message'=> ['type' => 'text'],
+                            'created' => [
+                                'type'       => 'int',
+                                'constraint' => 11
+                                         ],
                             'status' => [
-                                         'type'         => 'smallint',
-                                         'constraint'   => 1
+                                'type'          => 'smallint',
+                                'constraint'    => 1,
+                                'default'       => 1
                                         ]
                            ];
 
@@ -177,7 +187,7 @@ class Xforms extends MY_Controller
         $this->dbforge->create_table('xforms_messages', TRUE);
 
         $this->db->where('name', 'xforms');
-        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '1']);
+        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '2.4'])]);
     }
 
     public function autoload() {
@@ -234,8 +244,15 @@ class Xforms extends MY_Controller
         // Если нажали отправить форму, то перебираем все входящие значения
         if ($this->input->post()) {
 
-            $msg        = []; // Текст в админку
-            $msg_email  = []; // Текст для почты
+            // Текст в админку
+            $msg            = [
+                'fid'       => $form['id'],
+                'created'   => strtotime(date('Y-m-d H:i:s'))
+            ];
+            $msg_email      = []; // Текст для почты
+            $user_email     = ''; // Email клиента, для отправки ему письма
+            $attach_email   = []; // Файлы, прикрепляемые к письму
+
 
             $post_data = $this->input->post();
 
@@ -275,17 +292,28 @@ class Xforms extends MY_Controller
                                 $files[$k][$key] = $v;
                             }
                         }
-                        foreach($files as $file) {
-                            $data_msg .= '<a href="' . site_url('xforms/download/' . $file['url']) . '">' . $file['name'] . '</a> - ';
-                            $data_msg .= '<a href="' . site_url('xforms/deleteFile/' . $file['url']) . '" title="удалить" style="color:red;">×</a><br/>';
+                        foreach($files as $key => $file) {
+                            if($form['action_files'] == 1 OR $form['action_files'] == 3) {
+                                // Вставляем ссылки файлы в текст письма
+                                $data_msg .= '<a href="' . site_url('xforms/download/' . $file['url']) . '">' . $file['name'] . '</a> - ';
+                                $data_msg .= '<a href="' . site_url('xforms/deleteFile/' . $file['url']) . '" title="удалить" style="color:red;">×</a><br/>';
+                            }
+
+                            // Добавляем для вложения в письмо
+                            $attach_email[] = $file['url'];
                         }
                     }
                 } elseif ($field['type'] == 'text' OR $field['type'] == 'textarea') {
                     $this->form_validation->set_rules($key_post, $field['label'], 'trim|xss_clean|' . $require . $field['validation']);
                     $data_msg = $post_data[$key_post];
+
+                    // Найдем поле с email'ом отправителя
+                    if($form['user_message_active'] AND $field['id'] == $form['user_message_active'])
+                        $user_email = $post_data[$key_post];
                 }
 
-                $msg_email[$field['id']]['field'] = $field;
+                if($field['type'] != 'file' OR ($field['type'] == 'file' AND $form['action_files'] != 2))
+                    $msg_email[$field['id']]['field'] = $field;
 
                 if(!empty($data_msg))
                     $msg_email[$field['id']]['data'] = $data_msg;
@@ -296,36 +324,115 @@ class Xforms extends MY_Controller
             }
 
             if (!$this->form_validation->run($this) == FALSE) {
-                // добавляем сообщение в БД.
-                // TODO: Добавить сообщение в админку.
 
-                // Отправялем email
+                /*
+                 * Отправялем email
+                 * т.к. стандарный модуль cmsemail не позволяет прикреплять больше 1 файла и отправлять на несколько email'ов админам, см. = https://github.com/imagecms/ImageCMS/issues/103
+                 * Загружаем его настройки для отправки почты через стандартные средства
+                 */
                 $message = assetManager::create()->setData('data', $msg_email)->fetchTemplate('email');
+
+                $this->load->library('email');
+                $this->email->clear();
+
+                $locale =  MY_Controller::defaultLocale();
+                $pattern_name = 'xforms_send_form_' . $form['id'];
+                $default_settings = ModuleSettings::ofModule('cmsemail')->get($locale ?: null);
+                $pattern_settings = email::getInstance()->cmsemail_model->getPaternSettings($pattern_name);
+
+                // добавляем сообщение в БД.
+                $msg['message'] = $message;
+                $message_id     = $this->xforms_model->add_message($msg);
+
+                // Заменяемые переменные для cmsemail
+                $replaceData = [
+                    'message'       => $message,
+                    'link_message'  => site_url('admin/components/cp/xforms/message/' . $message_id)
+                ];
+
+                // Утсановим настройки для email
+                if ($pattern_settings) {
+                    foreach ($pattern_settings as $key => $value) {
+                        if (!$value) {
+                            if ($default_settings[$key]) {
+                                $pattern_settings[$key] = $default_settings[$key];
+                            }
+                        }
+                    }
+                }
+
+                $default_settings['type'] = strtolower($pattern_settings['type']);
+                $pattern_settings['protocol'] = strtolower($default_settings['protocol']);
+                if (strtolower($pattern_settings['protocol']) == strtolower('SMTP')) {
+                    $pattern_settings['smtp_port'] = $default_settings['port'];
+                    $pattern_settings['smtp_host'] = $default_settings['smtp_host'];
+                    $pattern_settings['smtp_user'] = $default_settings['smtp_user'];
+                    $pattern_settings['smtp_pass'] = $default_settings['smtp_pass'];
+                    $pattern_settings['smtp_crypto'] = $default_settings['encryption'];
+                    $this->email->set_newline("\r\n"); // TODO: ???
+                }
+                $pattern_settings['mailtype'] = strtolower($pattern_settings['type']);
+                $pattern_settings['mailpath'] = $default_settings['mailpath'];
+
+                $this->email->initialize($pattern_settings);
+
+                /**
+                 * Отправляем письмо клиенту
+                 */
+                if($form['user_message_active'] AND $pattern_settings['user_message_active']) {
+
+                    $this->email->from($pattern_settings['from_email'], $pattern_settings['from']);
+                    $this->email->to($user_email);
+                    $this->email->subject($pattern_settings['theme']);
+                    $this->email->message(email::getInstance()->replaceVariables($pattern_settings['user_message'], $replaceData));
+
+                    $this->email->send();
+                    $this->email->clear();
+                }
+
+                /**
+                 * Отправляем письма админам
+                 */
                 $form['email'] = array_diff(explode(',', str_replace(' ', '', $form['email'])), ['']);
                 foreach ($form['email'] as $item) {
                     $item = trim($item);
 
                     if ($this->form_validation->valid_email($item)) {
 
-                        // email::getInstance()->sendEmail($this->input->post('email'), 'feedback', $feedback_variables);
+                        $this->email->from($pattern_settings['from_email'], $pattern_settings['from']);
+                        $this->email->to($item);
+                        $this->email->subject($pattern_settings['theme']);
+                        $this->email->message(email::getInstance()->replaceVariables($pattern_settings['admin_message'], $replaceData));
 
-                        $this->email->initialize(['mailtype' => 'html']);
-
-                        if($this->email->protocol != 'smtp') {
-                            $this->email->from($form['email'][0]);
+                        // Добавляем вложения
+                        if($attach_email AND ($form['action_files'] == 2 OR $form['action_files'] == 3)) {
+                            foreach ($attach_email as $file) {
+                                if(file_exists(FCPATH . 'uploads/xforms/' . $file)) {
+                                    $this->email->attach(FCPATH . 'uploads/xforms/' . $file);
+                                }
+                            }
                         }
 
-                        $this->email->subject($form['subject']);
-                        $this->email->message($message);
-                        $this->email->to($item);
                         $this->email->send();
 
-                        //$notify['console']['debug'][] = $this->email->print_debugger(); // отдаем в console.log(notify.console) информацию об отправке.
+                        // отдаем в console.log(notify.console) информацию об отправке. Только Админу
+                        if ($this->dx_auth->is_admin()) {
+                            $notify['console']['debug'][] = $this->email->print_debugger();
+                        }
+
                         $this->email->clear();
                     }
                 }
 
+                // Удаляем вложения
+                if($attach_email AND $form['action_files'] == 2) {
+                    foreach ($attach_email as $file) {
+                        $this->deleteFile($file);
+                    }
+                }
+
                 $notify['success'] = $form['success'];
+
             } else {
                 $notify['errors'] = $this->form_validation->getErrorsArray();
                 $notify['group_errors'] = validation_errors();
@@ -346,7 +453,6 @@ class Xforms extends MY_Controller
                 assetManager::create()
                     ->setData('form', $form)
                     ->setData('fields', $fields)
-                    ->setData('notify', $notify)
                     ->registerScript('jquery.ui.widget')
                     ->registerScript('jquery.iframe-transport')
                     ->registerScript('jquery.fileupload')
@@ -358,7 +464,6 @@ class Xforms extends MY_Controller
                 assetManager::create()
                     ->setData('form', $form)
                     ->setData('fields', $fields)
-                    ->setData('notify', $notify)
                     ->registerScript('xforms')
                     ->registerStyle('xforms')
                     ->render('../templates/show_form');
@@ -409,7 +514,7 @@ class Xforms extends MY_Controller
             $this->upload->initialize($config);
 
             if (!$this->upload->do_upload()) {
-                echo json_encode(array('error' => $this->upload->display_errors()));
+                echo json_encode(['error' => $this->upload->display_errors()]);
             } else {
                 $info = $this->upload->data();
 

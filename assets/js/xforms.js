@@ -12,6 +12,9 @@ function send_widget_form(i) {
         form.append('<div class="xforms_loader"></div>');
     }
 
+    // Найдем последнюю капчу на сайте
+    var last_capt
+
     $.ajax({
         type: "POST",
         url: form.attr('action'),
@@ -54,6 +57,8 @@ function send_widget_form(i) {
                     form.find('.xforms_loader').remove();
                 }
             }
+
+            console.log(notify);
         }
     });
 

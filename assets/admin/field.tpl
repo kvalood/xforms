@@ -136,7 +136,7 @@
                                             <input name="allowed_types" id="allowed_types" value="{$field.allowed_types}"
                                                    type="text">
                                         </div>
-                                        <span class="help-block">Впишите расширения файлов, доступных к загрузке, через  |<br/>Например: gif|jpg|png</span>
+                                        <span class="help-block">Впишите расширения файлов, доступных к загрузке, через  |<br/>Например: gif|jpg|png  или впишите *, если хотите загружать файлы любых форматов</span>
                                     </div>
                                 </div>
 
@@ -187,7 +187,7 @@
                                     </div>
                                 </div>
 
-                                <div class="control-group">
+                                <div class="control-group" style="display:{if !$field || ($field.type == 'textarea' || $field.type == 'text' || $field.type == 'select' || $field.type == 'checkbox')}block{else:}none{/if}">
                                     <div class="control-label"></div>
                                     <div class="controls">
 											<span class="frame_label no_connection">
@@ -228,14 +228,14 @@
 
             var selected_val = $(this).val(),
                 showers_line = {
-                    checkbox: ['value', 'check'],
-                    select: ['value', 'check'],
+                    checkbox: ['value', 'check', 'disable'],
+                    select: ['value', 'check', 'disable'],
                     radio: ['check', 'value'],
-                    text: ['maxlength'],
-                    textarea: ['maxlength'],
+                    text: ['maxlength', 'disable'],
+                    textarea: ['maxlength', 'disable'],
                     file: ['allowed_types']
                 },
-                optional_fields = ['check', 'value', 'maxlength', 'allowed_types'];
+                optional_fields = ['check', 'value', 'maxlength', 'allowed_types', 'disable'];
 
             // Вылючаем опциональные поля
             for(var i in optional_fields) {
