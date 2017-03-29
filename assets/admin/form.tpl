@@ -148,7 +148,7 @@
                                     <div class="controls">
 
                                         <select name="user_message_active" id="user_message_active">
-                                            <option value="1" {if !$form.user_message_active}selected="selected"{/if}>Не отправлять клиенту письмо</option>
+                                            <option value="0" {if !$form.user_message_active}selected="selected"{/if}>Не отправлять клиенту письмо</option>
 
                                             {foreach $fields as $field}
                                                 <option value="{$field.id}" {if $form.user_message_active == $field.id}selected="selected"{/if}>{$field.label} ({$field.id})</option>

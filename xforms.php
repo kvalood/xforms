@@ -21,6 +21,18 @@ class Xforms extends MY_Controller
         $this->load->model('xforms_model');
         $this->load->library('form_validation');
 
+        $this->form_validation->set_message('tpl_validation', lang('The %s field can only contain Latin characters', 'admin'));
+
+        // TODO: Добавить в след. версию.
+        /*
+        $this->set_message('valid_date', lang('Поле %s должно содержать правильную дату.'));
+        $this->set_message('valid_time', lang('Поле %s должно содержать правильное время.'));
+        $this->set_message('phone', lang('Поле %s должно содержать корректный номер.'));
+        $this->set_message('valid_phone', lang('Поле %s должно содержать корректный номер телефона. Не допускаются пробелы, дефисы и скобки.'));
+        $this->set_message('least_one_symbol', lang('Поле %s должно содержать как минимум один символ.'));
+        $this->set_message('alpha_dash_slash', lang('alpha_dash'));
+        */
+
         $this->load->helper(array('form', 'url'));
     }
 
@@ -207,6 +219,60 @@ class Xforms extends MY_Controller
             return TRUE;
         }
     }
+
+
+    /**
+     * Valid Date (europe format)
+     * // TODO: Добавить в след. версию.
+     */
+    public function valid_date($str) {
+
+        if (preg_match('/([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})/', $str)) {
+            $arr = explode('.', $str);
+            $dd = $arr[0];
+            $mm = $arr[1];
+            $yyyy = $arr[2];
+
+            return (checkdate($mm, $dd, $yyyy));
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * Validate time
+     */
+    // TODO: Добавить в след. версию.
+    public function valid_time($str) {
+
+        if (preg_match('/([0-9]{1,2})\:([0-9]{1,2})\:([0-9]{1,2})/', $str)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * VAlidete phone number
+     * +7 8 +38 +375 [0-9]
+     * междугородных телефонов Российской Федерации (после удаления добавочного номера а так же всех «левых» символов кроме цифр и плюса вначале)
+     * с учетом действующего Телефонного плана нумерации, (в том числе, кодов альтернативных операторов дальней связи)
+     * дополнительно Украина с привычным вбиванием для Украины через 038
+     * дополнительно Белоруссия
+     * Отбрасывает номера вида:
+     * +70000000000
+     * +77777777777
+     * +78901234567
+     * 88888888888
+     * Дополнительно ПРОСТО ПРОВЕРКА РОССИЯ,УКРАИНА, БЕЛКА - без заморочек, просто межгород и 8
+     * ^(8|\+7|\+038|\+38|\+375)\d{9,10}$
+     */
+    // TODO: Добавить в след. версию.
+    public function valid_phone($number) {
+
+        return (bool) preg_match('/^(?:8(?:(?:21|22|23|24|51|52|53|54|55)|(?:15\d\d))?|\+7|\+375|\+38|\+038)?(?:(?:3[04589]|4[012789]|8[^89\D]|9\d)\d)?\d{7}$/', $number);
+    }
+
 
     public function index() {
 
