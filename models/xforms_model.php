@@ -4,6 +4,25 @@
 
 class Xforms_model extends CI_Model
 {
+
+    /**
+     * @return array
+     */
+    public function get_settings() {
+        $this->db->where('name', 'xforms');
+        $query = $this->db->get('components')->row_array();
+        return unserialize($query['settings']);
+    }
+
+    /**
+     * @param array $data
+     */
+    public function save_settings($data) {
+        $this->db->where('name', 'xforms');
+        $this->db->update('components', ['settings' => serialize($data)]);
+    }
+
+
     /**
      * Add form
      * @param array $data

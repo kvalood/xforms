@@ -7,21 +7,23 @@
         <div class="pull-right">
             <div class="d-i_b">
                 <a href="/admin/components/cp/xforms/form" class="btn btn-small pjax btn-success"><i
-                            class="icon-plus-sign icon-white"></i>Создать форму</a>
+                            class="icon-plus-sign icon-white"></i>{lang('Create form', 'xforms')}</a>
                 <a href="/admin/components/cp/xforms/messages" class="btn btn-small pjax btn-success"><i
-                            class="icon-envelope icon-white"></i>Сообщения</a>
+                            class="icon-envelope icon-white"></i>{lang('Messages', 'xforms')}</a>
+                <a class="btn btn-small pjax" href="/admin/components/cp/xforms/show_settings"><i
+                            class="icon-wrench"></i>{lang('Settings', 'xforms')}</a>
             </div>
         </div>
     </div>
     {if $forms}
         <table id="cats_table" class="table  table-bordered table-hover table-condensed t-l_a">
             <thead>
-                <th class="span1">ID</th>
-                <th class="span4">Наименование</th>
-                <th class="span2">URL</th>
-                <th class="span2">Тема</th>
-                <th class="span1">E-mail</th>
-                <th class="span1">Действия</th>
+            <th class="span1">ID</th>
+            <th class="span4">Наименование</th>
+            <th class="span2">URL</th>
+            <th class="span2">Тема</th>
+            <th class="span1">E-mail</th>
+            <th class="span1">Действия</th>
             </thead>
             <tbody>
             {foreach $forms as $form}
@@ -35,8 +37,8 @@
                     </td>
                     <td>
                         {if $form.direct_url}
-                        <a href="{site_url('xforms/show')}/{$form.url}" target="_blank" data-rel="tooltip"
-                           data-placement="top" data-original-title="Посмотреть на сайте">{$form.url}</a>
+                            <a href="{site_url('xforms/show')}/{$form.url}" target="_blank" data-rel="tooltip"
+                               data-placement="top" data-original-title="Посмотреть на сайте">{$form.url}</a>
                         {else:}
                             Не показывается на сайте
                         {/if}

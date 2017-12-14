@@ -7,6 +7,10 @@
 }
 .field__item .error{}
 .xforms_description{}
+.field__checkbox{}
+.field__checkbox label:hover{
+	cursor: pointer;
+}
 .field__title.require_field:before{
     content: '*';
     font-size: 18px;
@@ -16,6 +20,11 @@
     display: inline-block;
     vertical-align: top;
     line-height: 22px;
+}
+.field__item input[name="captcha"],
+.captcha_image {
+	display: inline-block;
+	vertical-align: top;
 }
 .xforms_loader{
     display: block;
@@ -42,11 +51,6 @@
     border-bottom: 10px solid #3498db;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-}
-.field__item input[name="captcha"],
-.captcha_image {
-	display: inline-block;
-	vertical-align: top;
 }
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }

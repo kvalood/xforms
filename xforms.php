@@ -199,7 +199,7 @@ class Xforms extends MY_Controller
         $this->dbforge->create_table('xforms_messages', TRUE);
 
         $this->db->where('name', 'xforms');
-        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '2.4'])]);
+        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '2.4.1', 'save_messages' => 0])]);
     }
 
     public function autoload() {
@@ -406,15 +406,20 @@ class Xforms extends MY_Controller
                 $default_settings = ModuleSettings::ofModule('cmsemail')->get($locale ?: null);
                 $pattern_settings = email::getInstance()->cmsemail_model->getPaternSettings($pattern_name);
 
-                // добавляем сообщение в БД.
-                $msg['message'] = $message;
-                $message_id     = $this->xforms_model->add_message($msg);
+                // Узнаем настройки форм
+                $setting_forms = $this->xforms_model->get_settings();
 
                 // Заменяемые переменные для cmsemail
-                $replaceData = [
-                    'message'       => $message,
-                    'link_message'  => site_url('admin/components/cp/xforms/message/' . $message_id)
-                ];
+                $replaceData = ['message' => $message];
+
+                if($setting_forms['save_messages']) {
+                    // добавляем сообщение в БД.
+                    $msg['message'] = $message;
+                    $message_id = $this->xforms_model->add_message($msg);
+
+                    $replaceData = ['link_message'  => site_url('admin/components/cp/xforms/message/' . $message_id)];
+                }
+
 
                 // Утсановим настройки для email
                 if ($pattern_settings) {

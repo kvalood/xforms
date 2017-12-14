@@ -201,7 +201,7 @@ class Admin extends BaseAdminController
                     $this->load->dbforge();
                     $email_paterns = [
                         'name'                  => 'xforms_send_form_' . $id,
-                        'from'                  => 'Админстрация сайта',
+                        'from'                  => 'Администрация сайта',
                         'from_email'            => '',
                         'type'                  => 'HTML',
                         'patern'                => '',
@@ -269,6 +269,38 @@ class Admin extends BaseAdminController
 
         assetManager::create()->setData('forms', $this->xforms_model->get_forms())->renderAdmin('forms');
     }
+
+    /**
+     * Show module settings
+     */
+    public function show_settings() {
+        $settings = $this->xforms_model->get_settings();
+
+        \CMSFactory\assetManager::create()
+            ->setData('settings', $settings)
+            ->renderAdmin('settings');
+    }
+
+
+    /**
+     * Update module settings
+     */
+    public function update_settings() {
+        $data = [
+            'save_messages'      => (bool) $this->input->post('save_messages'),
+        ];
+
+        $this->xforms_model->save_settings($data);
+        showMessage(lang('Changes saved', 'xforms'));
+
+        if ($this->input->post('action') == 'toedit') {
+            pjax('/admin/components/cp/xforms/show_settings');
+        } else {
+            pjax('/admin/components/cp/xforms');
+        }
+    }
+
+
 
     /**
      * Show list messages in admin panel
@@ -381,7 +413,7 @@ class Admin extends BaseAdminController
             foreach ($xforms as $key => $xform) {
                 $email_paterns = [
                     'name'                  => 'xforms_send_form_' . $xform['id'],
-                    'from'                  => 'Админстрация сайта',
+                    'from'                  => 'Администрация сайта',
                     'from_email'            => '',
                     'type'                  => 'HTML',
                     'patern'                => '',
