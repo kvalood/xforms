@@ -125,7 +125,8 @@
                                             <input name="validation" id="validation" value="{$field.validation}"
                                                    type="text">
                                         </div>
-                                        <span class="help-block">Например: valid_email|max_length[255]|min_length[1]|numeric<br/>trim|required|xss_clean Не нужно вставлять.</span>
+                                        <span class="help-block">Например: valid_email|max_length[255]|min_length[1]|numeric|valid_phone итд.<br/>trim|required|xss_clean Не нужно вставлять.<br/>
+                                        </span>
                                     </div>
                                 </div>
 

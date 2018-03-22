@@ -4,25 +4,6 @@
 
 class Xforms_model extends CI_Model
 {
-
-    /**
-     * @return array
-     */
-    public function get_settings() {
-        $this->db->where('name', 'xforms');
-        $query = $this->db->get('components')->row_array();
-        return unserialize($query['settings']);
-    }
-
-    /**
-     * @param array $data
-     */
-    public function save_settings($data) {
-        $this->db->where('name', 'xforms');
-        $this->db->update('components', ['settings' => serialize($data)]);
-    }
-
-
     /**
      * Add form
      * @param array $data
@@ -141,55 +122,4 @@ class Xforms_model extends CI_Model
             $this->db->where('id', $id)->delete('xforms_field');
         }
     }
-
-    /**
-     * @return mixed
-     */
-    public function get_messages() {
-
-        $this->db->select('xforms_messages.*, xforms.title');
-        $this->db->from('xforms_messages');
-        $this->db->join('xforms', 'xforms_messages.fid = xforms.id');
-        $this->db->order_by("xforms_messages.created", "desc");
-        $result = $this->db->get()->result_array();
-
-        return $result;
-        //return $this->db->get()->result_array();
-    }
-
-    /**
-     * @param array $data
-     * @return mixed
-     */
-    public function add_message($data = []) {
-
-        $this->db->insert('xforms_messages', $data);
-        return $this->db->insert_id();
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function get_message($id) {
-
-        $this->db->select('xforms_messages.*, xforms.title, xforms.action_files');
-        $this->db->from('xforms_messages');
-        $this->db->join('xforms', 'xforms_messages.fid = xforms.id');
-        $this->db->where('xforms_messages.id', $id);
-
-        return $this->db->get()->row_array();
-    }
-
-    /**
-     * @param $id
-     * @param $data
-     */
-    public function update_message($id, $data) {
-
-        $this->db->where('id', $id);
-        $this->db->update('xforms_messages', $data);
-        return $id;
-    }
-
 }

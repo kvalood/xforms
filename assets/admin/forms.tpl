@@ -8,10 +8,6 @@
             <div class="d-i_b">
                 <a href="/admin/components/cp/xforms/form" class="btn btn-small pjax btn-success"><i
                             class="icon-plus-sign icon-white"></i>{lang('Create form', 'xforms')}</a>
-                <a href="/admin/components/cp/xforms/messages" class="btn btn-small pjax btn-success"><i
-                            class="icon-envelope icon-white"></i>{lang('Messages', 'xforms')}</a>
-                <a class="btn btn-small pjax" href="/admin/components/cp/xforms/show_settings"><i
-                            class="icon-wrench"></i>{lang('Settings', 'xforms')}</a>
             </div>
         </div>
     </div>

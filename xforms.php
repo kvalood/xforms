@@ -23,15 +23,20 @@ class Xforms extends MY_Controller
 
         $this->form_validation->set_message('tpl_validation', lang('The %s field can only contain Latin characters', 'admin'));
 
-        // TODO: Добавить в след. версию.
-        /*
-        $this->set_message('valid_date', lang('Поле %s должно содержать правильную дату.'));
-        $this->set_message('valid_time', lang('Поле %s должно содержать правильное время.'));
-        $this->set_message('phone', lang('Поле %s должно содержать корректный номер.'));
-        $this->set_message('valid_phone', lang('Поле %s должно содержать корректный номер телефона. Не допускаются пробелы, дефисы и скобки.'));
-        $this->set_message('least_one_symbol', lang('Поле %s должно содержать как минимум один символ.'));
-        $this->set_message('alpha_dash_slash', lang('alpha_dash'));
-        */
+        $this->form_validation->set_message('required', lang('Поле обязательно для заполнения', 'xforms'));
+
+        $this->form_validation->set_message('valid_phone', lang('Поле должно содержать корректный номер телефона. Не допускаются пробелы, дефисы и скобки.', 'xforms'));
+        $this->form_validation->set_message('valid_date', lang('Поле должно содержать правильную дату', 'xforms'));
+        $this->form_validation->set_message('valid_time', lang('Поле должно содержать правильное время', 'xforms'));
+
+        $this->form_validation->set_message('valid_email', lang('Введите корректный email адрес', 'xforms'));
+        $this->form_validation->set_message('valid_emails', lang('Введите корректные email адреса', 'xforms'));
+        $this->form_validation->set_message('valid_ip', lang('Введите корректный IP адрес', 'xforms'));
+        $this->form_validation->set_message('valid_url', lang('Введите корректный URL адрес', 'xforms'));
+        $this->form_validation->set_message('numeric', 	lang('Поле должно содержать только числовое значение', 'xforms'));
+        $this->form_validation->set_message('integer', lang('Поле дожно содержать целое число', 'xforms'));
+        $this->form_validation->set_message('min_length', preg_replace('/<!--.*?-->/is', '',  lang('В поле <!--%s--> должно быть не менее %s символов в длину.', 'xforms')));
+        $this->form_validation->set_message('max_length', preg_replace('/<!--.*?-->/is', '',  lang('В поле <!--%s--> должно быть не более %s символов в длину.', 'xforms')));
 
         $this->load->helper(array('form', 'url'));
     }
@@ -45,7 +50,6 @@ class Xforms extends MY_Controller
         $this->load->dbforge();
         $this->dbforge->drop_table('xforms');
         $this->dbforge->drop_table('xforms_field');
-        $this->dbforge->drop_table('xforms_messages');
     }
 
     public function _install() {
@@ -172,34 +176,8 @@ class Xforms extends MY_Controller
         $this->dbforge->add_field($xforms_field);
         $this->dbforge->create_table('xforms_field', TRUE);
 
-        $xforms_messages = [
-                            'id'     => [
-                                         'type'           => 'INT',
-                                         'constraint'     => 11,
-                                         'auto_increment' => TRUE,
-                                        ],
-                            'fid'    => [
-                                         'type'       => 'int',
-                                         'constraint' => 11,
-                                        ],
-                            'message'=> ['type' => 'text'],
-                            'created' => [
-                                'type'       => 'int',
-                                'constraint' => 11
-                                         ],
-                            'status' => [
-                                'type'          => 'smallint',
-                                'constraint'    => 1,
-                                'default'       => 1
-                                        ]
-                           ];
-
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->add_field($xforms_messages);
-        $this->dbforge->create_table('xforms_messages', TRUE);
-
         $this->db->where('name', 'xforms');
-        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '2.4.1', 'save_messages' => 0])]);
+        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '3.0'])]);
     }
 
     public function autoload() {
@@ -223,7 +201,6 @@ class Xforms extends MY_Controller
 
     /**
      * Valid Date (europe format)
-     * // TODO: Добавить в след. версию.
      */
     public function valid_date($str) {
 
@@ -242,7 +219,6 @@ class Xforms extends MY_Controller
     /**
      * Validate time
      */
-    // TODO: Добавить в след. версию.
     public function valid_time($str) {
 
         if (preg_match('/([0-9]{1,2})\:([0-9]{1,2})\:([0-9]{1,2})/', $str)) {
@@ -253,7 +229,7 @@ class Xforms extends MY_Controller
     }
 
     /**
-     * VAlidete phone number
+     * Validete phone number
      * +7 8 +38 +375 [0-9]
      * междугородных телефонов Российской Федерации (после удаления добавочного номера а так же всех «левых» символов кроме цифр и плюса вначале)
      * с учетом действующего Телефонного плана нумерации, (в том числе, кодов альтернативных операторов дальней связи)
@@ -267,9 +243,7 @@ class Xforms extends MY_Controller
      * Дополнительно ПРОСТО ПРОВЕРКА РОССИЯ,УКРАИНА, БЕЛКА - без заморочек, просто межгород и 8
      * ^(8|\+7|\+038|\+38|\+375)\d{9,10}$
      */
-    // TODO: Добавить в след. версию.
     public function valid_phone($number) {
-
         return (bool) preg_match('/^(?:8(?:(?:21|22|23|24|51|52|53|54|55)|(?:15\d\d))?|\+7|\+375|\+38|\+038)?(?:(?:3[04589]|4[012789]|8[^89\D]|9\d)\d)?\d{7}$/', $number);
     }
 
@@ -406,20 +380,8 @@ class Xforms extends MY_Controller
                 $default_settings = ModuleSettings::ofModule('cmsemail')->get($locale ?: null);
                 $pattern_settings = email::getInstance()->cmsemail_model->getPaternSettings($pattern_name);
 
-                // Узнаем настройки форм
-                $setting_forms = $this->xforms_model->get_settings();
-
                 // Заменяемые переменные для cmsemail
                 $replaceData = ['message' => $message];
-
-                if($setting_forms['save_messages']) {
-                    // добавляем сообщение в БД.
-                    $msg['message'] = $message;
-                    $message_id = $this->xforms_model->add_message($msg);
-
-                    $replaceData = ['link_message'  => site_url('admin/components/cp/xforms/message/' . $message_id)];
-                }
-
 
                 // Утсановим настройки для email
                 if ($pattern_settings) {
