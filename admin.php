@@ -1,7 +1,9 @@
 <?php
 
 use CMSFactory\assetManager;
+use cmsemail\email;
 use Components;
+
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -171,10 +173,14 @@ class Admin extends BaseAdminController
 
             $this->form_validation->set_rules('page_title', 'Заголовок', 'trim|xss_clean|required|min_length[1]|max_length[255]');
             $this->form_validation->set_rules('page_url', 'URL формы', 'alpha_dash|least_one_symbol');
-            $this->form_validation->set_rules('subject', 'Тема', 'trim|xss_clean|required|min_length[1]|max_length[255]');
             $this->form_validation->set_rules('desc', 'Описание', 'trim|xss_clean');
             $this->form_validation->set_rules('good', 'Сообщение', 'trim|xss_clean|required');
-            $this->form_validation->set_rules('email', 'Email', 'callback_check_emails');
+
+            // Валидируем заголовок темы и email только когда форма еще не создана
+            if(!$id) {
+                $this->form_validation->set_rules('subject', 'Тема', 'trim|xss_clean|required|min_length[1]|max_length[255]');
+                $this->form_validation->set_rules('email', 'Email', 'callback_check_emails');
+            }
 
             if ($this->form_validation->run($this) == FALSE) {
                 showMessage(validation_errors(), false, 'r');
@@ -195,6 +201,7 @@ class Admin extends BaseAdminController
 
                 // Создаем / сохраняем
                 if (isset($id) AND $this->xforms_model->update_form($id, $data)) {
+
                     showMessage(lang('Changes has been saved', 'xforms'));
                     $path = '/admin/components/cp/xforms/form/' . $id;
                 } else {
@@ -211,7 +218,8 @@ class Admin extends BaseAdminController
                         'type'                  => 'HTML',
                         'patern'                => '',
                         'user_message_active'   => 0,
-                        'admin_message_active'  => 0
+                        'admin_message_active'  => 1,
+                        'admin_email'           => $data['email']
                     ];
                     $this->db->insert('mod_email_paterns', $email_paterns);
                     $email_patterns_id = $this->db->insert_id();
@@ -241,6 +249,7 @@ class Admin extends BaseAdminController
             if (isset($id)) {
                 assetManager::create()
                     ->setData('form', $this->xforms_model->get_form($id))
+                    ->setData('cmsemail', email::getInstance()->cmsemail_model->getPaternSettings('xforms_send_form_' . $id))
                     ->setData('fields', $this->xforms_model->get_form_fields($id, ['visible' => 1, 'type' => 'text']))
                     ->renderAdmin('form');
             } else {

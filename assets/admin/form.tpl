@@ -78,7 +78,25 @@
                                 </div>
 
                                 <div class="control-group">
-                                    <label class="control-label" for="email">E-mail: <span class="must">*</span></label>
+                                    <div class="controls">
+                                        <span class="frame_label no_connection m-t_5 m-b_10">
+                                            <span class="niceCheck b_n">
+                                                <input type="checkbox" value="1"
+                                                       name="direct_url"{if $form.direct_url} checked{/if}>
+                                            </span>
+                                            Разрешить прямой доступ через URL?
+                                            <span class="help-block">
+                                                Если опция включена, на форму можно зайти по прямому URL вида - /xforms/show/FORM_URL<br/>
+                                                Если отключена, форма будет доступна только при обращении из виджета
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {if !$form.id}
+                                <div class="control-group">
+                                    <label class="control-label" for="email">Настройка email: <span class="must">*</span></label>
+
                                     <div class="controls">
                                         <div class="o_h">
                                             <input type="text" class="textbox_long" name="email" id="email"
@@ -98,6 +116,15 @@
                                         <span class="help-block">На почту придет письмо с такой темой.</span>
                                     </div>
                                 </div>
+                                {else:}
+                                    <div class="control-group">
+                                        <label class="control-label" for="email">Настройка email: <span class="must">*</span></label>
+
+                                        <div class="controls">
+                                            <a href="{site_url('admin/components/cp/cmsemail/edit')}/{$cmsemail['id']}" target="_blank">через модуль cmsemail</a>
+                                        </div>
+                                    </div>
+                                {/if}
 
                                 <div class="control-group">
                                     <div class="controls">
@@ -124,21 +151,6 @@
                                     </div>
                                 </div>
 
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <span class="frame_label no_connection m-t_5 m-b_10">
-                                            <span class="niceCheck b_n">
-                                                <input type="checkbox" value="1"
-                                                       name="direct_url"{if $form.direct_url} checked{/if}>
-                                            </span>
-                                            Разрешить прямой доступ через URL?
-                                            <span class="help-block">
-                                                Если опция включена, на форму можно зайти по прямому URL вида - /xforms/show/FORM_URL<br/>
-                                                Если отключена, форма будет доступна только при обращении из виджета
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
 
                             {if $form.id}
                                 <div class="control-group">

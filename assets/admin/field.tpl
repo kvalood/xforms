@@ -62,7 +62,7 @@
                                                 radio
                                             </option>
                                             <option value="file"{if $field.type=='file'} selected="selected"{/if}>
-                                                загрузка файла
+                                                загрузка файлов
                                             </option>
                                             <option value="" disabled>------</option>
                                             <option value="separator"{if $field.type=='separator'} selected="selected"{/if}>

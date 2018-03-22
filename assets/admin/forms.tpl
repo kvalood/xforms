@@ -17,8 +17,7 @@
             <th class="span1">ID</th>
             <th class="span4">Наименование</th>
             <th class="span2">URL</th>
-            <th class="span2">Тема</th>
-            <th class="span1">E-mail</th>
+            <th class="span3">Тема</th> <!-- TODO: убрать -->
             <th class="span1">Действия</th>
             </thead>
             <tbody>
@@ -40,7 +39,6 @@
                         {/if}
                     </td>
                     <td>{$form.subject}</td>
-                    <td>{$form.email}</td>
                     <td>
                         <a class="btn btn-small" data-rel="tooltip" data-title="Настройки формы"
                            href="/admin/components/cp/xforms/form/{$form.id}" data-original-title="">

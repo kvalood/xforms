@@ -80,10 +80,6 @@ class Xforms extends MY_Controller
                                     'type'       => 'varchar',
                                     'constraint' => 255,
                                    ],
-                   'email'      => [
-                                    'type'       => 'varchar',
-                                    'constraint' => 255,
-                                   ],
                    'captcha'    => [
                                     'type'       => 'int',
                                     'constraint' => 2,
@@ -284,11 +280,6 @@ class Xforms extends MY_Controller
         // Если нажали отправить форму, то перебираем все входящие значения
         if ($this->input->post()) {
 
-            // Текст в админку
-            $msg            = [
-                'fid'       => $form['id'],
-                'created'   => strtotime(date('Y-m-d H:i:s'))
-            ];
             $msg_email      = []; // Текст для почты
             $user_email     = ''; // Email клиента, для отправки ему письма
             $attach_email   = []; // Файлы, прикрепляемые к письму
@@ -402,7 +393,6 @@ class Xforms extends MY_Controller
                     $pattern_settings['smtp_user'] = $default_settings['smtp_user'];
                     $pattern_settings['smtp_pass'] = $default_settings['smtp_pass'];
                     $pattern_settings['smtp_crypto'] = $default_settings['encryption'];
-                    $this->email->set_newline("\r\n"); // TODO: ???
                 }
                 $pattern_settings['mailtype'] = strtolower($pattern_settings['type']);
                 $pattern_settings['mailpath'] = $default_settings['mailpath'];
@@ -420,13 +410,13 @@ class Xforms extends MY_Controller
                     $this->email->message(email::getInstance()->replaceVariables($pattern_settings['user_message'], $replaceData));
 
                     $this->email->send();
-                    $this->email->clear();
+                    $this->email->clear(TRUE);
                 }
 
                 /**
                  * Отправляем письма админам
                  */
-                $form['email'] = array_diff(explode(',', str_replace(' ', '', $form['email'])), ['']);
+                $form['email'] = array_diff(explode(',', str_replace(' ', '', $pattern_settings['admin_email'])), ['']);
                 foreach ($form['email'] as $item) {
                     $item = trim($item);
 
@@ -436,7 +426,7 @@ class Xforms extends MY_Controller
                         $this->email->to($item);
                         $this->email->subject($pattern_settings['theme']);
                         $this->email->message(email::getInstance()->replaceVariables($pattern_settings['admin_message'], $replaceData));
-
+                        $this->email->set_newline("\r\n");
                         // Добавляем вложения
                         if($attach_email AND ($form['action_files'] == 2 OR $form['action_files'] == 3)) {
                             foreach ($attach_email as $file) {
@@ -453,7 +443,7 @@ class Xforms extends MY_Controller
                             $notify['console']['debug'][] = $this->email->print_debugger();
                         }
 
-                        $this->email->clear();
+                        $this->email->clear(TRUE);
                     }
                 }
 
@@ -596,13 +586,13 @@ class Xforms extends MY_Controller
         $info->path = base_url() . 'uploads/' . $file;
         $info->file = is_file(FCPATH . 'uploads/' . $file);
 
-        if (IS_AJAX) {
+        $is_ajax    = $this->input->is_ajax_request() ? 1 : 0;
+
+        if ($is_ajax) {
             //I don't think it matters if this is set but good for error checking in the console/firebug
             echo json_encode(array($info));
         } else {
-            //here you will need to decide what you want to show for a successful delete
-            $file_data['delete_data'] = $file;
-            $this->load->view('admin/delete_success', $file_data);
+            echo "File has been deleted.";
         }
     }
 
