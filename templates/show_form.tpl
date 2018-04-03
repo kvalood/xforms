@@ -43,7 +43,7 @@
                         {if $field.type=='text'}
                             <input type="text" name="f{$field.id}" id="f{$field.id}" value="{$field.value}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if}  />
                         {elseif $field.type=='textarea'}
-                            <textarea name="f{$field.id}" class="message_text"  id="f{$field.id}"{if $field.disabled==1} disabled="disabled"{/if}>{$field.value}</textarea>
+                            <textarea name="f{$field.id}" class="message_text"  id="f{$field.id}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if}>{$field.value}</textarea>
                         {elseif $field.type=='checkbox'}
                             {if count($checkbox_value) >= 1}
                                 <ul class="field__checkbox">
