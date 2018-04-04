@@ -171,14 +171,14 @@ class Admin extends BaseAdminController
         // Сохраняем
         if ($this->input->post()) {
 
-            $this->form_validation->set_rules('page_title', 'Заголовок', 'trim|xss_clean|required|min_length[1]|max_length[255]');
-            $this->form_validation->set_rules('page_url', 'URL формы', 'alpha_dash|least_one_symbol');
-            $this->form_validation->set_rules('desc', 'Описание', 'trim|xss_clean');
-            $this->form_validation->set_rules('good', 'Сообщение', 'trim|xss_clean|required');
+            $this->form_validation->set_rules('page_title', lang('Title form', 'xforms'), 'trim|required|min_length[1]|max_length[255]');
+            $this->form_validation->set_rules('page_url', lang('URL form', 'xforms'), 'alpha_dash|least_one_symbol|max_length[255]');
+            $this->form_validation->set_rules('desc', lang('Description', 'xforms'), 'trim');
+            $this->form_validation->set_rules('good', lang('Successful message', 'xforms'), 'trim|required');
 
             // Валидируем заголовок темы и email только когда форма еще не создана
             if(!$id) {
-                $this->form_validation->set_rules('subject', 'Тема', 'trim|xss_clean|required|min_length[1]|max_length[255]');
+                $this->form_validation->set_rules('subject', lang('Email subject', 'xforms'), 'trim|xss_clean|required|min_length[1]|max_length[255]');
                 $this->form_validation->set_rules('email', 'Email', 'callback_check_emails');
             }
 

@@ -2,8 +2,8 @@
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-04 09:49+0300\n"
-"PO-Revision-Date: 2018-04-04 09:49+0300\n"
+"POT-Creation-Date: 2018-04-04 11:47+0300\n"
+"PO-Revision-Date: 2018-04-04 11:47+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
 "Language: \n"
@@ -78,6 +78,10 @@ msgstr "Удалить"
 msgid "Delete form"
 msgstr "Удалить форму"
 
+#: application/modules/xforms/admin.php:176
+msgid "Description"
+msgstr "Описание"
+
 #: application/modules/xforms/assets/admin/forms.tpl:37
 msgid "Does not appear on the site"
 msgstr "Не отображается на сайте"
@@ -102,6 +106,10 @@ msgstr "Редактирование"
 #: application/modules/xforms/assets/admin/forms.tpl:29
 msgid "Editing fields in the form"
 msgstr "Редактирование полей в форме"
+
+#: application/modules/xforms/admin.php:181
+msgid "Email subject"
+msgstr "Тема email"
 
 #: application/modules/xforms/xforms.php:30
 msgid "Enter a valid email address"
@@ -176,6 +184,10 @@ msgstr "показать"
 msgid "Status change success"
 msgstr "Статус успешно изменено"
 
+#: application/modules/xforms/admin.php:177
+msgid "Successful message"
+msgstr "Сообщение об успешной отправке"
+
 #: application/modules/xforms/xforms.php:35
 msgid "The field must contain an integer"
 msgstr ""
@@ -200,9 +212,17 @@ msgstr ""
 msgid "This field is required"
 msgstr ""
 
+#: application/modules/xforms/admin.php:174
+msgid "Title form"
+msgstr "Заголовок"
+
 #: application/modules/xforms/templates/show_form.tpl:90
 msgid "Type the characters you see in this image."
 msgstr "Введите символы, которые вы видите на этом изображении."
+
+#: application/modules/xforms/admin.php:175
+msgid "URL form"
+msgstr "URL формы"
 
 #: application/modules/xforms/assets/admin/forms.tpl:35
 msgid "View on the site"

@@ -167,7 +167,7 @@ class Xforms extends MY_Controller
         $this->dbforge->create_table('xforms_field', TRUE);
 
         $this->db->where('name', 'xforms');
-        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '3.0.1'])]);
+        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '3.0.2'])]);
     }
 
     public function autoload() {
@@ -491,27 +491,6 @@ class Xforms extends MY_Controller
                 $xform_fetch
                     ->render('../templates/show_form');
             }
-
-
-            /*if($result) {
-                assetManager::create()
-                    ->setData('form', $form)
-                    ->setData('fields', $fields)
-                    ->registerScript('jquery.ui.widget')
-                    ->registerScript('jquery.iframe-transport')
-                    ->registerScript('jquery.fileupload')
-                    ->registerScript('xforms')
-                    ->registerScript('xforms_files')
-                    ->registerStyle('xforms')
-                    ->render('../templates/wrapper');
-            } else {
-                assetManager::create()
-                    ->setData('form', $form)
-                    ->setData('fields', $fields)
-                    ->registerScript('xforms')
-                    ->registerStyle('xforms')
-                    ->render('../templates/show_form');
-            }*/
         }
     }
 
