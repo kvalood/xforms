@@ -21,22 +21,20 @@ class Xforms extends MY_Controller
         $this->load->model('xforms_model');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_message('tpl_validation', lang('The %s field can only contain Latin characters', 'admin'));
+        $this->form_validation->set_message('required', lang('This field is required', 'xforms')); // Поле обязательно для заполнения
 
-        $this->form_validation->set_message('required', lang('Поле обязательно для заполнения', 'xforms'));
+        $this->form_validation->set_message('valid_phone', lang('The field must contain the correct phone number. Spaces, hyphens and parentheses are not allowed', 'xforms')); // Поле должно содержать корректный номер телефона. Не допускаются пробелы, дефисы и скобки
+        $this->form_validation->set_message('valid_date', lang('The field must contain the correct date', 'xforms')); // Поле должно содержать правильную дату
+        $this->form_validation->set_message('valid_time', lang('The field must contain the correct time', 'xforms')); // Поле должно содержать правильное время
 
-        $this->form_validation->set_message('valid_phone', lang('Поле должно содержать корректный номер телефона. Не допускаются пробелы, дефисы и скобки.', 'xforms'));
-        $this->form_validation->set_message('valid_date', lang('Поле должно содержать правильную дату', 'xforms'));
-        $this->form_validation->set_message('valid_time', lang('Поле должно содержать правильное время', 'xforms'));
-
-        $this->form_validation->set_message('valid_email', lang('Введите корректный email адрес', 'xforms'));
-        $this->form_validation->set_message('valid_emails', lang('Введите корректные email адреса', 'xforms'));
-        $this->form_validation->set_message('valid_ip', lang('Введите корректный IP адрес', 'xforms'));
-        $this->form_validation->set_message('valid_url', lang('Введите корректный URL адрес', 'xforms'));
-        $this->form_validation->set_message('numeric', 	lang('Поле должно содержать только числовое значение', 'xforms'));
-        $this->form_validation->set_message('integer', lang('Поле дожно содержать целое число', 'xforms'));
-        $this->form_validation->set_message('min_length', preg_replace('/<!--.*?-->/is', '',  lang('В поле <!--%s--> должно быть не менее %s символов в длину.', 'xforms')));
-        $this->form_validation->set_message('max_length', preg_replace('/<!--.*?-->/is', '',  lang('В поле <!--%s--> должно быть не более %s символов в длину.', 'xforms')));
+        $this->form_validation->set_message('valid_email', lang('Enter a valid email address', 'xforms')); // Введите корректный email адрес
+        $this->form_validation->set_message('valid_emails', lang('Enter correct email addresses', 'xforms')); // Введите корректные email адреса
+        $this->form_validation->set_message('valid_ip', lang('Enter the correct IP address', 'xforms')); // Введите корректный IP адрес
+        $this->form_validation->set_message('valid_url', lang('Еnter a valid URL', 'xforms')); // Введите корректный URL адрес
+        $this->form_validation->set_message('numeric', 	lang('The field must contain only a numeric value', 'xforms')); // Поле должно содержать только числовое значение
+        $this->form_validation->set_message('integer', lang('The field must contain an integer', 'xforms')); // Поле дожно содержать целое число
+        $this->form_validation->set_message('min_length', preg_replace('/<!--.*?-->/is', '',  lang('<!--%s--> Must have at least %s characters', 'xforms'))); // В поле <!--%s--> должно быть не менее %s символов
+        $this->form_validation->set_message('max_length', preg_replace('/<!--.*?-->/is', '',  lang('<!--%s--> The field must be no more than %s characters', 'xforms'))); // В поле <!--%s--> должно быть не более %s символов
 
         $this->load->helper(array('form', 'url'));
     }
@@ -76,10 +74,6 @@ class Xforms extends MY_Controller
                                    ],
                    'desc'       => ['type' => 'text'],
                    'success'    => ['type' => 'text'],
-                   'subject'    => [
-                                    'type'       => 'varchar',
-                                    'constraint' => 255,
-                                   ],
                    'captcha'    => [
                                     'type'       => 'int',
                                     'constraint' => 2,
@@ -468,11 +462,38 @@ class Xforms extends MY_Controller
         } else {
 
             // Если есть поля "файл" в форме. Что бы не загружать лишние скрипты...
-            $result = array_filter($fields, function($lines){
+            $field_file_exists = array_filter($fields, function($lines){
                 return ($lines['type'] == 'file'); //Поиск по первому значению
             });
 
-            if($result) {
+
+            // Отдаем в tpl
+            $xform_fetch = assetManager::create();
+
+            $xform_fetch
+                ->setData('form', $form)
+                ->setData('fields', $fields)
+                ->registerScript('xforms')
+                ->registerStyle('xforms');
+
+            if($field_file_exists) {
+                $xform_fetch
+                    ->registerScript('jquery.ui.widget')
+                    ->registerScript('jquery.iframe-transport')
+                    ->registerScript('jquery.fileupload')
+                    ->registerScript('xforms_files');
+            }
+
+            if($form['direct_url']) {
+                $xform_fetch
+                    ->render('../templates/wrapper');
+            } else {
+                $xform_fetch
+                    ->render('../templates/show_form');
+            }
+
+
+            /*if($result) {
                 assetManager::create()
                     ->setData('form', $form)
                     ->setData('fields', $fields)
@@ -482,7 +503,7 @@ class Xforms extends MY_Controller
                     ->registerScript('xforms')
                     ->registerScript('xforms_files')
                     ->registerStyle('xforms')
-                    ->render('../templates/show_form');
+                    ->render('../templates/wrapper');
             } else {
                 assetManager::create()
                     ->setData('form', $form)
@@ -490,7 +511,7 @@ class Xforms extends MY_Controller
                     ->registerScript('xforms')
                     ->registerStyle('xforms')
                     ->render('../templates/show_form');
-            }
+            }*/
         }
     }
 

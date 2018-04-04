@@ -94,7 +94,7 @@
                 {/if}
 
                 <div class="submit col s12">
-                    <input type="submit" class="more-link bth" onClick="send_widget_form($(this));return false;" value="Отправить заявку" />
+                    <input type="submit" class="more-link bth" onClick="send_widget_form($(this));return false;" value="{lang('Send order.', 'xforms')}" />
                 </div>
 
             </div>

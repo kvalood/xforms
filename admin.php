@@ -191,12 +191,13 @@ class Admin extends BaseAdminController
                          'url'                  => $this->input->post('page_url'),
                          'desc'                 => $this->input->post('desc'),
                          'success'              => $this->input->post('good'),
-                         'subject'              => $this->input->post('subject'),
-                         'email'                => $this->input->post('email'),
                          'captcha'              => $this->input->post('captcha'),
                          'direct_url'           => $this->input->post('direct_url'),
                          'user_message_active'  => $this->input->post('user_message_active'),
                          'action_files'         => $this->input->post('action_files'),
+
+                         'subject'              => $this->input->post('subject'),
+                         'email'                => $this->input->post('email'),
                         ];
 
                 // Создаем / сохраняем
@@ -263,7 +264,12 @@ class Admin extends BaseAdminController
      */
     public function index() {
 
-        assetManager::create()->setData('forms', $this->xforms_model->get_forms())->renderAdmin('forms');
+        $xforms = $this->xforms_model->get_forms();
+        foreach ($xforms as $key => $f) {
+            $xforms[$key]['cmsemail_id'] = $this->db->select('id')->where('name', 'xforms_send_form_' . $f['id'])->get('mod_email_paterns')->row_array()['id'];
+        }
+
+        assetManager::create()->setData('forms', $xforms)->renderAdmin('forms');
     }
 
     /**

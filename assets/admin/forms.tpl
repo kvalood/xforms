@@ -15,10 +15,9 @@
         <table id="cats_table" class="table  table-bordered table-hover table-condensed t-l_a">
             <thead>
             <th class="span1">ID</th>
-            <th class="span4">Наименование</th>
-            <th class="span2">URL</th>
-            <th class="span3">Тема</th> <!-- TODO: убрать -->
-            <th class="span1">Действия</th>
+            <th class="span5">Наименование</th>
+            <th class="span4">URL</th>
+            <th class="span2">Действия</th>
             </thead>
             <tbody>
             {foreach $forms as $form}
@@ -27,25 +26,30 @@
                     <td class="share_alt">
                         <div class="o_h">
                             <a class="pjax" href="/admin/components/cp/xforms/fields/{$form.id}" data-rel="tooltip"
-                               data-placement="top" data-original-title="Редактировать поля">{$form.title}</a>
+                               data-placement="top" data-original-title="{lang('Editing fields in the form', 'xforms')}">{$form.title}</a>
                         </div>
                     </td>
                     <td>
                         {if $form.direct_url}
                             <a href="{site_url('xforms/show')}/{$form.url}" target="_blank" data-rel="tooltip"
-                               data-placement="top" data-original-title="Посмотреть на сайте">{$form.url}</a>
+                               data-placement="top" data-original-title="{lang('View on the site', 'xforms')}">{$form.url}</a>
                         {else:}
-                            Не показывается на сайте
+                            {lang('Does not appear on the site', 'xforms')}
                         {/if}
                     </td>
-                    <td>{$form.subject}</td>
                     <td>
-                        <a class="btn btn-small" data-rel="tooltip" data-title="Настройки формы"
-                           href="/admin/components/cp/xforms/form/{$form.id}" data-original-title="">
-                            <i class="icon-wrench"></i>
+                        <a class="btn btn-small" data-rel="tooltip" data-title="{lang('Settigns form', 'xforms')}"
+                           href="/admin/components/cp/xforms/form/{$form.id}" data-original-title=""><i class="icon-wrench"></i>
                         </a>
+
+                        {if $form.cmsemail_id}
+                        <a class="btn btn-small" data-rel="tooltip" data-title="{lang('Edit cmsemail settings for this form', 'xforms')}"
+                           href="{site_url('/admin/components/cp/cmsemail/edit')}/{$form.cmsemail_id}" target="_blank"><i class="icon-envelope"></i>
+                        </a>
+                        {/if}
+
                         <button onclick="xforms.deleteForm({$form.id});" class="btn btn-small" data-rel="tooltip"
-                                data-title="Удалить форму"><i class="icon-trash"></i></button>
+                                data-title="{lang('Delete form', 'xforms')}"><i class="icon-trash"></i></button>
                     </td>
                 </tr>
             {/foreach}
@@ -53,7 +57,7 @@
         </table>
     {else:}
         <div class="alert alert-info m-t_20">
-            <p>Ещё не создано ни одной формы.</p>
+            <p>{lang('Forms are missing', 'xforms')}</p>
         </div>
     {/if}
 </section>
@@ -61,11 +65,11 @@
 <div class="modal delete_form hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Удалить форму</h3>
+        <h3>{lang('Delete form', 'xforms')}</h3>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" onclick="$('.modal.delete_form').modal('hide');">Отмена</a>
-        <a href="#" class="btn btn-primary" onClick="xforms.deleteFormConfirm();">Удалить</a>
+        <a href="#" class="btn" onclick="$('.modal.delete_form').modal('hide');">{lang('Cancel', 'xforms')}</a>
+        <a href="#" class="btn btn-primary" onClick="xforms.deleteFormConfirm();">{lang('Remove', 'xforms')}</a>
     </div>
 </div>
 

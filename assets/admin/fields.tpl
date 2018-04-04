@@ -10,7 +10,7 @@
                             class="t-d_u">{lang("Back","xforms")}</span></a>
                 <button onclick="$('#delete_fields').modal();" type="button"
                         class="btn btn-small btn-danger action_on pages_action pages_delete" disabled="disabled"><i
-                            class="icon-trash"></i>Удалить
+                            class="icon-trash"></i>{lang("Delete","xforms")}
                 </button>
                 <a href="/admin/components/cp/xforms/field/{$form_id}" class="btn btn-small pjax btn-success"><i
                             class="icon-plus-sign icon-white"></i>{lang("Create","xforms")}</a>

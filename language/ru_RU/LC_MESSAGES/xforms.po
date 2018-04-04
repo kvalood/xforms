@@ -2,8 +2,8 @@
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-21 06:34+0300\n"
-"PO-Revision-Date: 2017-05-21 06:34+0300\n"
+"POT-Creation-Date: 2018-04-04 09:49+0300\n"
+"PO-Revision-Date: 2018-04-04 09:49+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
 "Language: \n"
@@ -18,39 +18,37 @@ msgstr ""
 "X-Poedit-Country: \n"
 "X-Poedit-SearchPath-0: .\n"
 
+#: application/modules/xforms/xforms.php:36
+msgid "<!--%s--> Must have at least %s characters"
+msgstr "В поле <!--%s--> должно быть не менее %s символов"
+
+#: application/modules/xforms/xforms.php:37
+msgid "<!--%s--> The field must be no more than %s characters"
+msgstr "В поле <!--%s--> должно быть не более %s символов"
+
 #: application/modules/xforms/assets/admin/field.tpl:5
 msgid "Adding fields in the form"
 msgstr "Добавление полей в форме"
 
-#: application/modules/xforms/xforms.php:33
-msgid "alpha_dash"
-msgstr ""
-
-#: application/modules/xforms/xforms_widgets.php:103
-msgid "amt_settings_saved"
-msgstr "amt_settings_saved"
-
 #: application/modules/xforms/assets/admin/field.tpl:12
 #: application/modules/xforms/assets/admin/fields.tpl:10
 #: application/modules/xforms/assets/admin/form.tpl:16
-#: application/modules/xforms/assets/admin/message.tpl:11
-#: application/modules/xforms/assets/admin/messages.tpl:11
-#: application/modules/xforms/assets/admin/settings.tpl:10
 #: application/modules/xforms/assets/admin/widget_settings.tpl:10
 #: application/modules/xforms/templates/show_form_form.tpl:10
 msgid "Back"
 msgstr "Вернуться"
 
-#: application/modules/xforms/admin.php:121
-#: application/modules/xforms/admin.php:193
+#: application/modules/xforms/assets/admin/forms.tpl:71
+msgid "Cancel"
+msgstr "Отмена"
+
+#: application/modules/xforms/admin.php:128
+#: application/modules/xforms/admin.php:206
+#: application/modules/xforms/xforms_widgets.php:103
 msgid "Changes has been saved"
 msgstr "Изменения были сохранены"
 
-#: application/modules/xforms/admin.php:294
-msgid "Changes saved"
-msgstr "Изменения сохранены"
-
-#: application/modules/xforms/xforms.php:389
+#: application/modules/xforms/xforms.php:348
 msgid "Code protection"
 msgstr "Защитный код"
 
@@ -70,19 +68,27 @@ msgstr "Создание и выход"
 msgid "Create form"
 msgstr "Создать форму"
 
-#: application/modules/xforms/assets/admin/message.tpl:19
-msgid "Date of creation"
-msgstr "Дата создания"
-
+#: application/modules/xforms/assets/admin/fields.tpl:13
 #: application/modules/xforms/assets/admin/fields.tpl:83
-#: application/modules/xforms/assets/admin/messages.tpl:95
 msgid "Delete"
 msgstr "Удалить"
 
+#: application/modules/xforms/assets/admin/forms.tpl:52
+#: application/modules/xforms/assets/admin/forms.tpl:68
+msgid "Delete form"
+msgstr "Удалить форму"
+
+#: application/modules/xforms/assets/admin/forms.tpl:37
+msgid "Does not appear on the site"
+msgstr "Не отображается на сайте"
+
 #: application/modules/xforms/assets/admin/fields.tpl:54
-#: application/modules/xforms/assets/admin/messages.tpl:64
 msgid "don't show"
 msgstr "не показывать"
+
+#: application/modules/xforms/assets/admin/forms.tpl:46
+msgid "Edit cmsemail settings for this form"
+msgstr "Изменить настройки Email для этой формы"
 
 #: application/modules/xforms/assets/admin/form.tpl:7
 msgid "Edit form"
@@ -93,16 +99,25 @@ msgid "Editing"
 msgstr "Редактирование"
 
 #: application/modules/xforms/assets/admin/field.tpl:5
+#: application/modules/xforms/assets/admin/forms.tpl:29
 msgid "Editing fields in the form"
 msgstr "Редактирование полей в форме"
 
-#: application/modules/xforms/admin.php:116
+#: application/modules/xforms/xforms.php:30
+msgid "Enter a valid email address"
+msgstr ""
+
+#: application/modules/xforms/xforms.php:31
+msgid "Enter correct email addresses"
+msgstr ""
+
+#: application/modules/xforms/xforms.php:32
+msgid "Enter the correct IP address"
+msgstr ""
+
+#: application/modules/xforms/admin.php:123
 msgid "Field created"
 msgstr "Поле создано"
-
-#: application/modules/xforms/assets/admin/message.tpl:42
-msgid "Filled fields"
-msgstr "Заполненные поля формы"
 
 #: application/modules/xforms/assets/admin/forms.tpl:5
 msgid "Form designer"
@@ -112,42 +127,29 @@ msgstr "Конструктор форм"
 msgid "Form fields"
 msgstr "Поля формы"
 
-#: application/modules/xforms/assets/admin/forms.tpl:12
-#: application/modules/xforms/assets/admin/message.tpl:6
-msgid "Messages"
-msgstr "Сообщение"
+#: application/modules/xforms/assets/admin/forms.tpl:60
+msgid "Forms are missing"
+msgstr "Формы отсутствуют"
 
-#: application/modules/xforms/assets/admin/message.tpl:26
-msgid "Name form"
-msgstr "Название формы"
-
-#: application/modules/xforms/assets/admin/messages.tpl:77
-msgid "No messages"
-msgstr "Нет сообщений"
-
-#: application/modules/xforms/assets/admin/settings.tpl:26
-msgid "Properties"
-msgstr "Свойства"
+#: application/modules/xforms/assets/admin/forms.tpl:72
+msgid "Remove"
+msgstr "Удалить"
 
 #: application/modules/xforms/assets/admin/fields.tpl:75
-#: application/modules/xforms/assets/admin/messages.tpl:87
 msgid "Remove fields"
 msgstr "Удаление полей"
 
 #: application/modules/xforms/assets/admin/fields.tpl:78
-#: application/modules/xforms/assets/admin/messages.tpl:90
 msgid "Remove the selected field?"
 msgstr "Удалить выбранное поле?"
 
 #: application/modules/xforms/assets/admin/field.tpl:19
 #: application/modules/xforms/assets/admin/form.tpl:23
-#: application/modules/xforms/assets/admin/settings.tpl:13
 #: application/modules/xforms/assets/admin/widget_settings.tpl:12
 #: application/modules/xforms/templates/show_form_form.tpl:12
 msgid "Save"
 msgstr "Сохранить"
 
-#: application/modules/xforms/assets/admin/settings.tpl:15
 #: application/modules/xforms/assets/admin/widget_settings.tpl:14
 #: application/modules/xforms/templates/show_form_form.tpl:14
 msgid "Save and exit"
@@ -158,72 +160,63 @@ msgstr "Сохранить и выйти"
 msgid "Save and go back"
 msgstr "Сохранить и вернуться"
 
-#: application/modules/xforms/assets/admin/settings.tpl:42
-msgid "Save messages to the admin panel?"
-msgstr "Сохранять сообщения в админ панели?"
+#: application/modules/xforms/templates/show_form.tpl:97
+msgid "Send order."
+msgstr ""
 
-#: application/modules/xforms/assets/admin/forms.tpl:14
-msgid "Settings"
-msgstr "Настройки"
+#: application/modules/xforms/assets/admin/forms.tpl:41
+msgid "Settigns form"
+msgstr "Настройки формы"
 
 #: application/modules/xforms/assets/admin/fields.tpl:54
-#: application/modules/xforms/assets/admin/messages.tpl:64
 msgid "show"
 msgstr "показать"
 
-#: application/modules/xforms/assets/admin/messages.tpl:57
-msgid "Show message"
-msgstr "Посмотреть сообщение"
-
-#: application/modules/xforms/admin.php:41
+#: application/modules/xforms/admin.php:43
 msgid "Status change success"
 msgstr "Статус успешно изменено"
 
-#: application/modules/xforms/assets/admin/message.tpl:34
-msgid "Status message"
-msgstr "Статус сообщения"
+#: application/modules/xforms/xforms.php:35
+msgid "The field must contain an integer"
+msgstr ""
+
+#: application/modules/xforms/xforms.php:34
+msgid "The field must contain only a numeric value"
+msgstr ""
+
+#: application/modules/xforms/xforms.php:27
+msgid "The field must contain the correct date"
+msgstr ""
+
+#: application/modules/xforms/xforms.php:26
+msgid "The field must contain the correct phone number. Spaces, hyphens and parentheses are not allowed"
+msgstr ""
+
+#: application/modules/xforms/xforms.php:28
+msgid "The field must contain the correct time"
+msgstr ""
 
 #: application/modules/xforms/xforms.php:24
-msgid "The %s field can only contain Latin characters"
+msgid "This field is required"
 msgstr ""
 
 #: application/modules/xforms/templates/show_form.tpl:90
 msgid "Type the characters you see in this image."
 msgstr "Введите символы, которые вы видите на этом изображении."
 
+#: application/modules/xforms/assets/admin/forms.tpl:35
+msgid "View on the site"
+msgstr "Посмотреть на сайте"
+
 #: application/modules/xforms/assets/admin/widget_settings.tpl:5
 #: application/modules/xforms/templates/show_form_form.tpl:5
 msgid "Widget settings"
 msgstr "Настройки виджета"
 
-#: application/modules/xforms/assets/admin/settings.tpl:5
-msgid "xForms settings"
-msgstr "Настройки xForms"
-
-#: application/modules/xforms/assets/admin/settings.tpl:49
-msgid "xForms version:"
-msgstr "Версия xForms:"
-
-#: application/modules/xforms/assets/admin/form.tpl:184
+#: application/modules/xforms/assets/admin/form.tpl:196
 msgid "Your request has been successfully sent!"
 msgstr "Ваш запрос был успешно отправлен!"
 
-#: application/modules/xforms/xforms.php:32
-msgid "Поле %s должно содержать как минимум один символ."
-msgstr ""
-
-#: application/modules/xforms/xforms.php:31
-msgid "Поле %s должно содержать корректный номер телефона. Не допускаются пробелы, дефисы и скобки."
-msgstr ""
-
-#: application/modules/xforms/xforms.php:30
-msgid "Поле %s должно содержать корректный номер."
-msgstr ""
-
-#: application/modules/xforms/xforms.php:29
-msgid "Поле %s должно содержать правильное время."
-msgstr ""
-
-#: application/modules/xforms/xforms.php:28
-msgid "Поле %s должно содержать правильную дату."
+#: application/modules/xforms/xforms.php:33
+msgid "Еnter a valid URL"
 msgstr ""

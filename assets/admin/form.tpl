@@ -100,7 +100,7 @@
                                     <div class="controls">
                                         <div class="o_h">
                                             <input type="text" class="textbox_long" name="email" id="email"
-                                                   value="{$form.email}" required/>
+                                                   value="" required/>
                                         </div>
                                         <span class="help-block">E-mail'ы куда приходят сообщения с формы (Можно несколько, через запятую)</span>
                                     </div>
@@ -111,7 +111,7 @@
                                     <div class="controls">
                                         <div class="o_h">
                                             <input type="text" class="textbox_long" name="subject" id="subject"
-                                                   value="{$form.subject}" required/>
+                                                   value="" required/>
                                         </div>
                                         <span class="help-block">На почту придет письмо с такой темой.</span>
                                     </div>

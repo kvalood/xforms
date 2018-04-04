@@ -2,8 +2,8 @@
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-17 04:09+0200\n"
-"PO-Revision-Date: 2017-02-17 04:09+0200\n"
+"POT-Creation-Date: 2018-04-04 10:19+0300\n"
+"PO-Revision-Date: 2018-04-04 10:19+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
 "Language: \n"
@@ -18,13 +18,17 @@ msgstr ""
 "X-Poedit-Country: \n"
 "X-Poedit-SearchPath-0: .\n"
 
+#: application/modules/xforms/xforms.php:36
+msgid "<!--%s--> Must have at least %s characters"
+msgstr "В поле <!--%s--> должно быть не менее %s символов"
+
+#: application/modules/xforms/xforms.php:37
+msgid "<!--%s--> The field must be no more than %s characters"
+msgstr "В поле <!--%s--> должно быть не более %s символов"
+
 #: application/modules/xforms/assets/admin/field.tpl:5
 msgid "Adding fields in the form"
-msgstr ""
-
-#: application/modules/xforms/xforms_widgets.php:84
-msgid "amt_settings_saved"
-msgstr ""
+msgstr "Добавить поля в форму"
 
 #: application/modules/xforms/assets/admin/field.tpl:12
 #: application/modules/xforms/assets/admin/fields.tpl:10
@@ -32,106 +36,155 @@ msgstr ""
 #: application/modules/xforms/assets/admin/widget_settings.tpl:10
 #: application/modules/xforms/templates/show_form_form.tpl:10
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
-#: application/modules/xforms/admin.php:122
-#: application/modules/xforms/admin.php:192
+#: application/modules/xforms/admin.php:128
+#: application/modules/xforms/admin.php:205
 msgid "Changes has been saved"
-msgstr ""
+msgstr "Изменения были сохранены"
 
-#: application/modules/xforms/xforms.php:266
+#: application/modules/xforms/xforms.php:352
 msgid "Code protection"
-msgstr ""
+msgstr "Защитный код (капча)"
 
 #: application/modules/xforms/assets/admin/field.tpl:21
 #: application/modules/xforms/assets/admin/fields.tpl:16
 #: application/modules/xforms/assets/admin/form.tpl:25
 msgid "Create"
-msgstr ""
+msgstr "Создать"
 
 #: application/modules/xforms/assets/admin/field.tpl:25
 #: application/modules/xforms/assets/admin/form.tpl:29
 msgid "Create and exit"
-msgstr ""
+msgstr "Создать и выйти"
 
 #: application/modules/xforms/assets/admin/form.tpl:9
+#: application/modules/xforms/assets/admin/forms.tpl:10
 msgid "Create form"
-msgstr ""
+msgstr "Создать форму"
 
 #: application/modules/xforms/assets/admin/fields.tpl:83
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: application/modules/xforms/assets/admin/fields.tpl:54
 msgid "don't show"
-msgstr ""
+msgstr "не показывать"
 
 #: application/modules/xforms/assets/admin/form.tpl:7
 msgid "Edit form"
-msgstr ""
+msgstr "Редактировать форму"
 
 #: application/modules/xforms/assets/admin/fields.tpl:50
 msgid "Editing"
-msgstr ""
+msgstr "Редактирование"
 
 #: application/modules/xforms/assets/admin/field.tpl:5
 msgid "Editing fields in the form"
-msgstr ""
+msgstr "Редактировать поля формы"
 
-#: application/modules/xforms/admin.php:114
+#: application/modules/xforms/xforms.php:30
+msgid "Enter a valid email address"
+msgstr "Введите корректный email адрес"
+
+#: application/modules/xforms/xforms.php:31
+msgid "Enter correct email addresses"
+msgstr "Введите корректные email адреса"
+
+#: application/modules/xforms/xforms.php:32
+msgid "Enter the correct IP address"
+msgstr "Введите корректный IP адрес"
+
+#: application/modules/xforms/admin.php:123
 msgid "Field created"
-msgstr ""
+msgstr "Поле создано"
 
 #: application/modules/xforms/assets/admin/forms.tpl:5
 msgid "Form designer"
-msgstr ""
+msgstr "Конструктор форм"
 
 #: application/modules/xforms/assets/admin/fields.tpl:5
 msgid "Form fields"
-msgstr ""
+msgstr "Поля формы"
 
 #: application/modules/xforms/assets/admin/fields.tpl:75
 msgid "Remove fields"
-msgstr ""
+msgstr "Удалить поля"
 
 #: application/modules/xforms/assets/admin/fields.tpl:78
 msgid "Remove the selected field?"
-msgstr ""
+msgstr "Удалить выделенные поля"
 
 #: application/modules/xforms/assets/admin/field.tpl:19
 #: application/modules/xforms/assets/admin/form.tpl:23
 #: application/modules/xforms/assets/admin/widget_settings.tpl:12
 #: application/modules/xforms/templates/show_form_form.tpl:12
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: application/modules/xforms/assets/admin/widget_settings.tpl:14
 #: application/modules/xforms/templates/show_form_form.tpl:14
 msgid "Save and exit"
-msgstr ""
+msgstr "Сохранить и выйти"
 
 #: application/modules/xforms/assets/admin/field.tpl:25
 #: application/modules/xforms/assets/admin/form.tpl:29
 msgid "Save and go back"
-msgstr ""
+msgstr "Сохранить и перейти назад"
+
+#: application/modules/xforms/templates/show_form.tpl:97
+msgid "Send order."
+msgstr "Отправить заявку"
+
+#: application/modules/xforms/xforms_widgets.php:103
+msgid "settings_saved"
+msgstr "Изменения сох"
 
 #: application/modules/xforms/assets/admin/fields.tpl:54
 msgid "show"
-msgstr ""
+msgstr "отображать"
 
-#: application/modules/xforms/admin.php:40
+#: application/modules/xforms/admin.php:43
 msgid "Status change success"
-msgstr ""
+msgstr "Успешно обновлено"
 
-#: application/modules/xforms/templates/show_form.tpl:68
+#: application/modules/xforms/xforms.php:35
+msgid "The field must contain an integer"
+msgstr "Поле должно содержать целое число"
+
+#: application/modules/xforms/xforms.php:34
+msgid "The field must contain only a numeric value"
+msgstr "Поле должно содержать только числовое значение"
+
+#: application/modules/xforms/xforms.php:27
+msgid "The field must contain the correct date"
+msgstr "Поле должно содержать правильную дату"
+
+#: application/modules/xforms/xforms.php:26
+msgid "The field must contain the correct phone number. Spaces, hyphens and parentheses are not allowed"
+msgstr "Поле должно содержать корректный номер телефона. Не допускаются пробелы, дефисы и скобки"
+
+#: application/modules/xforms/xforms.php:28
+msgid "The field must contain the correct time"
+msgstr "Поле должно содержать правильное время"
+
+#: application/modules/xforms/xforms.php:24
+msgid "This field is required"
+msgstr "Поле обязательно для заполнения"
+
+#: application/modules/xforms/templates/show_form.tpl:90
 msgid "Type the characters you see in this image."
-msgstr ""
+msgstr "Введите символы, которые вы видите на этом изображении."
 
 #: application/modules/xforms/assets/admin/widget_settings.tpl:5
 #: application/modules/xforms/templates/show_form_form.tpl:5
 msgid "Widget settings"
-msgstr ""
+msgstr "Настройки виджета"
 
-#: application/modules/xforms/assets/admin/form.tpl:149
+#: application/modules/xforms/assets/admin/form.tpl:196
 msgid "Your request has been successfully sent!"
-msgstr ""
+msgstr "Ваше сообщение было успешно отправлено!"
+
+#: application/modules/xforms/xforms.php:33
+msgid "Еnter a valid URL"
+msgstr "Введите корректный URL адрес"

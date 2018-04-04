@@ -100,7 +100,7 @@ class Xforms_Widgets extends MY_Controller
                     $data = ['form_id' => $this->input->post('form_id')];
 
                     $this->load->module('admin/widgets_manager')->update_config($widget_data['id'], $data);
-                    showMessage(lang('amt_settings_saved', 'xforms'));
+                    showMessage(lang('Changes has been saved', 'xforms'));
                     if ($this->input->post('action') == 'tomain') {
                         pjax('/admin/widgets_manager/index');
                     }
