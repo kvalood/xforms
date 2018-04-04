@@ -2,8 +2,8 @@
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-04 08:36+0300\n"
-"PO-Revision-Date: 2018-04-04 08:36+0300\n"
+"POT-Creation-Date: 2018-04-04 12:02+0300\n"
+"PO-Revision-Date: 2018-04-04 12:02+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
 "Language: \n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: application/modules/xforms/xforms.php:36
 msgid "<!--%s--> Must have at least %s characters"
-msgstr ""
+msgstr "<!--%s - > повинно бути як мінімум %s символів "
 
 #: application/modules/xforms/xforms.php:37
 msgid "<!--%s--> The field must be no more than %s characters"
-msgstr ""
+msgstr "<!--%s--> полі повинно бути не більше ніж %s символів "
 
 #: application/modules/xforms/assets/admin/field.tpl:5
 msgid "Adding fields in the form"
@@ -38,13 +38,17 @@ msgstr "Додавання полів у формі"
 msgid "Back"
 msgstr "Тому"
 
+#: application/modules/xforms/assets/admin/forms.tpl:71
+msgid "Cancel"
+msgstr "Відмінити"
+
 #: application/modules/xforms/admin.php:128
-#: application/modules/xforms/admin.php:205
+#: application/modules/xforms/admin.php:206
 #: application/modules/xforms/xforms_widgets.php:103
 msgid "Changes has been saved"
 msgstr "Зміни були збережені"
 
-#: application/modules/xforms/xforms.php:352
+#: application/modules/xforms/xforms.php:348
 msgid "Code protection"
 msgstr "Захист коду"
 
@@ -64,13 +68,31 @@ msgstr "Створення і вихід"
 msgid "Create form"
 msgstr "Створити форму"
 
+#: application/modules/xforms/assets/admin/fields.tpl:13
 #: application/modules/xforms/assets/admin/fields.tpl:83
 msgid "Delete"
 msgstr "Видалити"
 
+#: application/modules/xforms/assets/admin/forms.tpl:52
+#: application/modules/xforms/assets/admin/forms.tpl:68
+msgid "Delete form"
+msgstr "Видалити форма"
+
+#: application/modules/xforms/admin.php:176
+msgid "Description"
+msgstr "Опис"
+
+#: application/modules/xforms/assets/admin/forms.tpl:37
+msgid "Does not appear on the site"
+msgstr "Не з'являються на сайті"
+
 #: application/modules/xforms/assets/admin/fields.tpl:54
 msgid "don't show"
 msgstr "не показують"
+
+#: application/modules/xforms/assets/admin/forms.tpl:46
+msgid "Edit cmsemail settings for this form"
+msgstr "Зміна параметрів cmsemail для цієї форми"
 
 #: application/modules/xforms/assets/admin/form.tpl:7
 msgid "Edit form"
@@ -81,20 +103,25 @@ msgid "Editing"
 msgstr "Редагування"
 
 #: application/modules/xforms/assets/admin/field.tpl:5
+#: application/modules/xforms/assets/admin/forms.tpl:29
 msgid "Editing fields in the form"
 msgstr "Редагування полів у формі"
 
+#: application/modules/xforms/admin.php:181
+msgid "Email subject"
+msgstr "Тема листа"
+
 #: application/modules/xforms/xforms.php:30
 msgid "Enter a valid email address"
-msgstr ""
+msgstr "Введіть дійсну адресу електронної пошти "
 
 #: application/modules/xforms/xforms.php:31
 msgid "Enter correct email addresses"
-msgstr ""
+msgstr "Ввести правильні адреси електронної пошти "
 
 #: application/modules/xforms/xforms.php:32
 msgid "Enter the correct IP address"
-msgstr ""
+msgstr "Введіть правильну IP-адресу"
 
 #: application/modules/xforms/admin.php:123
 msgid "Field created"
@@ -107,6 +134,14 @@ msgstr "Конструктор форм"
 #: application/modules/xforms/assets/admin/fields.tpl:5
 msgid "Form fields"
 msgstr "Поля форми"
+
+#: application/modules/xforms/assets/admin/forms.tpl:60
+msgid "Forms are missing"
+msgstr "Форми не вистачає"
+
+#: application/modules/xforms/assets/admin/forms.tpl:72
+msgid "Remove"
+msgstr "Видалити"
 
 #: application/modules/xforms/assets/admin/fields.tpl:75
 msgid "Remove fields"
@@ -134,8 +169,12 @@ msgid "Save and go back"
 msgstr "Зберегти і повернутися"
 
 #: application/modules/xforms/templates/show_form.tpl:97
-msgid "Send order."
-msgstr ""
+msgid "Send order"
+msgstr "Відправити замовлення"
+
+#: application/modules/xforms/assets/admin/forms.tpl:41
+msgid "Settigns form"
+msgstr "Settigns форма"
 
 #: application/modules/xforms/assets/admin/fields.tpl:54
 msgid "show"
@@ -145,33 +184,49 @@ msgstr "показати"
 msgid "Status change success"
 msgstr "Статус успіх змінюватися"
 
+#: application/modules/xforms/admin.php:177
+msgid "Successful message"
+msgstr "Успішне повідомлення"
+
 #: application/modules/xforms/xforms.php:35
 msgid "The field must contain an integer"
-msgstr ""
+msgstr "Поле повинно містити ціле число"
 
 #: application/modules/xforms/xforms.php:34
 msgid "The field must contain only a numeric value"
-msgstr ""
+msgstr "Поле повинно містити числове значення"
 
 #: application/modules/xforms/xforms.php:27
 msgid "The field must contain the correct date"
-msgstr ""
+msgstr "Поле повинно містити правильну дату"
 
 #: application/modules/xforms/xforms.php:26
 msgid "The field must contain the correct phone number. Spaces, hyphens and parentheses are not allowed"
-msgstr ""
+msgstr "Поле повинно містити коректний номер телефону. Прогалин, дефісів та дужки не допускаються"
 
 #: application/modules/xforms/xforms.php:28
 msgid "The field must contain the correct time"
-msgstr ""
+msgstr "Поле повинно містити правильний час"
 
 #: application/modules/xforms/xforms.php:24
 msgid "This field is required"
-msgstr ""
+msgstr "Це поле є обов'язковим"
+
+#: application/modules/xforms/admin.php:174
+msgid "Title form"
+msgstr "Назва форма"
 
 #: application/modules/xforms/templates/show_form.tpl:90
 msgid "Type the characters you see in this image."
 msgstr "Введіть символи, які ви бачите на зображенні."
+
+#: application/modules/xforms/admin.php:175
+msgid "URL form"
+msgstr "Форма URL "
+
+#: application/modules/xforms/assets/admin/forms.tpl:35
+msgid "View on the site"
+msgstr "Подивитися на сайті"
 
 #: application/modules/xforms/assets/admin/widget_settings.tpl:5
 #: application/modules/xforms/templates/show_form_form.tpl:5
@@ -184,4 +239,4 @@ msgstr "Ваш запит успішно відправлено!"
 
 #: application/modules/xforms/xforms.php:33
 msgid "Еnter a valid URL"
-msgstr ""
+msgstr "Введіть допустимий URL-адресу"

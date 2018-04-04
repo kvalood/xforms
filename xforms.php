@@ -167,7 +167,7 @@ class Xforms extends MY_Controller
         $this->dbforge->create_table('xforms_field', TRUE);
 
         $this->db->where('name', 'xforms');
-        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '3.0.2'])]);
+        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '3.0.3'])]);
     }
 
     public function autoload() {

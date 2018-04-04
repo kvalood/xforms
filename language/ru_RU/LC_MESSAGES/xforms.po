@@ -2,8 +2,8 @@
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-04 11:47+0300\n"
-"PO-Revision-Date: 2018-04-04 11:47+0300\n"
+"POT-Creation-Date: 2018-04-04 12:01+0300\n"
+"PO-Revision-Date: 2018-04-04 12:01+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team:  <>\n"
 "Language: \n"
@@ -113,15 +113,15 @@ msgstr "Тема email"
 
 #: application/modules/xforms/xforms.php:30
 msgid "Enter a valid email address"
-msgstr ""
+msgstr "Введите корректный адрес электронной почты "
 
 #: application/modules/xforms/xforms.php:31
 msgid "Enter correct email addresses"
-msgstr ""
+msgstr "Ввести правильные адреса электронной почты "
 
 #: application/modules/xforms/xforms.php:32
 msgid "Enter the correct IP address"
-msgstr ""
+msgstr "Введите правильный IP-адрес"
 
 #: application/modules/xforms/admin.php:123
 msgid "Field created"
@@ -169,8 +169,8 @@ msgid "Save and go back"
 msgstr "Сохранить и вернуться"
 
 #: application/modules/xforms/templates/show_form.tpl:97
-msgid "Send order."
-msgstr ""
+msgid "Send order"
+msgstr "Отправить заявку"
 
 #: application/modules/xforms/assets/admin/forms.tpl:41
 msgid "Settigns form"
@@ -190,27 +190,27 @@ msgstr "Сообщение об успешной отправке"
 
 #: application/modules/xforms/xforms.php:35
 msgid "The field must contain an integer"
-msgstr ""
+msgstr "Поле должно содержать целое число"
 
 #: application/modules/xforms/xforms.php:34
 msgid "The field must contain only a numeric value"
-msgstr ""
+msgstr "Поле должно содержать только числовое значение"
 
 #: application/modules/xforms/xforms.php:27
 msgid "The field must contain the correct date"
-msgstr ""
+msgstr "Поле должно содержать правильную дату"
 
 #: application/modules/xforms/xforms.php:26
 msgid "The field must contain the correct phone number. Spaces, hyphens and parentheses are not allowed"
-msgstr ""
+msgstr "Поле должно содержать корректный номер телефона. Пробелы, дефисы и скобки не допускаются"
 
 #: application/modules/xforms/xforms.php:28
 msgid "The field must contain the correct time"
-msgstr ""
+msgstr "Поле должно содержать правильное время"
 
 #: application/modules/xforms/xforms.php:24
 msgid "This field is required"
-msgstr ""
+msgstr "Это поле является обязательным"
 
 #: application/modules/xforms/admin.php:174
 msgid "Title form"
@@ -239,4 +239,4 @@ msgstr "Ваш запрос был успешно отправлен!"
 
 #: application/modules/xforms/xforms.php:33
 msgid "Еnter a valid URL"
-msgstr ""
+msgstr "Введите правильный URL-адрес"
