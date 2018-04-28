@@ -167,7 +167,7 @@ class Xforms extends MY_Controller
         $this->dbforge->create_table('xforms_field', TRUE);
 
         $this->db->where('name', 'xforms');
-        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '3.0.3'])]);
+        $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '3.0.4'])]);
     }
 
     public function autoload() {
@@ -292,16 +292,16 @@ class Xforms extends MY_Controller
                     $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
                     $checked = explode("\n", $field['value']);
                     $data_msg = $checked[$post_data[$key_post]];
-                } elseif($field['type'] == 'checkbox') {
+                }
+                elseif($field['type'] == 'checkbox') {
 
                     if($require)
                         $this->form_validation->set_rules($key_post, $field['label'], $require);
 
                     $checked = explode("\n", $field['value']);
 
-                    foreach ($checked as $key => $val) {
-                        if(isset($post_data[$key_post][$key]))
-                            $data_msg .= $val . '<br/>';
+                    foreach ($post_data[$key_post] as $key => $val) {
+                        $data_msg .= $checked[$val] . '<br/>';
                     }
                 }
                 elseif($field['type'] == 'file') {
