@@ -33,8 +33,9 @@ class Xforms extends MY_Controller
         $this->form_validation->set_message('valid_url', lang('Еnter a valid URL', 'xforms')); // Введите корректный URL адрес
         $this->form_validation->set_message('numeric', 	lang('The field must contain only a numeric value', 'xforms')); // Поле должно содержать только числовое значение
         $this->form_validation->set_message('integer', lang('The field must contain an integer', 'xforms')); // Поле дожно содержать целое число
-        $this->form_validation->set_message('min_length', preg_replace('/<!--.*?-->/is', '',  lang('<!--%s--> Must have at least %s characters', 'xforms'))); // В поле <!--%s--> должно быть не менее %s символов
-        $this->form_validation->set_message('max_length', preg_replace('/<!--.*?-->/is', '',  lang('<!--%s--> The field must be no more than %s characters', 'xforms'))); // В поле <!--%s--> должно быть не более %s символов
+        //$this->form_validation->set_message('min_length', preg_replace('/<!--.*?-->/is', '',  lang('<!--%s--> Must have at least %s characters', 'xforms'))); // В поле <!--%s--> должно быть не менее %s символов
+        $this->form_validation->set_message('min_length', lang('<!--%s--> Must have at least %s characters', 'xforms')); // В поле <!--%s--> должно быть не менее %s символов
+        $this->form_validation->set_message('max_length', lang('<!--%s--> The field must be no more than %s characters', 'xforms')); // В поле <!--%s--> должно быть не более %s символов
 
         $this->load->helper(array('form', 'url'));
     }
