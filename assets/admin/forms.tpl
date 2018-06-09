@@ -14,10 +14,10 @@
     {if $forms}
         <table id="cats_table" class="table  table-bordered table-hover table-condensed t-l_a">
             <thead>
-            <th class="span1">ID</th>
-            <th class="span5">Наименование</th>
-            <th class="span4">URL</th>
-            <th class="span2">Действия</th>
+                <th class="span1">ID</th>
+                <th class="span5">Наименование</th>
+                <th class="span4">URL</th>
+                <th class="span2">Действия</th>
             </thead>
             <tbody>
             {foreach $forms as $form}
