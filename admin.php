@@ -195,10 +195,12 @@ class Admin extends BaseAdminController
                          'direct_url'           => $this->input->post('direct_url'),
                          'user_message_active'  => $this->input->post('user_message_active'),
                          'action_files'         => $this->input->post('action_files'),
-
-                         'subject'              => $this->input->post('subject'),
-                         'email'                => $this->input->post('email'),
                         ];
+
+                $email_data = [
+                    'subject'   => $this->input->post('subject'),
+                    'email'     => $this->input->post('email'),
+                ];
 
                 // Создаем / сохраняем
                 if (isset($id) AND $this->xforms_model->update_form($id, $data)) {
@@ -220,7 +222,7 @@ class Admin extends BaseAdminController
                         'patern'                => '',
                         'user_message_active'   => 0,
                         'admin_message_active'  => 1,
-                        'admin_email'           => $data['email']
+                        'admin_email'           => $email_data['email']
                     ];
                     $this->db->insert('mod_email_paterns', $email_paterns);
                     $email_patterns_id = $this->db->insert_id();
@@ -228,7 +230,7 @@ class Admin extends BaseAdminController
                     $email_paterns_i18n = [
                         'id'            => $email_patterns_id,
                         'locale'        => 'ru',
-                        'theme'         => $data['subject'] ? $data['subject'] : 'ImageCMS - Отправка формы - ' . $id,
+                        'theme'         => $email_data['subject'] ? $email_data['subject'] : 'ImageCMS - Отправка формы - ' . $id,
                         'user_message'  => 'Здравствуйте. Мы свяжемся с вами в ближайшее время.',
                         'admin_message' => '<p>Пришла заявка.</p><p>$message$</p>',
                         'description'   => 'Отправка формы xforms - ' . $data['title'],
