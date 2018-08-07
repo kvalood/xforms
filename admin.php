@@ -196,7 +196,7 @@ class Admin extends BaseAdminController
                          'user_message_active'  => $this->input->post('user_message_active'),
                          'action_files'         => $this->input->post('action_files'),
                         ];
-
+                
                 $email_data = [
                     'subject'   => $this->input->post('subject'),
                     'email'     => $this->input->post('email'),
