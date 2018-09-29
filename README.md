@@ -1,7 +1,7 @@
 
 Обсуждение и скриншоты тут - http://forum.imagecms.net/viewtopic.php?id=4988
 
-### Конструктор форм - xforms для ImageCMS
+### Конструктор форм - xforms для ImageCMS (старого образца на Codeigniter)
 
 ## Обратите внимание!
 Файлы модуля должны находиться в папке /application/modules/xforms
