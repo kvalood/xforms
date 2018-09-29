@@ -132,6 +132,18 @@
                                     </div>
                                 </div>
 
+                                <div class="control-group">
+                                    <label class="control-label" for="error_message">
+                                        Сообщение об ошибке
+                                    </label>
+                                    <div class="controls">
+                                        <div class="o_h">
+                                            <input type="text" name="error_message" id="error_message" value="{$field.error_message}"/>
+                                        </div>
+                                        <span class="help-block">Показывается когда есть какое-нибудь Условие проверки или поле обязательно. (по умолчанию используются системные сообщения)</span>
+                                    </div>
+                                </div>
+
                                 <div class="control-group" style="display:{if $field.type == 'file'}block{else:}none{/if}">
                                     <label class="control-label" for="allowed_types">Расширения файлов:</label>
                                     <div class="controls">

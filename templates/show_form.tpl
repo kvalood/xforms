@@ -34,9 +34,7 @@
                             <div class="field__title{if $field.require==1} require_field{/if}">{$field.label}</div>
                         {else:}
                             {if (!$checkbox_value AND $field.type=='checkbox') || $field.type=='text' || $field.type=='textarea' || $field.type=='file'}
-                                <label for="f{$field.id}" class="field__title{if $field.require==1} require_field{/if}">
-                                    {$field.label}
-                                </label>
+                                <label for="f{$field.id}" class="field__title{if $field.require==1} require_field{/if}">{$field.label}</label>
                             {/if}
                         {/if}
 

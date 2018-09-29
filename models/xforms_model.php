@@ -9,8 +9,8 @@ class Xforms_model extends CI_Model
      * @param array $data
      * @return int
      */
-    public function add_form($data = []) {
-
+    public function add_form($data = [])
+    {
         $this->db->insert('xforms', $data);
         return $this->db->insert_id();
     }
@@ -19,8 +19,8 @@ class Xforms_model extends CI_Model
      * @param int $id
      * @return array form
      */
-    public function get_form($id) {
-
+    public function get_form($id)
+    {
         $this->db->limit(1);
 
         if (is_int($id)) {
@@ -36,8 +36,8 @@ class Xforms_model extends CI_Model
      * @param array $data
      * @return bool
      */
-    public function update_form($id, $data = []) {
-
+    public function update_form($id, $data = [])
+    {
         $this->db->where('id', $id);
         $this->db->update('xforms', $data);
 
@@ -49,8 +49,8 @@ class Xforms_model extends CI_Model
      * @param array $param [visible, type]
      * @return array
      */
-    public function get_form_fields($id, $param = []) {
-
+    public function get_form_fields($id, $param = [])
+    {
         if (isset($param['visible'])) {
             $this->db->where('visible', $param['visible']);
         }
@@ -66,8 +66,8 @@ class Xforms_model extends CI_Model
      * @param integer $id
      * @return int
      */
-    public function get_form_name($id) {
-
+    public function get_form_name($id)
+    {
         $q = $this->db->select('title')->where('id', $id)->get('xforms')->row_array();
         return $q['title'];
     }
@@ -76,8 +76,8 @@ class Xforms_model extends CI_Model
      * list forms
      * @return mixed
      */
-    public function get_forms() {
-
+    public function get_forms()
+    {
         return $this->db->get('xforms')->result_array();
     }
 
@@ -86,8 +86,8 @@ class Xforms_model extends CI_Model
      * @param array $data
      * @return int
      */
-    public function add_field($data = []) {
-
+    public function add_field($data = [])
+    {
         $this->db->insert('xforms_field', $data);
         return $this->db->insert_id();
     }
@@ -96,8 +96,8 @@ class Xforms_model extends CI_Model
      * @param int $id
      * @return array
      */
-    public function get_field($id) {
-
+    public function get_field($id)
+    {
         return $this->db->where('id', $id)->get('xforms_field')->row_array();
     }
 
@@ -106,8 +106,8 @@ class Xforms_model extends CI_Model
      * @param array $data
      * @return integer
      */
-    public function update_field($id, $data) {
-
+    public function update_field($id, $data)
+    {
         $this->db->where('id', $id);
         $this->db->update('xforms_field', $data);
         return $id;
@@ -116,8 +116,8 @@ class Xforms_model extends CI_Model
     /**
      * @param array $ids
      */
-    public function delete_fields($ids = []) {
-
+    public function delete_fields($ids = [])
+    {
         foreach ($ids as $id) {
             $this->db->where('id', $id)->delete('xforms_field');
         }

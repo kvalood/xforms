@@ -12,8 +12,8 @@ use CMSFactory\ModuleSettings;
 class Xforms extends MY_Controller
 {
 
-    public function __construct() {
-
+    public function __construct()
+    {
         parent::__construct();
         $this->load->module('core');
         $lang = new MY_Lang();
@@ -31,7 +31,7 @@ class Xforms extends MY_Controller
         $this->form_validation->set_message('valid_emails', lang('Enter correct email addresses', 'xforms')); // Введите корректные email адреса
         $this->form_validation->set_message('valid_ip', lang('Enter the correct IP address', 'xforms')); // Введите корректный IP адрес
         $this->form_validation->set_message('valid_url', lang('Еnter a valid URL', 'xforms')); // Введите корректный URL адрес
-        $this->form_validation->set_message('numeric', 	lang('The field must contain only a numeric value', 'xforms')); // Поле должно содержать только числовое значение
+        $this->form_validation->set_message('numeric', lang('The field must contain only a numeric value', 'xforms')); // Поле должно содержать только числовое значение
         $this->form_validation->set_message('integer', lang('The field must contain an integer', 'xforms')); // Поле дожно содержать целое число
         //$this->form_validation->set_message('min_length', preg_replace('/<!--.*?-->/is', '',  lang('<!--%s--> Must have at least %s characters', 'xforms'))); // В поле <!--%s--> должно быть не менее %s символов
         $this->form_validation->set_message('min_length', lang('<!--%s--> Must have at least %s characters', 'xforms')); // В поле <!--%s--> должно быть не менее %s символов
@@ -40,8 +40,8 @@ class Xforms extends MY_Controller
         $this->load->helper(array('form', 'url'));
     }
 
-    public function _deinstall() {
-
+    public function _deinstall()
+    {
         if ($this->dx_auth->is_admin() == FALSE) {
             exit;
         }
@@ -51,8 +51,8 @@ class Xforms extends MY_Controller
         $this->dbforge->drop_table('xforms_field');
     }
 
-    public function _install() {
-
+    public function _install()
+    {
         if ($this->dx_auth->is_admin() == FALSE) {
             exit;
         }
@@ -60,108 +60,112 @@ class Xforms extends MY_Controller
         $this->load->dbforge();
 
         $xforms = [
-                   'id'         => [
-                                    'type'           => 'INT',
-                                    'constraint'     => 11,
-                                    'auto_increment' => TRUE,
-                                   ],
-                   'title'      => [
-                                    'type'       => 'varchar',
-                                    'constraint' => 255,
-                                   ],
-                   'url'        => [
-                                    'type'       => 'varchar',
-                                    'constraint' => 255,
-                                   ],
-                   'desc'       => ['type' => 'text'],
-                   'success'    => ['type' => 'text'],
-                   'captcha'    => [
-                                    'type'       => 'int',
-                                    'constraint' => 2,
-                                    'default'    => 1,
-                                   ],
-                   'direct_url' => [
-                                    'type'       => 'int',
-                                    'constraint' => 1,
-                                    'default'    => 0,
-                                   ],
-                   'action_files' => [
-                                    'type' => 'smallint',
-                                    'constraint' => '1',
-                                    'default' => 1
-                                    ],
-                   'user_message_active' => [
-                                    'type' => 'int',
-                                    'constraint' => '3'
-                                    ]
-                  ];
+            'id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'auto_increment' => TRUE,
+            ],
+            'title' => [
+                'type' => 'varchar',
+                'constraint' => 255,
+            ],
+            'url' => [
+                'type' => 'varchar',
+                'constraint' => 255,
+            ],
+            'desc' => ['type' => 'text'],
+            'success' => ['type' => 'text'],
+            'captcha' => [
+                'type' => 'int',
+                'constraint' => 2,
+                'default' => 1,
+            ],
+            'direct_url' => [
+                'type' => 'int',
+                'constraint' => 1,
+                'default' => 0,
+            ],
+            'action_files' => [
+                'type' => 'smallint',
+                'constraint' => '1',
+                'default' => 1
+            ],
+            'user_message_active' => [
+                'type' => 'int',
+                'constraint' => '3'
+            ]
+        ];
 
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->add_field($xforms);
         $this->dbforge->create_table('xforms', TRUE);
 
         $xforms_field = [
-                         'id'         => [
-                                          'type'           => 'INT',
-                                          'constraint'     => 11,
-                                          'auto_increment' => TRUE,
-                                         ],
-                         'fid'        => [
-                                          'type'       => 'int',
-                                          'constraint' => 11,
-                                         ],
-                         'type'       => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 255,
-                                         ],
-                         'label'      => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 255,
-                                         ],
-                         'value'      => ['type'       => 'text'],
-                         'desc'       => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 255,
-                                         ],
-                         'position'   => [
-                                          'type'       => 'int',
-                                          'constraint' => 11,
-                                          'default'    => 0,
-                                         ],
-                         'maxlength'  => [
-                                          'type'       => 'int',
-                                          'constraint' => 11,
-                                         ],
-                         'checked'    => [
-                                          'type'       => 'int',
-                                          'constraint' => 2,
-                                          'default'    => 0,
-                                         ],
-                         'disabled'   => [
-                                          'type'       => 'int',
-                                          'constraint' => 2,
-                                          'default'    => 0,
-                                         ],
-                         'visible'    => [
-                                          'type'       => 'int',
-                                          'constraint' => 1,
-                                          'default'    => 1,
-                                         ],
-                         'require'    => [
-                                          'type'       => 'int',
-                                          'constraint' => 2,
-                                          'default'    => 0,
-                                         ],
-                         'operation'  => ['type' => 'text'],
-                         'validation' => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 500,
-                                         ],
-                         'allowed_types' => [
-                                          'type'       => 'varchar',
-                                          'constraint' => 500,
-                                         ]
-                        ];
+            'id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'auto_increment' => TRUE,
+            ],
+            'fid' => [
+                'type' => 'int',
+                'constraint' => 11,
+            ],
+            'type' => [
+                'type' => 'varchar',
+                'constraint' => 255,
+            ],
+            'label' => [
+                'type' => 'varchar',
+                'constraint' => 255,
+            ],
+            'error_message' => [
+                'type' => 'varchar',
+                'constraint' => 255,
+            ],
+            'value' => ['type' => 'text'],
+            'desc' => [
+                'type' => 'varchar',
+                'constraint' => 255,
+            ],
+            'position' => [
+                'type' => 'int',
+                'constraint' => 11,
+                'default' => 0,
+            ],
+            'maxlength' => [
+                'type' => 'int',
+                'constraint' => 11,
+            ],
+            'checked' => [
+                'type' => 'int',
+                'constraint' => 2,
+                'default' => 0,
+            ],
+            'disabled' => [
+                'type' => 'int',
+                'constraint' => 2,
+                'default' => 0,
+            ],
+            'visible' => [
+                'type' => 'int',
+                'constraint' => 1,
+                'default' => 1,
+            ],
+            'require' => [
+                'type' => 'int',
+                'constraint' => 2,
+                'default' => 0,
+            ],
+            'operation' => ['type' => 'text'],
+            'validation' => [
+                'type' => 'varchar',
+                'constraint' => 500,
+            ],
+            'allowed_types' => [
+                'type' => 'varchar',
+                'constraint' => 500,
+            ]
+        ];
 
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->add_field($xforms_field);
@@ -171,7 +175,8 @@ class Xforms extends MY_Controller
         $this->db->update('components', ['enabled' => '1', 'in_menu' => '1', 'autoload' => '0', 'settings' => serialize(['version' => '3.0.4'])]);
     }
 
-    public function autoload() {
+    public function autoload()
+    {
 
     }
 
@@ -180,8 +185,8 @@ class Xforms extends MY_Controller
      * @param string $code
      * @return boolean
      */
-    public function captcha_check($code) {
-
+    public function captcha_check($code)
+    {
         if (!$this->dx_auth->captcha_check($code)) {
             return FALSE;
         } else {
@@ -193,8 +198,8 @@ class Xforms extends MY_Controller
     /**
      * Valid Date (europe format)
      */
-    public function valid_date($str) {
-
+    public function valid_date($str)
+    {
         if (preg_match('/([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})/', $str)) {
             $arr = explode('.', $str);
             $dd = $arr[0];
@@ -210,8 +215,8 @@ class Xforms extends MY_Controller
     /**
      * Validate time
      */
-    public function valid_time($str) {
-
+    public function valid_time($str)
+    {
         if (preg_match('/([0-9]{1,2})\:([0-9]{1,2})\:([0-9]{1,2})/', $str)) {
             return TRUE;
         } else {
@@ -234,13 +239,14 @@ class Xforms extends MY_Controller
      * Дополнительно ПРОСТО ПРОВЕРКА РОССИЯ,УКРАИНА, БЕЛКА - без заморочек, просто межгород и 8
      * ^(8|\+7|\+038|\+38|\+375)\d{9,10}$
      */
-    public function valid_phone($number) {
-        return (bool) preg_match('/^(?:8(?:(?:21|22|23|24|51|52|53|54|55)|(?:15\d\d))?|\+7|\+375|\+38|\+038)?(?:(?:3[04589]|4[012789]|8[^89\D]|9\d)\d)?\d{7}$/', $number);
+    public function valid_phone($number)
+    {
+        return (bool)preg_match('/^(?:8(?:(?:21|22|23|24|51|52|53|54|55)|(?:15\d\d))?|\+7|\+375|\+38|\+038)?(?:(?:3[04589]|4[012789]|8[^89\D]|9\d)\d)?\d{7}$/', $number);
     }
 
 
-    public function index() {
-
+    public function index()
+    {
         $this->core->error_404();
     }
 
@@ -248,11 +254,10 @@ class Xforms extends MY_Controller
      * @param string $url
      * @return string
      */
-    public function show($url = '') {
-
-        $is_widget  = ($this->input->post('is_widget')) ? 1 : 0; // TODO: Remove
-        $is_ajax    = $this->input->is_ajax_request() ? 1 : 0;
-        $form       = $this->xforms_model->get_form($url);
+    public function show($url = '')
+    {
+        $is_ajax = $this->input->is_ajax_request() ? 1 : 0;
+        $form = $this->xforms_model->get_form($url);
 
         if (!$is_ajax) {
             if (!$form['id'] OR !$form['direct_url']) {
@@ -275,9 +280,9 @@ class Xforms extends MY_Controller
         // Если нажали отправить форму, то перебираем все входящие значения
         if ($this->input->post()) {
 
-            $msg_email      = []; // Текст для почты
-            $user_email     = ''; // Email клиента, для отправки ему письма
-            $attach_email   = []; // Файлы, прикрепляемые к письму
+            $msg_email = []; // Текст для почты
+            $user_email = ''; // Email клиента, для отправки ему письма
+            $attach_email = []; // Файлы, прикрепляемые к письму
 
 
             $post_data = $this->input->post();
@@ -293,10 +298,9 @@ class Xforms extends MY_Controller
                     $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
                     $checked = explode("\n", $field['value']);
                     $data_msg = $checked[$post_data[$key_post]];
-                }
-                elseif($field['type'] == 'checkbox') {
+                } elseif ($field['type'] == 'checkbox') {
 
-                    if($require)
+                    if ($require)
                         $this->form_validation->set_rules($key_post, $field['label'], $require);
 
                     $checked = explode("\n", $field['value']);
@@ -304,22 +308,21 @@ class Xforms extends MY_Controller
                     foreach ($post_data[$key_post] as $key => $val) {
                         $data_msg .= $checked[$val] . '<br/>';
                     }
-                }
-                elseif($field['type'] == 'file') {
+                } elseif ($field['type'] == 'file') {
 
-                    if($require)
+                    if ($require)
                         $this->form_validation->set_rules($key_post, $field['label'], $require);
 
                     $files = [];
 
-                    if(!empty($post_data[$key_post])) {
+                    if (!empty($post_data[$key_post])) {
                         foreach ($post_data[$key_post] as $key => $val) {
-                            foreach($val as $k => $v) {
+                            foreach ($val as $k => $v) {
                                 $files[$k][$key] = $v;
                             }
                         }
-                        foreach($files as $key => $file) {
-                            if($form['action_files'] == 1 OR $form['action_files'] == 3) {
+                        foreach ($files as $key => $file) {
+                            if ($form['action_files'] == 1 OR $form['action_files'] == 3) {
                                 // Вставляем ссылки файлы в текст письма
                                 $data_msg .= '<a href="' . site_url('xforms/download/' . $file['url']) . '">' . $file['name'] . '</a> - ';
                                 $data_msg .= '<a href="' . site_url('xforms/deleteFile/' . $file['url']) . '" title="удалить" style="color:red;">×</a><br/>';
@@ -334,14 +337,14 @@ class Xforms extends MY_Controller
                     $data_msg = $post_data[$key_post];
 
                     // Найдем поле с email'ом отправителя
-                    if($form['user_message_active'] AND $field['id'] == $form['user_message_active'])
+                    if ($form['user_message_active'] AND $field['id'] == $form['user_message_active'])
                         $user_email = $post_data[$key_post];
                 }
 
-                if($field['type'] != 'file' OR ($field['type'] == 'file' AND $form['action_files'] != 2))
+                if ($field['type'] != 'file' OR ($field['type'] == 'file' AND $form['action_files'] != 2))
                     $msg_email[$field['id']]['field'] = $field;
 
-                if(!empty($data_msg))
+                if (!empty($data_msg))
                     $msg_email[$field['id']]['data'] = $data_msg;
             }
 
@@ -361,7 +364,7 @@ class Xforms extends MY_Controller
                 $this->load->library('email');
                 $this->email->clear();
 
-                $locale =  MY_Controller::defaultLocale();
+                $locale = MY_Controller::defaultLocale();
                 $pattern_name = 'xforms_send_form_' . $form['id'];
                 $default_settings = ModuleSettings::ofModule('cmsemail')->get($locale ?: null);
                 $pattern_settings = email::getInstance()->cmsemail_model->getPaternSettings($pattern_name);
@@ -397,7 +400,7 @@ class Xforms extends MY_Controller
                 /**
                  * Отправляем письмо клиенту
                  */
-                if($form['user_message_active'] AND $pattern_settings['user_message_active']) {
+                if ($form['user_message_active'] AND $pattern_settings['user_message_active']) {
 
                     $this->email->from($pattern_settings['from_email'], $pattern_settings['from']);
                     $this->email->to($user_email);
@@ -423,9 +426,9 @@ class Xforms extends MY_Controller
                         $this->email->message(email::getInstance()->replaceVariables($pattern_settings['admin_message'], $replaceData));
                         $this->email->set_newline("\r\n");
                         // Добавляем вложения
-                        if($attach_email AND ($form['action_files'] == 2 OR $form['action_files'] == 3)) {
+                        if ($attach_email AND ($form['action_files'] == 2 OR $form['action_files'] == 3)) {
                             foreach ($attach_email as $file) {
-                                if(file_exists(FCPATH . 'uploads/xforms/' . $file)) {
+                                if (file_exists(FCPATH . 'uploads/xforms/' . $file)) {
                                     $this->email->attach(FCPATH . 'uploads/xforms/' . $file);
                                 }
                             }
@@ -443,7 +446,7 @@ class Xforms extends MY_Controller
                 }
 
                 // Удаляем вложения
-                if($attach_email AND $form['action_files'] == 2) {
+                if ($attach_email AND $form['action_files'] == 2) {
                     foreach ($attach_email as $file) {
                         $this->deleteFile($file);
                     }
@@ -452,7 +455,22 @@ class Xforms extends MY_Controller
                 $notify['success'] = $form['success'];
 
             } else {
-                $notify['errors'] = $this->form_validation->getErrorsArray();
+
+                // Кастомные ошибки для полей.
+                $field_errors = [];
+                foreach ($this->form_validation->getErrorsArray() as $field_id => $error) {
+                    $f_id = preg_replace('/[^0-9]/', '', $field_id);
+                    $result = array_search($f_id, array_column($fields, 'id'));
+
+                    if ($fields[$result]['error_message']) {
+                        $field_errors[$field_id] = $fields[$result]['error_message'];
+                    } else {
+                        $field_errors[$field_id] = $error;
+                    }
+                }
+
+                $notify['errors'] = $field_errors;
+                $notify['fields'] = $fields;
                 $notify['group_errors'] = validation_errors();
                 $notify['captcha_image'] = $form['captcha_image'];
             }
@@ -463,7 +481,7 @@ class Xforms extends MY_Controller
         } else {
 
             // Если есть поля "файл" в форме. Что бы не загружать лишние скрипты...
-            $field_file_exists = array_filter($fields, function($lines){
+            $field_file_exists = array_filter($fields, function ($lines) {
                 return ($lines['type'] == 'file'); //Поиск по первому значению
             });
 
@@ -477,7 +495,7 @@ class Xforms extends MY_Controller
                 ->registerScript('xforms')
                 ->registerStyle('xforms');
 
-            if($field_file_exists) {
+            if ($field_file_exists) {
                 $xform_fetch
                     ->registerScript('jquery.ui.widget')
                     ->registerScript('jquery.iframe-transport')
@@ -485,7 +503,7 @@ class Xforms extends MY_Controller
                     ->registerScript('xforms_files');
             }
 
-            if($form['direct_url']) {
+            if ($form['direct_url']) {
                 $xform_fetch
                     ->render('../templates/wrapper');
             } else {
@@ -498,16 +516,16 @@ class Xforms extends MY_Controller
     /**
      * Upload file
      */
-    public function upload($field_id) {
-
+    public function upload($field_id)
+    {
         // Найдем форму.
-        if(!$field = $this->xforms_model->get_field($field_id))
+        if (!$field = $this->xforms_model->get_field($field_id))
             return false;
 
         $form = $this->xforms_model->get_form(intval($field['fid']));
 
         // расширния файлов доступные к загрузке
-        if($field['allowed_types'])
+        if ($field['allowed_types'])
             $config['allowed_types'] = $field['allowed_types'];
         else
             $config['allowed_types'] = 'jpg|png|rar|zip|doc|docx|psd|pdf';
@@ -527,13 +545,13 @@ class Xforms extends MY_Controller
 
         // fixed multiple file upload. Fucking codeigninter...
         $files = $_FILES;
-        $cpt = count($_FILES['f'.$field_id]['name']);
-        for($i=0; $i<$cpt; $i++) {
-            $_FILES['userfile']['name']     = $files['f'.$field_id]['name'][$i];
-            $_FILES['userfile']['type']     = $files['f'.$field_id]['type'][$i];
-            $_FILES['userfile']['tmp_name'] = $files['f'.$field_id]['tmp_name'][$i];
-            $_FILES['userfile']['error']    = $files['f'.$field_id]['error'][$i];
-            $_FILES['userfile']['size']     = $files['f'.$field_id]['size'][$i];
+        $cpt = count($_FILES['f' . $field_id]['name']);
+        for ($i = 0; $i < $cpt; $i++) {
+            $_FILES['userfile']['name'] = $files['f' . $field_id]['name'][$i];
+            $_FILES['userfile']['type'] = $files['f' . $field_id]['type'][$i];
+            $_FILES['userfile']['tmp_name'] = $files['f' . $field_id]['tmp_name'][$i];
+            $_FILES['userfile']['error'] = $files['f' . $field_id]['error'][$i];
+            $_FILES['userfile']['size'] = $files['f' . $field_id]['size'][$i];
 
             $this->upload->initialize($config);
 
@@ -542,15 +560,15 @@ class Xforms extends MY_Controller
             } else {
                 $info = $this->upload->data();
 
-                $file             = new StdClass;
-                $file->name       = $_FILES['userfile']['name'];
-                $file->url        = $info['file_name'];
-                $file->size       = $info['size'];
-                $file->extension  = $info['extension'];
-                $file->full_url   = $upload_path_url . $info['file_name'];
-                $file->deleteUrl  = base_url() . 'xforms/deleteFile/' . $info['file_name'];
+                $file = new StdClass;
+                $file->name = $_FILES['userfile']['name'];
+                $file->url = $info['file_name'];
+                $file->size = $info['size'];
+                $file->extension = $info['extension'];
+                $file->full_url = $upload_path_url . $info['file_name'];
+                $file->deleteUrl = base_url() . 'xforms/deleteFile/' . $info['file_name'];
                 $file->deleteType = 'DELETE';
-                $file->error      = null;
+                $file->error = null;
 
                 echo json_encode($file);
             }
@@ -561,12 +579,13 @@ class Xforms extends MY_Controller
     /**
      * Download file
      */
-    public function download($file) {
+    public function download($file)
+    {
         $this->load->helper('download');
 
         $data = file_get_contents("./uploads/xforms/$file");
 
-        if(empty($data)) {
+        if (empty($data)) {
             $this->core->error_404();
         } else {
             force_download($file, $data);
@@ -579,7 +598,8 @@ class Xforms extends MY_Controller
      * @param $file
      * TODO: Доделать проверку безопасности и вывод ошибок, если файл отсутствует.
      */
-    public function deleteFile($file) {
+    public function deleteFile($file)
+    {
         $success = unlink(FCPATH . 'uploads/xforms/' . $file);
         //info to see if it is doing what it is supposed to
         $info = new StdClass;
@@ -587,7 +607,7 @@ class Xforms extends MY_Controller
         $info->path = base_url() . 'uploads/' . $file;
         $info->file = is_file(FCPATH . 'uploads/' . $file);
 
-        $is_ajax    = $this->input->is_ajax_request() ? 1 : 0;
+        $is_ajax = $this->input->is_ajax_request() ? 1 : 0;
 
         if ($is_ajax) {
             //I don't think it matters if this is set but good for error checking in the console/firebug

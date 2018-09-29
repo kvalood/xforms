@@ -14,8 +14,8 @@ class Xforms_Widgets extends MY_Controller
 
     private $defaults = ['form_id' => 0];
 
-    public function __construct() {
-
+    public function __construct()
+    {
         parent::__construct();
         $lang = new MY_Lang();
         $lang->load('xforms');
@@ -27,15 +27,15 @@ class Xforms_Widgets extends MY_Controller
      * @param array $widget
      * @return string
      */
-    public function show_form($widget = []) {
-
+    public function show_form($widget = [])
+    {
         if ($widget['settings'] === FALSE) {
             $settings = $this->defaults;
         } else {
             $settings = $widget['settings'];
         }
 
-        $form = $this->xforms_model->get_form((int) $settings['form_id']);
+        $form = $this->xforms_model->get_form((int)$settings['form_id']);
 
         if ($form['captcha'] == 1) {
             $this->dx_auth->captcha();
@@ -45,11 +45,11 @@ class Xforms_Widgets extends MY_Controller
         $fields = $this->xforms_model->get_form_fields($settings['form_id'], ['visible' => 1]);
 
         // Если есть поля "файл" в форме. Что бы не загружать лишние скрипты...
-        $result = array_filter($fields, function($lines){
+        $result = array_filter($fields, function ($lines) {
             return ($lines['type'] == 'file'); //Поиск по первому значению
         });
 
-        if($result) {
+        if ($result) {
             return assetManager::create()
                 ->setData('widget', $widget)
                 ->setData('fields', $fields)
@@ -77,8 +77,8 @@ class Xforms_Widgets extends MY_Controller
      * @param string $action
      * @param array $widget_data
      */
-    public function show_form_configure($action = 'show_settings', array $widget_data = []) {
-
+    public function show_form_configure($action = 'show_settings', array $widget_data = [])
+    {
         if ($this->dx_auth->is_admin() == FALSE) {
             exit;
         }
