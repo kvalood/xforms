@@ -11,7 +11,7 @@ $com_info = [
     'window_type' => 'xhr', // Load method. Possible values xhr/iframe
     'w' => 600, // Window width
     'h' => 550, // Window height
-    'version' => '3.0.6', // Module version
+    'version' => '3.0.7', // Module version
     'author' => 'x404@bk.ru', // Author info
     'icon_class' => 'fa fa-cubes',
 ];
