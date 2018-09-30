@@ -26,19 +26,19 @@
                 {foreach $fields as $field}
                     <div class="field__item{if $field.type=='separator'} item_separator{/if} {$field.operation}">
 
-                        {if $field.type=='checkbox' || $field.type=='radio' || $field.type=='select'}
+                        {if in_array($field.type, array('checkbox', 'radio', 'select'))}
                             {$checkbox_value = array_diff(explode("\n",$field.value), array(''))}
                         {/if}
 
                         {if (($field.type=='select' || $field.type=='radio') AND count($checkbox_value) >= 1) || $field.type == 'separator' || count($checkbox_value) >= 1}
                             <div class="field__title{if $field.require==1} require_field{/if}">{$field.label}</div>
                         {else:}
-                            {if (!$checkbox_value AND $field.type=='checkbox') || $field.type=='text' || $field.type=='tel' || $field.type=='textarea' || $field.type=='file'}
+                            {if in_array($field.type, array('text', 'tel', 'email', 'textarea', 'file')) || (!$checkbox_value AND $field.type=='checkbox')}
                                 <label for="f{$field.id}" class="field__title{if $field.require==1} require_field{/if}">{$field.label}</label>
                             {/if}
                         {/if}
 
-                        {if $field.type=='text' || $field.type == 'tel' || $field.type == 'email'}
+                        {if in_array($field.type, array('text', 'tel', 'email'))}
                             <input type="{$field.type}" name="f{$field.id}" id="f{$field.id}" value="{$field.value}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if}  />
                         {elseif $field.type=='textarea'}
                             <textarea name="f{$field.id}" class="message_text"  id="f{$field.id}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if}>{$field.value}</textarea>
@@ -96,7 +96,6 @@
                 </div>
 
             </div>
-
         </form>
     {/if}
 </div>
