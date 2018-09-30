@@ -294,58 +294,75 @@ class Xforms extends MY_Controller
                 $data_msg = '';
 
                 // Делаем валидацию полей + подготоваливаем данные для отправки в письме
-                if ($field['type'] == 'radio' OR $field['type'] == 'select') {
-                    $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
-                    $checked = explode("\n", $field['value']);
-                    $data_msg = $checked[$post_data[$key_post]];
-                } elseif ($field['type'] == 'checkbox') {
+                switch ($field['type']) {
 
-                    if ($require)
-                        $this->form_validation->set_rules($key_post, $field['label'], $require);
+                    case 'text':
+                    case 'tel':
+                    case 'email':
+                    case 'textarea':
+                        $this->form_validation->set_rules($key_post, $field['label'], 'trim|xss_clean|' . $require . $field['validation']);
+                        $data_msg = $post_data[$key_post];
 
-                    $checked = explode("\n", $field['value']);
+                        // Найдем поле с email'ом отправителя
+                        if ($form['user_message_active'] AND $field['id'] == $form['user_message_active']) {
+                            $user_email = $post_data[$key_post];
+                        }
 
-                    foreach ($post_data[$key_post] as $key => $val) {
-                        $data_msg .= $checked[$val] . '<br/>';
-                    }
-                } elseif ($field['type'] == 'file') {
+                        break;
 
-                    if ($require)
-                        $this->form_validation->set_rules($key_post, $field['label'], $require);
+                    case 'radio':
+                    case 'select':
+                        $this->form_validation->set_rules($key_post, $field['label'], 'trim|max_length[3]|integer|' . $require . $field['validation']);
+                        $checked = explode("\n", $field['value']);
+                        $data_msg = $checked[$post_data[$key_post]];
+                        break;
 
-                    $files = [];
+                    case 'checkbox':
 
-                    if (!empty($post_data[$key_post])) {
+                        if ($require) {
+                            $this->form_validation->set_rules($key_post, $field['label'], $require);
+                        }
+                        $checked = explode("\n", $field['value']);
                         foreach ($post_data[$key_post] as $key => $val) {
-                            foreach ($val as $k => $v) {
-                                $files[$k][$key] = $v;
+                            $data_msg .= $checked[$val] . '<br/>';
+                        }
+                        break;
+
+                    case 'file':
+                        if ($require) {
+                            $this->form_validation->set_rules($key_post, $field['label'], $require);
+                        }
+                        $files = [];
+
+                        if (!empty($post_data[$key_post])) {
+                            foreach ($post_data[$key_post] as $key => $val) {
+                                foreach ($val as $k => $v) {
+                                    $files[$k][$key] = $v;
+                                }
+                            }
+                            foreach ($files as $key => $file) {
+                                if ($form['action_files'] == 1 OR $form['action_files'] == 3) {
+                                    // Вставляем ссылки файлы в текст письма
+                                    $data_msg .= '<a href="' . site_url('xforms/download/' . $file['url']) . '">' . $file['name'] . '</a> - ';
+                                    $data_msg .= '<a href="' . site_url('xforms/deleteFile/' . $file['url']) . '" title="удалить" style="color:red;">×</a><br/>';
+                                }
+
+                                // Добавляем для вложения в письмо
+                                $attach_email[] = $file['url'];
                             }
                         }
-                        foreach ($files as $key => $file) {
-                            if ($form['action_files'] == 1 OR $form['action_files'] == 3) {
-                                // Вставляем ссылки файлы в текст письма
-                                $data_msg .= '<a href="' . site_url('xforms/download/' . $file['url']) . '">' . $file['name'] . '</a> - ';
-                                $data_msg .= '<a href="' . site_url('xforms/deleteFile/' . $file['url']) . '" title="удалить" style="color:red;">×</a><br/>';
-                            }
+                        break;
 
-                            // Добавляем для вложения в письмо
-                            $attach_email[] = $file['url'];
-                        }
-                    }
-                } elseif ($field['type'] == 'text' OR $field['type'] == 'textarea') {
-                    $this->form_validation->set_rules($key_post, $field['label'], 'trim|xss_clean|' . $require . $field['validation']);
-                    $data_msg = $post_data[$key_post];
-
-                    // Найдем поле с email'ом отправителя
-                    if ($form['user_message_active'] AND $field['id'] == $form['user_message_active'])
-                        $user_email = $post_data[$key_post];
                 }
 
-                if ($field['type'] != 'file' OR ($field['type'] == 'file' AND $form['action_files'] != 2))
+                if ($field['type'] != 'file' OR ($field['type'] == 'file' AND $form['action_files'] != 2)) {
                     $msg_email[$field['id']]['field'] = $field;
+                }
 
-                if (!empty($data_msg))
+                if (!empty($data_msg)) {
                     $msg_email[$field['id']]['data'] = $data_msg;
+                }
+
             }
 
             if ($form['captcha'] == 1) {

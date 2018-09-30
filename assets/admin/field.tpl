@@ -47,27 +47,16 @@
                                     <label class="control-label" for="type">Тип поля: </label>
                                     <div class="controls">
                                         <select name="type" id="type">
-                                            <option value="text"{if $field.type=='text'} selected="selected"{/if}>text
-                                            </option>
-                                            <option value="textarea"{if $field.type=='textarea'} selected="selected"{/if}>
-                                                textarea
-                                            </option>
-                                            <option value="checkbox"{if $field.type=='checkbox'} selected="selected"{/if}>
-                                                checkbox
-                                            </option>
-                                            <option value="select"{if $field.type=='select'} selected="selected"{/if}>
-                                                select
-                                            </option>
-                                            <option value="radio"{if $field.type=='radio'} selected="selected"{/if}>
-                                                radio
-                                            </option>
-                                            <option value="file"{if $field.type=='file'} selected="selected"{/if}>
-                                                загрузка файлов
-                                            </option>
+                                            <option value="text"{if $field.type=='text'} selected="selected"{/if}>text</option>
+                                            <option value="tel"{if $field.type=='tel'} selected="selected"{/if}>tel</option>
+                                            <option value="email"{if $field.type=='email'} selected="selected"{/if}>email</option>
+                                            <option value="textarea"{if $field.type=='textarea'} selected="selected"{/if}>textarea</option>
+                                            <option value="checkbox"{if $field.type=='checkbox'} selected="selected"{/if}>checkbox</option>
+                                            <option value="select"{if $field.type=='select'} selected="selected"{/if}>select</option>
+                                            <option value="radio"{if $field.type=='radio'} selected="selected"{/if}>radio</option>
+                                            <option value="file"{if $field.type=='file'} selected="selected"{/if}>загрузка файлов</option>
                                             <option value="" disabled>------</option>
-                                            <option value="separator"{if $field.type=='separator'} selected="selected"{/if}>
-                                                разделитель
-                                            </option>
+                                            <option value="separator"{if $field.type=='separator'} selected="selected"{/if}>разделитель</option>
                                         </select>
                                     </div>
                                 </div>
@@ -247,6 +236,8 @@
                     select: ['value', 'check', 'disable'],
                     radio: ['check', 'value'],
                     text: ['maxlength', 'disable'],
+                    tel: ['maxlength', 'disable'],
+                    email: ['disable'],
                     textarea: ['maxlength', 'disable'],
                     file: ['allowed_types']
                 },

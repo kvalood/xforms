@@ -33,13 +33,13 @@
                         {if (($field.type=='select' || $field.type=='radio') AND count($checkbox_value) >= 1) || $field.type == 'separator' || count($checkbox_value) >= 1}
                             <div class="field__title{if $field.require==1} require_field{/if}">{$field.label}</div>
                         {else:}
-                            {if (!$checkbox_value AND $field.type=='checkbox') || $field.type=='text' || $field.type=='textarea' || $field.type=='file'}
+                            {if (!$checkbox_value AND $field.type=='checkbox') || $field.type=='text' || $field.type=='tel' || $field.type=='textarea' || $field.type=='file'}
                                 <label for="f{$field.id}" class="field__title{if $field.require==1} require_field{/if}">{$field.label}</label>
                             {/if}
                         {/if}
 
-                        {if $field.type=='text'}
-                            <input type="text" name="f{$field.id}" id="f{$field.id}" value="{$field.value}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if}  />
+                        {if $field.type=='text' || $field.type == 'tel' || $field.type == 'email'}
+                            <input type="{$field.type}" name="f{$field.id}" id="f{$field.id}" value="{$field.value}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if}  />
                         {elseif $field.type=='textarea'}
                             <textarea name="f{$field.id}" class="message_text"  id="f{$field.id}"{if $field.maxlength >0} maxlength="{$field.maxlength}"{/if}{if $field.disabled==1} disabled="disabled"{/if}>{$field.value}</textarea>
                         {elseif $field.type=='checkbox'}
