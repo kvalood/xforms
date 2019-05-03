@@ -353,6 +353,11 @@ class Xforms extends MY_Controller
                         }
                         break;
 
+                    case 'hidden':
+                        $this->form_validation->set_rules($key_post, $field['label'], 'trim|xss_clean');
+                        $data_msg = $post_data[$key_post];
+                        break;
+
                 }
 
                 if ($field['type'] != 'file' OR ($field['type'] == 'file' AND $form['action_files'] != 2)) {

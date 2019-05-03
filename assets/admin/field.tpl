@@ -55,6 +55,7 @@
                                             <option value="select"{if $field.type=='select'} selected="selected"{/if}>select</option>
                                             <option value="radio"{if $field.type=='radio'} selected="selected"{/if}>radio</option>
                                             <option value="file"{if $field.type=='file'} selected="selected"{/if}>загрузка файлов</option>
+                                            <option value="hidden"{if $field.type=='hidden'} selected="selected"{/if}>hidden</option>
                                             <option value="" disabled>------</option>
                                             <option value="separator"{if $field.type=='separator'} selected="selected"{/if}>разделитель</option>
                                         </select>
@@ -239,7 +240,8 @@
                     tel: ['maxlength', 'disable'],
                     email: ['disable'],
                     textarea: ['maxlength', 'disable'],
-                    file: ['allowed_types']
+                    file: ['allowed_types'],
+                    hidden: []
                 },
                 optional_fields = ['check', 'value', 'maxlength', 'allowed_types', 'disable'];
 
