@@ -16,3 +16,5 @@
     {/foreach}
 
 </table>
+
+Город отправителя: {$geo.regionName}, {$geo.city}

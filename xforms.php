@@ -381,7 +381,12 @@ class Xforms extends MY_Controller
                  * т.к. стандарный модуль cmsemail не позволяет прикреплять больше 1 файла и отправлять на несколько email'ов админам, см. = https://github.com/imagecms/ImageCMS/issues/103
                  * Загружаем его настройки для отправки почты через стандартные средства
                  */
-                $message = assetManager::create()->setData('data', $msg_email)->fetchTemplate('email');
+                $geo = unserialize(file_get_contents('http://ip-api.com/php/'.$_SERVER['REMOTE_ADDR']));
+
+                $message = assetManager::create()
+                    ->setData('data', $msg_email)
+                    ->setData('geo', $geo)
+                    ->fetchTemplate('email');
 
                 $this->load->library('email');
                 $this->email->clear();
