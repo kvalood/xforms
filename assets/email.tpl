@@ -17,4 +17,7 @@
 
 </table>
 
-Город отправителя: {$geo.regionName}, {$geo.city}
+<p>
+Город отправителя: {$geo.regionName}, {$geo.city} <br>
+IP отправителя: {$geo.query}
+</p>
