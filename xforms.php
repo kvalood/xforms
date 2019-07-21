@@ -125,7 +125,7 @@ class Xforms extends MY_Controller
             'value' => ['type' => 'text'],
             'desc' => [
                 'type' => 'varchar',
-                'constraint' => 255,
+                'constraint' => 400,
             ],
             'position' => [
                 'type' => 'int',

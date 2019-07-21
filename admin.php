@@ -85,7 +85,7 @@ class Admin extends BaseAdminController
     {
         if ($this->input->post('type')) {
             $this->form_validation->set_rules('value', 'Значение', 'trim|xss_clean');
-            $this->form_validation->set_rules('desc', 'Описание', 'trim|xss_clean|max_length[255]');
+            $this->form_validation->set_rules('desc', 'Описание', 'trim|xss_clean|max_length[400]');
             $this->form_validation->set_rules('validation', 'Валидация', 'trim|xss_clean');
             $this->form_validation->set_rules('operation', 'Операции', 'trim');
             $this->form_validation->set_rules('position', 'Позиция', 'trim|xss_clean|numeric');
@@ -209,35 +209,39 @@ class Admin extends BaseAdminController
                     $path = '/admin/components/cp/xforms/form/' . $id;
                 } else {
                     $id = $this->xforms_model->add_form($data);
-                    showMessage('Готово', 'Форма добавлена');
-                    $path = '/admin/components/cp/xforms/form/' . $id;
 
-                    // Добавим шаблон "xforms_send" для отправки почты через модуль cmsemail
-                    $this->load->dbforge();
-                    $email_paterns = [
-                        'name' => 'xforms_send_form_' . $id,
-                        'from' => 'Администрация сайта',
-                        'from_email' => '',
-                        'type' => 'HTML',
-                        'patern' => '',
-                        'user_message_active' => 0,
-                        'admin_message_active' => 1,
-                        'admin_email' => $email_data['email']
-                    ];
-                    $this->db->insert('mod_email_paterns', $email_paterns);
-                    $email_patterns_id = $this->db->insert_id();
+                    if($id) {
+                        showMessage('Готово', 'Форма добавлена');
+                        $path = '/admin/components/cp/xforms/form/' . $id;
 
-                    $email_paterns_i18n = [
-                        'id' => $email_patterns_id,
-                        'locale' => 'ru',
-                        'theme' => $email_data['subject'] ? $email_data['subject'] : 'ImageCMS - Отправка формы - ' . $id,
-                        'user_message' => 'Здравствуйте. Мы свяжемся с вами в ближайшее время.',
-                        'admin_message' => '<p>Пришла заявка.</p><p>$message$</p>',
-                        'description' => 'Отправка формы xforms - ' . $data['title'],
-                        'variables' => 'a:1:{s:9:"$message$";s:46:"Список заполненных полей";}'
-                    ];
-                    $this->db->insert('mod_email_paterns_i18n', $email_paterns_i18n);
+                        // Добавим шаблон "xforms_send" для отправки почты через модуль cmsemail
+                        $this->load->dbforge();
+                        $email_paterns = [
+                            'name' => 'xforms_send_form_' . $id,
+                            'from' => 'Администрация сайта',
+                            'from_email' => '',
+                            'type' => 'HTML',
+                            'patern' => '',
+                            'user_message_active' => 0,
+                            'admin_message_active' => 1,
+                            'admin_email' => $email_data['email']
+                        ];
+                        $this->db->insert('mod_email_paterns', $email_paterns);
+                        $email_patterns_id = $this->db->insert_id();
 
+                        $email_paterns_i18n = [
+                            'id' => $email_patterns_id,
+                            'locale' => 'ru',
+                            'theme' => $email_data['subject'] ? $email_data['subject'] : 'ImageCMS - Отправка формы - ' . $id,
+                            'user_message' => 'Здравствуйте. Мы свяжемся с вами в ближайшее время.',
+                            'admin_message' => '<p>Пришла заявка.</p><p>$message$</p>',
+                            'description' => 'Отправка формы xforms - ' . $data['title'],
+                            'variables' => 'a:1:{s:9:"$message$";s:46:"Список заполненных полей";}'
+                        ];
+                        $this->db->insert('mod_email_paterns_i18n', $email_paterns_i18n);
+                    } else {
+                        showMessage('Error', 'System error');
+                    }
                 }
 
                 if ($this->input->post('action') == 'close') {
