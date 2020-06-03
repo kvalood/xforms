@@ -85,7 +85,7 @@ class Admin extends BaseAdminController
     {
         if ($this->input->post('type')) {
             $this->form_validation->set_rules('value', 'Значение', 'trim|xss_clean');
-            $this->form_validation->set_rules('desc', 'Описание', 'trim|xss_clean|max_length[400]');
+            $this->form_validation->set_rules('desc', 'Описание', 'trim|xss_clean');
             $this->form_validation->set_rules('validation', 'Валидация', 'trim|xss_clean');
             $this->form_validation->set_rules('operation', 'Операции', 'trim');
             $this->form_validation->set_rules('position', 'Позиция', 'trim|xss_clean|numeric');

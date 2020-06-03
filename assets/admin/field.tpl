@@ -86,7 +86,8 @@
                                     </div>
                                 </div>
 
-                                <div class="control-group" style="display:{if $field.type == 'select' || $field.type == 'radio' || $field.type == 'checkbox'}block{else:}none{/if}">
+                                {$visible_type = ['checkbox', 'text', 'select', 'radio']}
+                                <div class="control-group" style="display:{if in_array($field.type, $visible_type)}block{else:}none{/if}">
                                     <label class="control-label" for="value">
                                         Значение
                                     </label>
@@ -101,9 +102,7 @@
                                         Описание
                                     </label>
                                     <div class="controls">
-                                        <div class="o_h">
-                                            <input type="text" name="desc" id="desc" value="{$field.desc}"/>
-                                        </div>
+                                        <textarea name="desc" id="desc">{$field.desc}</textarea>
                                         <span class="help-block">Подсказка для поля</span>
                                     </div>
                                 </div>

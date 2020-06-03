@@ -123,10 +123,7 @@ class Xforms extends MY_Controller
                 'constraint' => 255,
             ],
             'value' => ['type' => 'text'],
-            'desc' => [
-                'type' => 'varchar',
-                'constraint' => 400,
-            ],
+            'desc' => ['type' => 'text'],
             'position' => [
                 'type' => 'int',
                 'constraint' => 11,
@@ -609,6 +606,8 @@ class Xforms extends MY_Controller
     public function download($file)
     {
         $this->load->helper('download');
+
+        ob_clean();
 
         $data = file_get_contents("./uploads/xforms/$file");
 
